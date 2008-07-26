@@ -1,0 +1,4 @@
+#labels authsub,AuthSubSessionToken,AuthSubRevokeToken
+==AuthSub Authentication for Web Applications==
+
+http://code.google.com/apis/accounts/docs/AuthSub.html
