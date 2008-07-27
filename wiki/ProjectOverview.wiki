@@ -1,0 +1,52 @@
+#labels cpedialog,appengine,blog,python,cpedia,picasaweb,yui,authsub,google
+* Want to join this project? [mailto:cpedia@gmail.com Just send email to me.] *
+
+blog implemented by python and can be hosted on google appengine
+
+Now you can access the Demo at: http://blog.cpedia.com
+
+==Screenshots==
+ ===Main Page===
+ [http://blog.cpedia.com http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGOkUDA&nonsense=something_that_ends_with.png]
+
+ ===Add/Edit Blog===
+ [http://blog.cpedia.com http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGOoUDA&nonsense=something_that_ends_with.png]
+  
+ ===Insert/Upload Images=== 
+ [http://blog.cpedia.com http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGP0UDA&nonsense=something_that_ends_with.png]
+  
+ ===Page/Menu Admin===
+ [http://blog.cpedia.com http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGP4UDA&nonsense=something_that_ends_with.png]
+ 
+ ===Uploaded Images/Other Resources Admin===
+ [http://blog.cpedia.com http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGP8UDA&nonsense=something_that_ends_with.png]
+
+ ===Access picasaweb albums===
+ [http://blog.cpedia.com http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGIAVDA&nonsense=something_that_ends_with.png]
+
+==Features:==
+===blog===
+  * using yui grid, so it's very easy to change or extend the page layout.
+
+  * auto-generate permalink url through translating the blog title by google.
+
+  * tags for the blog entry.
+
+  * rich content editor by yui rich editor.
+
+  * Ajax implemented by simplejson & yui Connection Manager. (Such as inline editable table.)
+
+  [http://blog.cpedia.com/2008/07/yui-in-the-application-of-cpedialog http://blog.cpedia.com/img/blog_post/editable_table.jpg]
+
+  * Upload images file to bigTable in yui rich editor.
+
+  * Uploaded images, tags, archives, albums management.
+
+  * Menu & pages management.
+  
+  * AuthSub Session Token and System cache management.
+
+===albums===
+  * access the picasaweb albums through gdata API.
+
+  * authSub implemented by decorating the python method.
