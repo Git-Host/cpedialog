@@ -12,10 +12,18 @@ http://code.google.com/appengine/docs/appcfgpy.html
 = Details =
 
 == Download cpedialog ==
-# Please download cpedialog from googlecode site and decompress it to a folder, for example, extract it to the "D:\My projects\cpedialog", make sure the file app.yaml is located in the folder cpedialog. 
+#Download cpedialog from googlecode site and decompress it to a folder, for example, extract it to "D:\My projects\cpedialog", make sure file "app.yaml" is located in the folder of cpedialog. 
 
-# Please open the file app.yaml with some text editor (such as Microsoft Notpad). Change the applocation property in the first line to your own appengine app name.
- For example: 
-        application: pchen   change to:
-        application: your_app_name
-  
+#Open the file app.yaml with some text editor (such as Microsoft Notpad). Change the applocation property in the first line to your own appengine app name.
+For example: 
+application: pchen   change to: 
+application: your_app_id
+
+#Run the appcfg.py update command to upload cpedialog to your appengine app.
+cd D:\My projects
+appcfg.py update cpedialog
+
+wait until the command execute finished.  
+
+Now you can access your app running on App Engine:
+http://your_app_id.appspot.com
