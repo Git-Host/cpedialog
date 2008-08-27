@@ -1,5 +1,5 @@
-#summary This article will give you the summary introduce about cpedialog.
-#labels cpedialog,appengine,blog,python,cpedia,picasaweb,yui,authsub,google
+#summary This article will give you the summary introduction about cpedialog.
+#labels cpedialog,appengine,blog,python,cpedia,picasaweb
 
 * Want to join this project? [mailto:cpedia@gmail.com Just send email to me.] *
 
