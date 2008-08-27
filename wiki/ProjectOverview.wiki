@@ -1,4 +1,6 @@
+#summary This article will give you the summary introduce about cpedialog.
 #labels cpedialog,appengine,blog,python,cpedia,picasaweb,yui,authsub,google
+
 * Want to join this project? [mailto:cpedia@gmail.com Just send email to me.] *
 
 blog implemented by python and can be hosted on google appengine
