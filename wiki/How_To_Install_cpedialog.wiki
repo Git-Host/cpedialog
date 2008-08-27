@@ -1,14 +1,21 @@
-#summary One-sentence summary of this page.
+#summary This article will tell you how to install cpedialog on appengine.
 #labels cpedialog,install
 
-= Introduction =
+= Preface =
 
-Add your content here.
+Before you start to install cpedialog, you need to know what appengine is and what appengine can do. If you still have some uncertainty, please refer to: 
+http://code.google.com/appengine/docs/whatisgoogleappengine.html
 
+And we also recommend you to read the article for "Uploading an App" to appengine:
+http://code.google.com/appengine/docs/appcfgpy.html
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== Download cpedialog ==
+# Please download cpedialog from googlecode site and decompress it to a folder, for example, extract it to the "D:\My projects\cpedialog", make sure the file app.yaml is located in the folder cpedialog. 
+
+# Please open the file app.yaml with some text editor (such as Microsoft Notpad). Change the applocation property in the first line to your own appengine app name.
+ For example: 
+        application: pchen   change to:
+        application: your_app_name
+  
