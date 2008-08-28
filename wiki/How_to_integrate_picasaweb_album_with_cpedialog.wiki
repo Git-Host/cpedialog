@@ -19,5 +19,21 @@ A alert message box will pop-up to ask you whether to add a row. Click "OK", a d
   [http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGPEYDA&p.png]
 
 ===Manager you picasaweb alubms accounts===
-  After you add the album menu to your blog, you still need to add you picasaweb album username to the "Albums" table.
+  After you add the album menu to your blog, you can access the album by click the link from the menu. But you will get the follow page.
+  [http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGPIYDA&p.png]
+
+Don't worry, you just still need to add you picasaweb album username to the "Albums" table.
+Double-click the "Add" column in the table header to add a new record to the album table.
+
+  [http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGLcaDA&p.png]
+
+And then modify the default username to your picasaweb album username. (For example, cpedia). Set the valid property of the record to be "true".
+  [http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGLgaDA&p.png]
+
+Then you can access your album now.
+  [http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGPMYDA&p.png]
+
+You can add one or more albums to be shown for public.
+  
+
  
