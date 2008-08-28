@@ -30,7 +30,7 @@ Double-click the "Add" column in the table header to add a new record to the alb
 And then modify the default username to your picasaweb album username. (For example, cpedia). Set the valid property of the record to be "true".
   [http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGLgaDA&p.png]
 
-Then you can access your album now.
+Then you can access your album from the menu.
   [http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGPMYDA&p.png]
 
 You can add one or more albums to be shown for public.
