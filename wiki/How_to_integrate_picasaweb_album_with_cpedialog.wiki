@@ -1,14 +1,23 @@
 #summary You must want your own albums shown on your blog, here is the tips tell you how to integrate picasaweb album with cpedialog.
 #labels picasaweb,albums,cpedialog
 
-= Introduction =
+== Preface ==
 
-Add your content here.
+Before you start to integrate picasaweb album with cpedialog, you must have an picasaweb account.
+If you still don't have one, you can apply from: http://picasaweb.google.com
+You can also upload your photos to picasaweb by picasa.
 
+== Details ==
 
-= Details =
+===Add album menu for your site===
+  If you want to make your album can be access by public, you need to add a menu for album firstly.
+  Login as the system administrator to your blog, then switch to the system configuration module. You will see some tabs in this page, select the "Pages" Tab. Now in the "Menu Admin" table, you can add a row.
+  If you still have not any men yet, just double-click the "Add" column at the table header.
+A alert message box will pop-up to ask you whether to add a row. Click "OK", a default menu will be added to the table, now you can edit the default menu value directly.
+  Click the default menu title and set it to "Albums", click the default menu permalink and set it to "*/albums*", click the default menu valid and set it to "true".  
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  [http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGPEYDA&p.png]
+
+===Manager you picasaweb alubms accounts===
+  After you add the album menu to your blog, you still need to add you picasaweb album username to the "Albums" table.
+ 
