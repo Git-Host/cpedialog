@@ -11,7 +11,7 @@ http://code.google.com/appengine/docs/appcfgpy.html
 
 == Details ==
 
-1.Download cpedialog from googlecode site and decompress it to a folder, for example, extract it to "D:\My projects\cpedialog", make sure file "app.yaml" is located in the folder of cpedialog. 
+1.Download cpedialog from googlecode site (http://code.google.com/p/cpedialog/downloads/list) and decompress it to a folder, for example, extract it to "D:\My projects\cpedialog", make sure file "app.yaml" is located in the folder of cpedialog. 
 
  [http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGO0YDA&p.png]
 
