@@ -1,5 +1,0 @@
-#summary This article will give you the summary introduction about cpedialog.
-#labels cpedialog,appengine,blog,python,cpedia,picasaweb
-
-Please refer to:
-http://code.google.com/p/cpedialog/
