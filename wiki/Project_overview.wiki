@@ -1,0 +1,5 @@
+#summary This article will give you the summary introduction about cpedialog.
+#labels cpedialog,overview
+
+Please refer to:
+http://code.google.com/p/cpedialog/
