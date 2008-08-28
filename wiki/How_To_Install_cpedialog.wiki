@@ -20,7 +20,7 @@ For example:
 application: pchen   change to: 
 application: your_app_id
 
- [http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGPAYDA&p.png]
+ [http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGLUaDA&p.png]
 
 3.Run the appcfg.py update command to upload cpedialog to your appengine app.
  [http://blog.cpedia.com/rpc/img?img_id=agVwY2hlbnINCxIGSW1hZ2VzGO4YDA&p.png]
