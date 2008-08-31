@@ -1,0 +1,16 @@
+#summary introduction on how to start up for freshman.
+
+= Introduction =
+We will use this page to describe how to start to develop with cpedialog.
+
+= Jion Project =
+  * you should have a google account to use google code.
+  * send an email to project owner: cpedia@gmail.com to request as a member.
+= Check out Source Code =
+Use a svn client to checkout source code from google code
+==Windows==
+  * it is recommanded to use tortoiseSVN, you can download tortoiseSVN [http://tortoisesvn.net/downloads here]
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
