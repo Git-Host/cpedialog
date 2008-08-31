@@ -5,7 +5,7 @@ We will use this page to describe how to start to develop with cpedialog.
 
 = Jion Project =
   * you should have a google account to use google code.
-  * send an email to project owner: cpedia@gmail.com to request as a member.
+  * send an email to [http://mailto:cpedia@gmail.com project owner] to request as a member.
 = Check out Source Code =
 Use a svn client to checkout source code from google code
 ==Windows==
