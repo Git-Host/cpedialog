@@ -1,5 +1,5 @@
 #summary introduction on how to start up for freshman.
-#labels new,developer,cpedialog
+#labels freshman,developer,cpedialog
 
 = Introduction =
 We will use this page to describe how to start to develop with cpedialog.
@@ -10,6 +10,7 @@ We will use this page to describe how to start to develop with cpedialog.
 = Download Resources =
   * [http://www.python.org/download/ Python2.5]
   * [http://code.google.com/appengine/downloads.html Google App Engine]
+  * [http://code.google.com/appengine/articles/eclipse.html PyDev]
 = Learning Resources =
 before you start cpedia, you should be familiar with python, and Google App Engine
   * it is recommanded to read [http://diveintopython.org/ Dive into Python] to start python study, it has been translated into several languages.
@@ -24,30 +25,30 @@ Use a svn client to checkout source code from google code
 = Cpedialog Tech Stack =
   * Python
   * Google App Engine
+  * Django
   * YUI
 = Cpedialog Project Stucture =
 || *File* || *Usage* ||
-|| /admin.py || ||
-|| /album.py || ||
-|| /authorized.py || ||
-|| /BeautifulSoup.py || ||
-|| /blog.py || ||
-|| /docs.py || ||
-|| /main.py || ||
-|| /model.py || ||
-|| /rpc.py || ||
-|| /util.py || ||
-|| /view.py || ||
-|| /xmlblogloader.py || ||
-|| /atom || ||
-|| /gdata || ||
-|| /img|| ||
-|| /recaptcha || ||
-|| /simplejson || ||
-|| /stylesheets || ||
-|| /templates || ||
-|| /cpedia || ||
-|| /jscripts || ||
+|| /admin.py || for the system configuration module ||
+|| /album.py || integrate with [http://code.google.com/apis/picasaweb/overview.html picasaweb albums]||
+|| /authorized.py || Decrote method for the authorization and google authsub. Refer to: [http://www.python.org/dev/peps/pep-0318/ Python Decorators for Functions and Methods]
+[http://code.google.com/apis/accounts/docs/AuthSub.html AuthSub Authentication for Web Applications]||
+|| /BeautifulSoup.py || Beautiful Soup parses a XML or HTML document into a
+tree representation. See: http://www.crummy.com/software/BeautifulSoup/  ||
+|| /blog.py || Classes for blog operation and releated resource access.||
+|| /main.py || Main routine that runs the WSGIApplication using a CGI adaptor ||
+|| /model.py || The entity model.||
+|| /rpc.py || Remote Procedure Call for ajax.||
+|| /util.py || Helper class.  ||
+|| /view.py || Django template render parent class.||
+|| /atom, /gdata  || [http://code.google.com/apis/gdata/ Google Data APIs] ||
+|| /img|| Images resource. ||
+|| /recaptcha || [http://pypi.python.org/pypi/recaptcha-client A plugin for reCAPTCHA and reCAPTCHA Mailhide] reCAPTCHA is used for anti-spam of the blog post comments.||
+|| /simplejson || A simple, fast, extensible JSON encoder and decoder. http://undefined.org/python/#simplejson ||
+|| /stylesheets || CSS style files ||
+|| /templates || Django templates files ||
+|| /cpedia || Common library of cpedialog ||
+|| /jscripts || Javascript files. ||
 
 
 
