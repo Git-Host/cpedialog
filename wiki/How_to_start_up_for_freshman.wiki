@@ -1,51 +1,55 @@
 #summary introduction on how to start up for freshman.
 #labels freshman,developer,cpedialog
 
-= Introduction =
+== Introduction ==
 We will use this page to describe how to start to develop with cpedialog.
 
-= Jion Project =
+== Jion Project ==
   * you should have a google account to use google code.
   * send an email to [mailto:cpedia@gmail.com project owner] to request as a member.
-= Download Resources =
+== Download Resources ==
   * [http://www.python.org/download/ Python2.5]
   * [http://code.google.com/appengine/downloads.html Google App Engine]
-  * [http://code.google.com/appengine/articles/eclipse.html PyDev]
-= Learning Resources =
+== Learning Resources ==
 before you start cpedia, you should be familiar with python, and Google App Engine
   * it is recommanded to read [http://diveintopython.org/ Dive into Python] to start python study, it has been translated into several languages.
   * it is recommanded to read [http://code.google.com/appengine/docs/gettingstarted/ GAE Getting Started Guide] to get a brief understand for Google App Engine
-= Check out Source Code =
+  * it is recommanded to read [http://code.google.com/appengine/articles/ Google App Engine Articles] to get some best practise for GAE.
+== Check out Source Code ==
 Use a svn client to checkout source code from google code
   * for windows user, it is recommanded to use tortoiseSVN, you can download tortoiseSVN [http://tortoisesvn.net/downloads here]
   * for linux user, it is recommanded to use svn command line.
   * check out cpedialog source code to local directory
-= IDE =
+== IDEs ==
+  * [http://code.google.com/appengine/articles/eclipse.html PyDev plugin for eclipse]
+  * [http://wingware.com/doc/howtos/google-app-engine WingIDE]
+  * [http://www.activestate.com/Products/komodo_ide/index.mhtml Komodo IDE]
+  * More refer to: http://wiki.python.org/moin/IntegratedDevelopmentEnvironments
 
-= Cpedialog Tech Stack =
+== Cpedialog Tech Stack ==
   * Python
   * Google App Engine
   * Django
   * YUI
-= Cpedialog Project Stucture =
+== Cpedialog Project Stucture ==
 || *File* || *Usage* ||
 || /admin.py || for the system configuration module ||
-|| /album.py || integrate with [http://code.google.com/apis/picasaweb/overview.html picasaweb albums]||
-|| /authorized.py || Decrote method for the authorization and google authsub. Refer to:*[http://www.python.org/dev/peps/pep-0318/ Python Decorators for Functions and Methods]   *[http://code.google.com/apis/accounts/docs/AuthSub.html AuthSub Authentication for Web Applications]||
-|| /BeautifulSoup.py|| Beautiful Soup parses a XML or HTML document into a tree representation. See: http://www.crummy.com/software/BeautifulSoup/  ||
+|| /album.py || for integration with [http://code.google.com/apis/picasaweb/overview.html picasaweb albums]||
+|| /authorized.py || Decorator method for authenticate/authorization and google authsub. Refer to:  *[http://www.python.org/dev/peps/pep-0318/ Python Decorators for Functions and Methods]   *[http://code.google.com/apis/accounts/docs/AuthSub.html AuthSub Authentication for Web Applications]||
+|| /BeautifulSoup.py || Beautiful Soup parses a XML or HTML document into a tree representation. See: http://www.crummy.com/software/BeautifulSoup/  ||
 || /blog.py || Classes for blog operation and releated resource access.||
 || /main.py || Main routine that runs the WSGIApplication using a CGI adaptor ||
-|| /model.py || The entity model.||
+|| /model.py || The entity model of cpedialog.||
 || /rpc.py || Remote Procedure Call for ajax.||
-|| /util.py || Helper class.  ||
-|| /view.py || Django template render parent class.||
+|| /util.py || Helper class. Most methods are used for getting cached object from memcache and flushing cache at proper time. ||
+|| /view.py || Django template render base class.||
 || /atom, /gdata  || [http://code.google.com/apis/gdata/ Google Data APIs] ||
 || /img|| Images resource. ||
-|| /recaptcha || [http://pypi.python.org/pypi/recaptcha-client A plugin for reCAPTCHA and reCAPTCHA Mailhide] reCAPTCHA is used for anti-spam of the blog post comments.||
+|| /recaptcha || [http://pypi.python.org/pypi/recaptcha-client A plugin for reCAPTCHA and reCAPTCHA Mailhide] reCAPTCHA is used for anti-spam of the blog comments.||
 || /simplejson || A simple, fast, extensible JSON encoder and decoder. http://undefined.org/python/#simplejson ||
-|| /stylesheets || CSS style files ||
-|| /templates || Django templates files ||
-|| /cpedia || Common library of cpedialog ||
+|| /stylesheets || CSS style files. ||
+|| /templates || Django templates files. ||
+|| /cpedia || Common library of cpedialog. ||
 || /jscripts || Javascript files. ||
 
 
