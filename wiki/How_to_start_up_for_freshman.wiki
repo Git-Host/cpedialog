@@ -31,8 +31,7 @@ Use a svn client to checkout source code from google code
 || *File* || *Usage* ||
 || /admin.py || for the system configuration module ||
 || /album.py || integrate with [http://code.google.com/apis/picasaweb/overview.html picasaweb albums]||
-|| /authorized.py || Decrote method for the authorization and google authsub. Refer to:[http://www.python.org/dev/peps/pep-0318/ Python Decorators for Functions and Methods]   
-[http://code.google.com/apis/accounts/docs/AuthSub.html AuthSub Authentication for Web Applications]||
+|| /authorized.py || Decrote method for the authorization and google authsub. Refer to:*[http://www.python.org/dev/peps/pep-0318/ Python Decorators for Functions and Methods]   *[http://code.google.com/apis/accounts/docs/AuthSub.html AuthSub Authentication for Web Applications]||
 || /BeautifulSoup.py || Beautiful Soup parses a XML or HTML document into a tree representation. See: http://www.crummy.com/software/BeautifulSoup/  ||
 || /blog.py || Classes for blog operation and releated resource access.||
 || /main.py || Main routine that runs the WSGIApplication using a CGI adaptor ||
