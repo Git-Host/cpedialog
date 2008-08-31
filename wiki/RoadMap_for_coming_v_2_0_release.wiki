@@ -18,12 +18,12 @@ This article will record the roadmap of cpedialog for the coming version 2.0 rel
     # user can import blog entries from blogger.com
     # user can export blog entries to blogger.com
     # add the ability for every blog entry to be posted to blogger.com
-
 5. cpedia bookmark manager
     # add a region in home page, to display user's bookmark
     # add a new tab to manager user's bookmark
+6. I18n support.
 
-6. Some small enhancement, such as the time zone support.
+7. Some small enhancement, such as the time zone support.
 
 
 *Caution*: This article is not the final version!
