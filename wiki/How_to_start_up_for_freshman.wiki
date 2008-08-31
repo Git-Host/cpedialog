@@ -6,11 +6,20 @@ We will use this page to describe how to start to develop with cpedialog.
 = Jion Project =
   * you should have a google account to use google code.
   * send an email to [mailto:cpedia@gmail.com project owner] to request as a member.
+= Download Resources =
+  * [http://www.python.org/download/ Python2.5]
+  * [http://code.google.com/appengine/downloads.html Google App Engine]
+= Learning Resources =
+before you start cpedia, you should be familiar with python, and Google App Engine
+  * it is recommanded to read [http://diveintopython.org/ Dive into Python] to start python study, it has been translated into several languages.
+  * it is recommanded to read [http://code.google.com/appengine/docs/gettingstarted/ GAE Getting Started Guide] to get a brief understand for Google App Engine
 = Check out Source Code =
 Use a svn client to checkout source code from google code
-==Windows==
-  * it is recommanded to use tortoiseSVN, you can download tortoiseSVN [http://tortoisesvn.net/downloads here]
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  * for windows user, it is recommanded to use tortoiseSVN, you can download tortoiseSVN [http://tortoisesvn.net/downloads here]
+  * for linux user, it is recommanded to use svn command line.
+  * check out cpedialog source code to local directory
+= IDE =
+
+= Cpedialog Project Stucture =
+
+= Run Cpedialog in your laptop =
