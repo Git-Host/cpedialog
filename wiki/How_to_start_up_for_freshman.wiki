@@ -20,6 +20,10 @@ Use a svn client to checkout source code from google code
   * check out cpedialog source code to local directory
 = IDE =
 
+= Cpedialog Tech Stack =
+  * Python
+  * Google App Engine
+  * YUI
 = Cpedialog Project Stucture =
 
 = Run Cpedialog in your laptop =
