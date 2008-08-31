@@ -26,5 +26,30 @@ Use a svn client to checkout source code from google code
   * Google App Engine
   * YUI
 = Cpedialog Project Stucture =
+|| *File* || *Usage* ||
+|| /admin.py || ||
+|| /album.py || ||
+|| /authorized.py || ||
+|| /BeautifulSoup.py || ||
+|| /blog.py || ||
+|| /docs.py || ||
+|| /main.py || ||
+|| /model.py || ||
+|| /rpc.py || ||
+|| /util.py || ||
+|| /view.py || ||
+|| /xmlblogloader.py || ||
+|| /atom || ||
+|| /gdata || ||
+|| /img|| ||
+|| /recaptcha || ||
+|| /simplejson || ||
+|| /stylesheets || ||
+|| /templates || ||
+|| /cpedia || ||
+|| /jscripts || ||
+
+
+
 
 = Run Cpedialog in your laptop =
