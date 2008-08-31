@@ -22,6 +22,7 @@ This article will record the roadmap of cpedialog for the coming version 2.0 rel
     # add a region in home page, to display user's bookmark
     # add a new tab to manager user's bookmark
 6. I18n support.
+
 7. Some small enhancement, such as the time zone support.
 
 
