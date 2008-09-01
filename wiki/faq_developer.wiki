@@ -9,6 +9,7 @@ Use this page to answer the frequently asked question.
   * *Reason*
     * it is because the urlfetch model provided by GAE can't use proxy
     * by default cpedialog will request http://feeds.delicious.com/v2/json/tags/%username for delicious tag when you starup, so the urlfetch will hang your request.
+    * [http://code.google.com/p/googleappengine/issues/detail?id=544   	 urlfetch cannot be used behind a proxy]
   * *Solotion*
     * go to model.py
     * find variable delicious_enable
