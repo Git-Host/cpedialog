@@ -1,0 +1,15 @@
+#summary FAQ Page for cpedialog developer.
+
+= Introduction =
+
+Use this page to answer the frequently asked question.
+
+
+= Why cpedialog is too slow when my laptop is behind a proxy  =
+  * *Reason*
+    * it is because the urlfetch model provided by GAE can't use proxy
+    * by default cpedialog will request http://feeds.delicious.com/v2/json/tags/%username for delicious tag when you starup, so the urlfetch will hang your request.
+  * *Solotion*
+    * go to model.py
+    * find variable delicious_enable
+    * change the default value to False
