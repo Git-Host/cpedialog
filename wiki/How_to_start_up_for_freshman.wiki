@@ -56,6 +56,5 @@ Use a svn client to checkout source code from google code
 || /jscripts || Javascript files. ||
 
 
-
-
 = Run Cpedialog in your laptop =
+  * dev_appserver.py cpedialog
