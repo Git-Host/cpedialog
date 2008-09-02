@@ -1,0 +1,16 @@
+#summary This article is the development plan of cpedialog version 2.0 for project team.
+
+=Preface=
+
+Add your content here.
+
+
+= Details =
+|| *Features*|| *Phase I* || *Phase II* || *Deadline* || *Remarks* || *Assign to* || 
+||Css refactor || redefine the css class name, make the css styles are easy to override by user.  || Define the style template model, implement the feature to customize the modularized style in background.  ||  ||  || Circle, Ping ||
+|| || || || || || ||
+|| || || || || || ||
+|| || || || || || ||
+|| || || || || || ||
+|| || || || || || ||
+||i18n support || language setting in the background.|| transfer all the english words in the page to chinese.|| || || A.TNG||
