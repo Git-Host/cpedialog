@@ -6,6 +6,8 @@
 Before you start to install cpedialog, you need to know what appengine is and what appengine can do. If you still have some uncertainty, please refer to: 
 http://code.google.com/appengine/docs/whatisgoogleappengine.html
 
+Make sure Google App Engine has been installed correctly.
+
 And we also recommend you to read the article for "Uploading an App" to appengine:
 http://code.google.com/appengine/docs/appcfgpy.html
 
