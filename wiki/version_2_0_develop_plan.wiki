@@ -1,0 +1,11 @@
+#summary This article is the development plan of cpedialog version 2.0 for project team.
+#labels plan,cpedialog
+
+=Preface=
+
+Add your content here.
+
+
+= Details =
+|| *Features*|| *Phase I* || *Phase II* || *Deadline* || *Remarks* || *Assign to* || 
+||Css refactor || redefine the css class name, make the css styles are easy to override by user.  || Define the sytle template model, implement the feature to customize the modularized style in background.  ||  ||  || Circle, Ping ||
