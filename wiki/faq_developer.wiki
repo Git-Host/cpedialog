@@ -14,3 +14,5 @@ Use this page to answer the frequently asked question.
     * go to model.py
     * find variable delicious_enable
     * change the default value to False
+= How to use log message when I develop =
+  * use util.getLogger(__name__).debug($msg)
