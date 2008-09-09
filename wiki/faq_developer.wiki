@@ -16,3 +16,14 @@ Use this page to answer the frequently asked question.
     * change the default value to False
 = How to use log message when I develop =
   * use util.getLogger(__name__).debug($msg)
+= i18n =  
+  * *Preconditions*
+    * Make sure you've installed Django. If not, go to _/google_appengine/lib/django_ and run _python setup.py install_.
+    * Add _Python25/Lib/site-packages/django/bin_ to you system variable *Path*. 
+  * *Wrap strings you want to i18n*
+    * In .py file, you could use ,,-,,(). For example, use `response.out.write(_('hello'))` to replace `response.out.write('hello')`. 
+    * In template file, you could use {% trans %}. For example, use `<span>{% trans "hello" %}</span>` to replace `<span>hello</span>`. Don't forget to add {% load i18n %} at the first line of the template file.
+    * More detail information visit [http://docs.djangoproject.com/en/dev/topics/i18n/ here]. 
+  * *Create locale files*
+    * Make sure there is a folder named *locale* under root folder of project. If not, create it. 
+    * Open command line prompt and change to your project folder. Run _make-messages.py -l language_, for example _make-messages.py -l zh_CN_. There is a file named _django.po_ under _proj/locale/zh_CN/LC_MESSAGES_. 
