@@ -23,7 +23,11 @@ Use this page to answer the frequently asked question.
   * *Wrap strings you want to i18n*
     * In .py file, you could use ,,-,,(). For example, use `response.out.write(_('hello'))` to replace `response.out.write('hello')`. 
     * In template file, you could use {% trans %}. For example, use `<span>{% trans "hello" %}</span>` to replace `<span>hello</span>`. Don't forget to add {% load i18n %} at the first line of the template file.
-    * More detail information visit [http://docs.djangoproject.com/en/dev/topics/i18n/ here]. 
+    * Further information visit [http://docs.djangoproject.com/en/dev/topics/i18n/ here]. 
   * *Create locale files*
     * Make sure there is a folder named *locale* under root folder of project. If not, create it. 
-    * Open command line prompt and change to your project folder. Run _make-messages.py -l language_, for example _make-messages.py -l zh_CN_. There is a file named _django.po_ under _proj/locale/zh_CN/LC_MESSAGES_. 
+    * Open command line prompt and change to your project folder. Run _make-messages.py -l language_, for example _make-messages.py -l zh_CN_. This will create a file named _django.po_ under _proj/locale/zh_CN/LC_MESSAGES_. 
+    * There are two way to create .mo file. 
+      * Use [http://www.poedit.net/ poEdit]. Open django.po and edit. Add your translation. Then save. poEdit will create django.mo automatically. 
+      * Use compile-messages.py. Change to project folder in command line prompt, run _compile-messages.py_. Django.mo will be created. 
+    * Once you update source code or template, you could run _make-messages.py -l language_ again to update django.po. Run poEdit/compile-messages.py again to create django.mo. 
