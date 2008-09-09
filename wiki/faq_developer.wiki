@@ -16,7 +16,7 @@ Use this page to answer the frequently asked question.
     * change the default value to False
 = How to use log message when I develop =
   * use util.getLogger(__name__).debug($msg)
-= i18n =  
+= Internationalization =  
   * *Preconditions*
     * Make sure you've installed Django. If not, go to _/google_appengine/lib/django_ and run _python setup.py install_.
     * Add _Python25/Lib/site-packages/django/bin_ to you system variable *Path*. 
@@ -30,4 +30,4 @@ Use this page to answer the frequently asked question.
     * There are two way to create .mo file. 
       * Use [http://www.poedit.net/ poEdit]. Open django.po and edit. Add your translation. Then save. poEdit will create django.mo automatically. 
       * Use compile-messages.py. Change to project folder in command line prompt, run _compile-messages.py_. Django.mo will be created. 
-    * Once you update source code or template, you could run _make-messages.py -l language_ again to update django.po. Run poEdit/compile-messages.py again to create django.mo. 
+    * Once you update source code or template, you should run _make-messages.py -l language_ again to update django.po. Then run poEdit/compile-messages.py again to create django.mo. 
