@@ -26,7 +26,7 @@ Use this page to answer the frequently asked question.
     * Further information visit [http://docs.djangoproject.com/en/dev/topics/i18n/ here]. 
   * *Create locale files*
     * Make sure there is a folder named *locale* under root folder of project. If not, create it. 
-    * Open command line prompt and change to your project folder. Run _make-messages.py -l language_, for example _make-messages.py -l zh_CN_. This will create a file named _django.po_ under _proj/locale/zh_CN/LC_MESSAGES_. 
+    * Open command line prompt and change to your project folder. Run _make-messages.py -l language_, for example _make-messages.py -l zh_CN_. This will create a file named _django.po_ under _proj/locale/zh_CN/LC_MESSAGES_. Make-messages.py will scan all source code files and template to gather strings which need to i18n. 
     * There are two way to create .mo file. 
       * Use [http://www.poedit.net/ poEdit]. Open django.po and edit. Add your translation. Then save. poEdit will create django.mo automatically. 
       * Use compile-messages.py. Change to project folder in command line prompt, run _compile-messages.py_. Django.mo will be created. 
