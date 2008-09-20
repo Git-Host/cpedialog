@@ -13,4 +13,5 @@ Add your content here.
 ||Multi-login & User management || implement openId client and support yahoo & some other openId user login the system || persistence user info in local DB, implement user management feature. || || || Liyang || Liyang, Ping ||
 ||synchronize with blogger.com || using gdata to post entity to blogger. || export to/import from blogger. || || || Liyang || Liyang, A.TNG||
 ||i18n support || language setting in the background.|| transfer all the english words in the page to chinese.|| || || A.TNG || A.TNG||
+||open social || open social container that make user can integrate more apps.|| || || || Widen, Ping || Widen||
 || QA || FT(Function Test) || NFT & Integration Test  || || || Ailivina || Ailivina, A.TNG ||
