@@ -209,17 +209,30 @@ class CPediaLog(db.Model):
 
 
 class Portal(db.Model):
-    page_title = db.StringProperty(default='Main')
-    page_url = db.StringProperty()
     body_size = db.StringProperty()
     sidebar = db.StringProperty()
     body_split = db.StringProperty()
-    weblog = db.ReferenceProperty(Weblog)
 
 
 class Portlet(db.Model):
     title = db.StringProperty(multiline=False)
+    system_reserved = db.BooleanProperty(default = False)
+    content = db.TextProperty()
+    valid = db.BooleanProperty(default = False)
 
+portlets_system_reserved = {
+    "Header":"../main_top.html",
+    "Footer":"../footer.html",
+    "albums":"http://picasaweb.google.com/data/feed/",
+    "blogger":"http://www.blogger.com/feeds/",
+    "base":"http://www.google.com/base/feeds/",
+    "site":"https://www.google.com/webmasters/tools/feeds/",
+    "spreadsheets":"http://spreadsheets.google.com/feeds/",
+    "codesearch":"http://www.google.com/codesearch/feeds/",
+    "finance":"http://finance.google.com/finance/feeds/",
+    "contacts":"http://www.google.com/m8/feeds/",
+    "youtube":"http://gdata.youtube.com/feeds/",
+}
 
 class User(EmailUser):
     fullname = db.StringProperty()

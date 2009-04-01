@@ -10,7 +10,7 @@
     {% for sheet in stylesheets %}
     <link type="text/css" rel="stylesheet" href="{{ sheet.filename }}"/>
     {% endfor %}
-    <script type="text/javascript" src="http://yui.yahooapis.com/3.0.0pr1/build/yui/yui-min.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/3.0.0pr2/build/yui/yui-min.js"></script>
     <style type="text/css">
         #showSlider { position: relative; }
         #sliderbg { background-image: url( /img/bg-fader.gif ); background-repeat: repeat-x; position: relative; top: 10px; height: 40px; width: 209px; }
@@ -41,6 +41,7 @@
 <div id="doc2" class="yui-t5">
     <div id="hd">
         <ul class="list" id="list1">
+            {% include "../main_top.html" %}
         </ul>
     </div>
     <div id="bd">
@@ -66,7 +67,7 @@
 </div>
 <div style="display:none;">
     <div id="drag_main_top" class="div_cpedialog" title="Header">
-    {% include "../main_top.html" %}
+    
     </div>    
     <div id="drag_footer" class="div_cpedialog" title="Footer">
     {% include "../footer.html" %}
