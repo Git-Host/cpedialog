@@ -1,5 +1,4 @@
-//YAHOO.util.Event.onContentReady('menudiv', function() {
-    var renderMenuTable = function() {
+YAHOO.util.Event.onContentReady('menudiv', function() {
         var myColumnDefs = [
             {key:"title",label:"Title",sortable:true,editor:"textbox"},
             {key:"permalink",label:"Permalink",sortable:true,editor:"textbox"},
@@ -134,6 +133,4 @@
                 this.onEventShowCellEditor(ev);
             }
         });
-        ;
-    };
-//});
+}());

@@ -1,5 +1,4 @@
-//YAHOO.util.Event.onContentReady('archivesdiv', function() {
-    var renderArchiveTable = function() {
+YAHOO.util.Event.onContentReady('archivesdiv', function() {
         var DataTable  = YAHOO.widget.DataTable,
             Paginator  = YAHOO.widget.Paginator;
 
@@ -114,7 +113,4 @@
                 this.onEventShowCellEditor(ev);
             }
         });
-
-        ;
-    };
-//});
+}());

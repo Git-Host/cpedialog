@@ -3,33 +3,33 @@
 {% block title %}{{title}} - User Profile {% endblock %}
 {% block blogcontainer %}
 <!-- Dependency -->
-<script src="http://yui.yahooapis.com/2.6.0/build/yahoo/yahoo-min.js"></script>
+<script src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js"></script>
 <!-- Used for Custom Events and event listener bindings -->
-<script src="http://yui.yahooapis.com/2.6.0/build/event/event-min.js"></script>
+<script src="http://yui.yahooapis.com/2.7.0/build/event/event-min.js"></script>
 <!-- Connection Manager -->
-<script src="http://yui.yahooapis.com/2.6.0/build/connection/connection-min.js"></script>
+<script src="http://yui.yahooapis.com/2.7.0/build/connection/connection-min.js"></script>
 <!-- JSON Utility -->
-<script src="http://yui.yahooapis.com/2.6.0/build/json/json-min.js"></script>
+<script src="http://yui.yahooapis.com/2.7.0/build/json/json-min.js"></script>
 
 <!--DataTable-->
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/datatable/assets/skins/sam/datatable.css" />
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/tabview/assets/skins/sam/tabview.css" />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/datatable/assets/skins/sam/datatable.css" />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/tabview/assets/skins/sam/tabview.css" />
 
 
-<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/element/element-beta-min.js"></script>
-<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/datasource/datasource-min.js"></script>
-<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/datatable/datatable-beta-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/element/element-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/datatable/datatable-min.js"></script>
 
 <!--tabview-->
-<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/tabview/tabview-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/tabview/tabview-min.js"></script>
 
 <!--Resizable panel-->
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/container/assets/skins/sam/container.css" />
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/resize/assets/skins/sam/resize.css" />
-<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/utilities/utilities.js"></script>
-<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/container/container.js"></script>
-<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/resize/resize.js"></script>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/skins/sam/container.css" />
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/resize/assets/skins/sam/resize.css" />
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/resize/resize.js"></script>
 
 <script type="text/javascript" src="/jscripts/common/constant.js"></script>
 <script type="text/javascript" src="/jscripts/common/utils.js"></script>
@@ -47,7 +47,7 @@
                 document.getElementById("openIDTable").deleteRow(src_obj.parentNode.parentNode.rowIndex);
                 alert("Delete openID successfully.");
             }
-        }
+        };
         var callback =
         {
             success:deleteOpenIDSuccess,

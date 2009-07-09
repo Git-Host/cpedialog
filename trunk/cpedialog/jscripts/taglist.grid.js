@@ -1,5 +1,4 @@
-//YAHOO.util.Event.onContentReady('tagsdiv',function() {
-    var renderTagTable =  function() {
+YAHOO.util.Event.onContentReady('tagsdiv',function() {
         var DataTable  = YAHOO.widget.DataTable,
             Paginator  = YAHOO.widget.Paginator;
 
@@ -120,7 +119,4 @@
                 this.onEventShowCellEditor(ev);
             }
         });
-
-        ;
-    };
-//});
+}());
