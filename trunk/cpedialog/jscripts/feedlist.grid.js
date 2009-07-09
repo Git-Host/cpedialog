@@ -1,4 +1,4 @@
-YAHOO.util.Event.onContentReady('feeddiv', function() {
+YAHOO.util.Event.onDOMReady (function() {
         var myColumnDefs = [
             {key:"title",label:"Title",sortable:true,editor:"textbox"},
             {key:"feed",label:"Feed URL",sortable:true,editor:"textbox",className:"feedth"},
@@ -131,4 +131,4 @@ YAHOO.util.Event.onContentReady('feeddiv', function() {
                 this.onEventShowCellEditor(ev);
             }
         });
-}());
+});

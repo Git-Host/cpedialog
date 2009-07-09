@@ -1,4 +1,4 @@
-YAHOO.util.Event.onContentReady('menudiv', function() {
+YAHOO.util.Event.onDOMReady(function() {
         var myColumnDefs = [
             {key:"title",label:"Title",sortable:true,editor:"textbox"},
             {key:"permalink",label:"Permalink",sortable:true,editor:"textbox"},
@@ -133,4 +133,4 @@ YAHOO.util.Event.onContentReady('menudiv', function() {
                 this.onEventShowCellEditor(ev);
             }
         });
-}());
+});
