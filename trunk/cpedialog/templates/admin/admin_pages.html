@@ -36,33 +36,7 @@
         Menu List:<br>
         <input type="button" value="Add new Menu" id="add_menu_btn"/>
         <input type="button" value="Delete Menu(s)" id="delete_menu_btn"/>  <br/>       
-            <div id="menudiv">
-            <table id="menutable">
-                <thead><tr>
-                    <th>{% trans "Title" %}</th>
-                    <th>{% trans "Permalink" %}</th>
-                    <th>{% trans "Target" %}</th>
-                    <th>{% trans "Order" %}</th>
-                    <th>{% trans "Valid" %}</th>
-                    <th>{% trans "Id" %}</th>
-                    <th>{% trans "Delete" %}</th>
-                    <th>{% trans "Add" %}</th>
-                </tr></thead>
-                <tbody>
-                {% for entry in menus %}
-                <tr id="menu_{{entry.key.id}}">
-                    <td>{{entry.title}}</td>
-                    <td>{{entry.permalink}}</td>
-                    <td>{{entry.target}}</td>
-                    <td>{{entry.order}}</td>
-                    <td>{{entry.valid}}</td>
-                    <td>{{entry.key.id}}</td>
-                    <td> </td>
-                    <td> </td>
-                </tr>
-                {% endfor%}
-                </tbody>
-            </table>
+            <div id="menudiv" class="full_width">
             </div>
         <br/>
         <input type="button" value="Add Albums link to Menu" id="add_menu_album_btn"/> <br/>

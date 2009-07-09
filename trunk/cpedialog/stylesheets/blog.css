@@ -45,6 +45,9 @@ a:hover {
 .align_center {
         text-align: center !important;
  }
+.full_width {
+        width: 100%;
+ }
 
 #title a, #title a:hover, #title a:link, #title a:visited {
     background-color: inherit !important;
