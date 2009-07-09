@@ -1,4 +1,4 @@
-YAHOO.util.Event.onContentReady('imagesdiv', function() {
+YAHOO.util.Event.onDOMReady(function() {
         var DataTable  = YAHOO.widget.DataTable,
             Paginator  = YAHOO.widget.Paginator;
 
@@ -99,4 +99,4 @@ YAHOO.util.Event.onContentReady('imagesdiv', function() {
                 this.onEventShowCellEditor(ev);
             }
         });
-}());
+});
