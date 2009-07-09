@@ -8,9 +8,10 @@ YAHOO.util.Event.onDOMReady(function() {
         {key:"valid",label:"Valid",sortable:true,editor:"radio",editorOptions:{radioOptions:[true,false],disableBtns:true}}
    ];
 
-    var myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("menutable"));
-    myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+    var myDataSource = new YAHOO.util.DataSource("/rpc?action=GetMenus");
+    myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
     myDataSource.responseSchema = {
+        resultsList: "records",        
         fields: [{key:"title"},{key:"permalink"},{key:"target"},
             {key:"order", parser:YAHOO.util.DataSource.parseNumber},
             {key:"valid"}, {key:"id"}, {key:"key"}
@@ -84,10 +85,8 @@ YAHOO.util.Event.onDOMReady(function() {
     };
 
     var deleteMenus = function() {
-        alert("ttt");
         var selected = myDataTable.getSelectedRows();
         var rset = myDataTable.getRecordSet();
-        alert(selected);
         if (selected.length > 0) {
             if (confirm('Are you sure to delete the menu(s)?')) {
                 YAHOO.util.Connect.asyncRequest('POST', '/rpc?action=DeleteMenu',

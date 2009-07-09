@@ -139,6 +139,22 @@ class RPCHandler(webapp.RequestHandler):
       return True
 
   # for menu inline cell editable table
+  def GetMenus(self):
+      menus_ = Menu.all().order('order')
+      menus = []
+      for menu_ in menus_:
+          menu = datastore.Entity("Menu")
+          menu["title"] = menu_.title
+          menu["permalink"] = menu_.permalink
+          menu["target"] = menu_.target
+          menu["order"] = menu_.order
+          menu["valid"] = menu_.valid
+          menu['key'] = str(menu_.key())
+          menu['id'] = str(menu_.key().id())
+          menus+=[menu]
+      returnValue = {"records":menus}
+      return returnValue
+
   @authorized.role('admin')
   def UpdateMenu(self,request):
       menu = Menu.get_by_id(int(request.get("id")))
@@ -176,6 +192,7 @@ class RPCHandler(webapp.RequestHandler):
   @authorized.role('admin')
   def DeleteMenu(self,request):
       menu_keys = request.get("menu_keys")
+      logging.info(menu_keys)
       menus =  Menu.get(menu_keys.split(","))
       for menu in menus:
           menu.delete()

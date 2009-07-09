@@ -145,10 +145,10 @@ class AdminPagesPage(BaseRequestHandler):
   @authorized.role('admin')
   def get(self):
         pages = Weblog.all().filter('entrytype','page').order('-date')
-        menus = Menu.all().order('order')
+        #menus = Menu.all().order('order')
         template_values = {
             'pages':pages,
-            'menus':menus,
+           # 'menus':menus,
           }
         self.generate('admin/admin_pages.html',template_values)
 
