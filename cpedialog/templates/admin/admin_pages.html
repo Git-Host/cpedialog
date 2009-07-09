@@ -34,8 +34,8 @@
     <legend>{% trans "Menu Admin" %}</legend>
     <div class="fieldsetdiv">
         Menu List:<br>
-        <small>{% trans "Tips:you can double-click the 'Add' column in the table header to add a new record." %}</small>  <br>
-        <small>{% trans "For example: If you want to add a menu '/albums' for system album feature, just add a new record and then set the valid to true." %}</small> 
+        <input type="button" value="Add new Menu" id="add_menu_btn"/>
+        <input type="button" value="Delete Menu(s)" id="delete_menu_btn"/>  <br/>       
             <div id="menudiv">
             <table id="menutable">
                 <thead><tr>
@@ -64,6 +64,11 @@
                 </tbody>
             </table>
             </div>
+        <br/>
+        <input type="button" value="Add Albums link to Menu" id="add_menu_album_btn"/> <br/>
+        <input type="button" value="Add Google Profile link to Menu" id="add_menu_profile_btn"/> <br/>
+        <input type="button" value="Add My Google library link to Menu" id="add_menu_book_btn"/> <br/> 
+
     	</div>
 </fieldset>
 

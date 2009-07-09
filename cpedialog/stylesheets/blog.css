@@ -42,6 +42,10 @@ a:hover {
     padding-left: 10px;
 }
 
+.align_center {
+        text-align: center !important;
+ }
+
 #title a, #title a:hover, #title a:link, #title a:visited {
     background-color: inherit !important;
     border: none !important;
