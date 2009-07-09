@@ -175,8 +175,10 @@ class RPCHandler(webapp.RequestHandler):
 
   @authorized.role('admin')
   def DeleteMenu(self,request):
-      menu = Menu.get_by_id(int(request.get("id")))
-      menu.delete()
+      menu_keys = request.get("menu_keys")
+      menus =  Menu.get(menu_keys.split(","))
+      for menu in menus:
+          menu.delete()
       util.flushMenuList()
       return True
 

@@ -9,12 +9,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
 
             var myBuildUrl = function(datatable, record) {
                 var url = '';
-                var cols = datatable.getColumnSet().keys;
-                for (var i = 0; i < cols.length; i++) {
-                    if (cols[i].isPrimaryKey) {
-                        url += '&' + cols[i].key + '=' + encodeURIComponent(record.getData(cols[i].key));
-                    }
-                }
+                url += '&id=' + encodeURIComponent(record.getData("id"));
                 return url;
             };
 

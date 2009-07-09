@@ -1,136 +1,116 @@
 YAHOO.util.Event.onDOMReady(function() {
-        var myColumnDefs = [
-            {key:"title",label:"Title",sortable:true,editor:"textbox"},
-            {key:"permalink",label:"Permalink",sortable:true,editor:"textbox"},
-            {key:"target",label:"Target",sortable:true,editor:"dropdown",editorOptions:{dropdownOptions:["_self","_blank","_parent","_top"]}},
-            {key:"order",label:"Order",formatter:YAHOO.widget.DataTable.formatNumber,sortable:true,editor:"textbox",editorOptions:{validator:YAHOO.widget.DataTable.validateNumber}},
-            {key:"valid",label:"Valid",sortable:true,editor:"radio",editorOptions:{radioOptions:[true,false],disableBtns:true}},
-            {key:"id",label:"Id",sortable:true,isPrimaryKey:true,hidden:true},
-            {key:"delete",label:"Delete",action:'delete',formatter:function(elCell) {
-                elCell.innerHTML = '<img src="/img/delete.gif" title="delete row" />';
-                elCell.style.cursor = 'pointer';
-            }},
-            {key:"insert",label:"Add",action:'insert',formatter:function(elCell) {
-                elCell.innerHTML = '<img src="/img/insert.png" title="insert new row" />';
-                elCell.style.cursor = 'pointer';
-            }}
-        ];
+    var myColumnDefs = [
+        {key:"check",resizeable:true,label:"",formatter:YAHOO.widget.DataTable.formatCheckbox,className:"align_center"},
+        {key:"title",label:"Title",sortable:true,editor:"textbox"},
+        {key:"permalink",label:"Permalink",sortable:true,editor:"textbox"},
+        {key:"target",label:"Target",sortable:true,editor:"dropdown",editorOptions:{dropdownOptions:["_self","_blank","_parent","_top"]}},
+        {key:"order",label:"Order",formatter:YAHOO.widget.DataTable.formatNumber,sortable:true,editor:"textbox",editorOptions:{validator:YAHOO.widget.DataTable.validateNumber}},
+        {key:"valid",label:"Valid",sortable:true,editor:"radio",editorOptions:{radioOptions:[true,false],disableBtns:true}}
+   ];
 
-        this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("menutable"));
-        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
-        this.myDataSource.responseSchema = {
-            fields: [{key:"title"},{key:"permalink"},{key:"target"},
-                {key:"order", parser:YAHOO.util.DataSource.parseNumber},
-                {key:"valid"}, {key:"id"}, {key:"delete"}, {key:"insert"}
-            ]
-        };
-        this.myDataTable = new YAHOO.widget.DataTable("menudiv", myColumnDefs, this.myDataSource,
-        { sortedBy:{key:"order",dir:"asc"}});
+    var myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("menutable"));
+    myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+    myDataSource.responseSchema = {
+        fields: [{key:"title"},{key:"permalink"},{key:"target"},
+            {key:"order", parser:YAHOO.util.DataSource.parseNumber},
+            {key:"valid"}, {key:"id"}, {key:"key"}
+        ]
+    };
+    var myDataTable = new YAHOO.widget.DataTable("menudiv", myColumnDefs, myDataSource,
+    { sortedBy:{key:"order",dir:"asc"}});
 
-        this.myDataTable.updateMethod = "UpdateMenu";
+    myDataTable.updateMethod = "UpdateMenu";
 
-        // Set up editing flow
-        this.highlightEditableCell = function(oArgs) {
-            var elCell = oArgs.target;
-            if (YAHOO.util.Dom.hasClass(elCell, "yui-dt-editable")) {
-                this.highlightCell(elCell);
+    // Set up editing flow
+    this.highlightEditableCell = function(oArgs) {
+        var elCell = oArgs.target;
+        if (YAHOO.util.Dom.hasClass(elCell, "yui-dt-editable")) {
+            this.highlightCell(elCell);
+        }
+    };
+    myDataTable.subscribe("cellMouseoverEvent", this.highlightEditableCell);
+    myDataTable.subscribe("cellMouseoutEvent", myDataTable.onEventUnhighlightCell);
+    myDataTable.subscribe("cellClickEvent", myDataTable.onEventShowCellEditor);
+    
+    // Selects any cell that receives a checkbox click
+    myDataTable.subscribe("checkboxClickEvent", function(oArgs) {
+        var elCheckbox = oArgs.target;
+        var elRow = this.getTrEl(elCheckbox);
+        if (elCheckbox.checked) {
+            this.selectRow(elRow);
+        } else {
+            this.unselectRow(elRow);
+        }
+    });
+
+    // Hook into custom event to customize save-flow of "radio" editor
+    myDataTable.subscribe("editorUpdateEvent", function(oArgs) {
+        if (oArgs.editor.column.key === "valid") {
+            this.saveCellEditor();
+        }
+    });
+    myDataTable.subscribe("editorBlurEvent", function(oArgs) {
+        this.cancelCellEditor();
+    });
+
+    var addMenu = function() {
+        YAHOO.util.Connect.asyncRequest('POST', '/rpc?action=AddMenu',
+        {
+            success: function (o) {
+                var index = myDataTable.getRecordSet().getLength();
+                var record = YAHOO.lang.JSON.parse(o.responseText);
+                myDataTable.addRow(record, index);
+            },
+            failure: function (o) {
+                alert(o.statusText);
+            },
+            scope:this
+        }
+                );
+    };
+
+    YAHOO.util.Event.addListener("add_menu_btn", "click", addMenu);
+
+    var selectedMenuIds = function(recordSet, selectedRows) {
+        var _keys = "menu_keys=";
+        for (var x = 0, length = selectedRows.length; x < length; x++) {
+            var record = recordSet.getRecord(selectedRows[x]);
+            _keys += record.getData().key;
+            if (x < length - 1) {
+                _keys += ",";
             }
-        };
-        this.myDataTable.subscribe("cellMouseoverEvent", this.highlightEditableCell);
-        this.myDataTable.subscribe("cellMouseoutEvent", this.myDataTable.onEventUnhighlightCell);
-        //this.myDataTable.subscribe("cellClickEvent", this.myDataTable.onEventShowCellEditor);
+        }
+        return _keys;
+    };
 
-        // Hook into custom event to customize save-flow of "radio" editor
-        this.myDataTable.subscribe("editorUpdateEvent", function(oArgs) {
-            if (oArgs.editor.column.key === "valid") {
-                this.saveCellEditor();
-            }
-        });
-        this.myDataTable.subscribe("editorBlurEvent", function(oArgs) {
-            this.cancelCellEditor();
-        });
-
-        var myBuildUrl = function(datatable, record) {
-            var url = '';
-            var cols = datatable.getColumnSet().keys;
-            for (var i = 0; i < cols.length; i++) {
-                if (cols[i].isPrimaryKey) {
-                    url += '&' + cols[i].key + '=' + encodeURIComponent(record.getData(cols[i].key));
-                }
-            }
-            return url;
-        };
-
-        this.myDataTable.subscribe('cellClickEvent', function(ev) {
-            var target = YAHOO.util.Event.getTarget(ev);
-            var column = this.getColumn(target);
-            if (column.action == 'insert') {
-                if (confirm('Are you sure to add a new menu?')) {
-                    YAHOO.util.Connect.asyncRequest('POST', '/rpc?action=AddMenu',
-                    {
-                        success: function (o) {
-                            var record = YAHOO.lang.JSON.parse(o.responseText);
-                            this.addRow(record, this.getRecordIndex(target));
-                        },
-                        failure: function (o) {
-                            alert(o.statusText);
-                        },
-                        scope:this
-                    }
-                            );
-                }
-            } else {
-                this.onEventShowCellEditor(ev);
-            }
-        });
-
-        this.myDataTable.subscribe('theadLabelDblclickEvent', function(ev) {
-            var target = YAHOO.util.Event.getTarget(ev);
-            //var column = this.getTheadEl(target);
-            //if (column.label == 'insert') {
-            if (confirm('Are you sure to add a new menu?')) {
-                YAHOO.util.Connect.asyncRequest('POST', '/rpc?action=AddMenu',
+    var deleteMenus = function() {
+        alert("ttt");
+        var selected = myDataTable.getSelectedRows();
+        var rset = myDataTable.getRecordSet();
+        alert(selected);
+        if (selected.length > 0) {
+            if (confirm('Are you sure to delete the menu(s)?')) {
+                YAHOO.util.Connect.asyncRequest('POST', '/rpc?action=DeleteMenu',
                 {
                     success: function (o) {
-                        var record = YAHOO.lang.JSON.parse(o.responseText);
-                        this.addRow(record, this.getRecordIndex(target));
+                        if (o.responseText == 'true') {
+                            for (var x = 0; x < selected.length; x++) {
+                                myDataTable.deleteRow(rset.getRecordIndex(rset.getRecord(selected[x])));
+                            }
+                        } else {
+                            alert(o.responseText);
+                        }
                     },
                     failure: function (o) {
                         alert(o.statusText);
                     },
                     scope:this
-                }
-                );
+                }, selectedMenuIds(rset, selected)
+                        );
             }
-            //} else {
-            //    this.onEventShowCellEditor(ev);
-            //}
-        });
-
-        this.myDataTable.subscribe('cellClickEvent', function(ev) {
-            var target = YAHOO.util.Event.getTarget(ev);
-            var column = this.getColumn(target);
-            if (column.action == 'delete') {
-                if (confirm('Are you sure to delete the menu?')) {
-                    var record = this.getRecord(target);
-                    YAHOO.util.Connect.asyncRequest('POST', '/rpc?action=DeleteMenu' + myBuildUrl(this, record),
-                    {
-                        success: function (o) {
-                            if (o.responseText == 'true') {
-                                this.deleteRow(target);
-                            } else {
-                                alert(o.responseText);
-                            }
-                        },
-                        failure: function (o) {
-                            alert(o.statusText);
-                        },
-                        scope:this
-                    }
-                            );
-                }
-            } else {
-                this.onEventShowCellEditor(ev);
-            }
-        });
+        } else {
+            alert("Please select at least one Menu to delete.");
+        }
+    };
+    YAHOO.util.Event.addListener("delete_menu_btn", "click", deleteMenus);
 });
