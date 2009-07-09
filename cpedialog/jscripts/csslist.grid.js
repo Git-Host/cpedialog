@@ -1,5 +1,4 @@
-//YAHOO.util.Event.onContentReady('imagesdiv', function() {
-    var renderCSSTable = function() {
+YAHOO.util.Event.onContentReady('imagesdiv', function() {
         var DataTable  = YAHOO.widget.DataTable,
             Paginator  = YAHOO.widget.Paginator;
 
@@ -100,10 +99,7 @@
                 this.onEventShowCellEditor(ev);
             }
         });
-
-        ;
-    };
-//});
+}());
 
 function uploadCSSFile() {
     YAHOO.util.Connect.setForm('css_upload', true);
