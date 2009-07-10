@@ -16,33 +16,280 @@
 
 __author__ = 'Ping Chen'
 
-
 import pickle
 
-from google.appengine.ext import db
-from google.appengine.ext import search
 import logging
 import datetime
 import urllib
+import random
 import cgi
 import simplejson
 
+from google.appengine.ext import search
+from google.appengine.api import memcache
+from google.appengine.ext import db
+from google.appengine.api import users
+from google.appengine.api import datastore_types
+
 from cpedia.auth.models import EmailUser
 
+def to_dict(model_obj, attr_list, init_dict_func=None):
+    """Converts Model properties into various formats.
 
-class Archive(db.Model):
+    Supply a init_dict_func function that populates a
+    dictionary with values.  In the case of db.Model, this
+    would be something like _to_entity().  You may also
+    designate more complex properties in attr_list, like
+      "counter.count"
+    Each object in the chain will be retrieved.  In the
+    example above, the counter object will be retrieved
+    from model_obj's properties.  And then counter.count
+    will be retrieved.  The value returned will have a
+    key set to the last name in the chain, e.g. 'count'
+    in the above example.
+    """
+    values = {}
+    init_dict_func(values)
+    for token in attr_list:
+        elems = token.split('.')
+        value = getattr(model_obj, elems[0])
+        for elem in elems[1:]:
+            value = getattr(value, elem)
+        values[elems[-1]] = value
+    if model_obj.is_saved():
+        values['key'] =  str(model_obj.key())
+    return values
+
+# Format for conversion of datetime to JSON
+DATE_FORMAT = "%Y-%m-%d"
+TIME_FORMAT = "%H:%M:%S"
+
+def replace_datastore_types(entity):
+    """Replaces any datastore types in a dictionary with standard types.
+
+    Passed-in entities are assumed to be dictionaries with values that
+    can be at most a single list level.  These transformations are made:
+      datetime.datetime      -> string
+      db.Key                 -> key hash suitable for regenerating key
+      users.User             -> dict with 'nickname' and 'email'
+    TODO -- GeoPt when needed
+    """
+    def get_replacement(value):
+        if isinstance(value, datetime.datetime):
+            return value.strftime("%s %s" % (DATE_FORMAT, TIME_FORMAT))
+        elif isinstance(value, datetime.date):
+            return value.strftime(DATE_FORMAT)
+        elif isinstance(value, datetime.time):
+            return value.strftime(TIME_FORMAT)
+        elif isinstance(value, datastore_types.Key):
+            return str(value)
+        elif isinstance(value, users.User):
+            return { 'nickname': value.nickname(),
+                     'email': value.email(),
+                     'user_id':value.user_id() }
+        else:
+            return None
+
+    for key, value in entity.iteritems():
+        if isinstance(value, list):
+            new_list = []
+            for item in value:
+                new_value = get_replacement(item)
+                new_list.append(new_value or item)
+            entity[key] = new_list
+        else:
+            new_value = get_replacement(value)
+            if new_value:
+                entity[key] = new_value
+
+class SerializableModel(db.Model):
+    """Extends Model to have json and possibly other serializations
+
+    Use the class variable 'json_does_not_include' to declare properties
+    that should *not* be included in json serialization.
+    TODO -- Complete round-tripping
+    """
+    json_does_not_include = []
+
+    def to_json(self, attr_list=[]):
+        def to_entity(entity):
+            """Convert datastore types in entity to
+               JSON-friendly structures."""
+            self._to_entity(entity)
+            for skipped_property in self.__class__.json_does_not_include:
+                del entity[skipped_property]
+            replace_datastore_types(entity)
+        values = to_dict(self, attr_list, to_entity)
+        #return simplejson.dumps(values)   #simplejson.dumps will be applied when do the rpc call.
+        return values
+
+class MemcachedModel(SerializableModel):
+#All the query to this model need to be self-stored.
+#The dict need to set a unique key, and the value must be db.Query() object.
+    querys = {}
+
+    def delete_cached_list(self):
+        memcache_list_keys = self.__class__.memcache_list_key()
+        if memcache_list_keys is not None and len(memcache_list_keys) > 0:
+            memcache.delete_multi(memcache_list_keys)
+
+    def delete(self):
+        super(MemcachedModel, self).delete()
+        self.delete_cached_list()
+        if self.is_saved():
+            memcache.delete(self.__class__.memcache_object_key(self.key()))
+
+    def put(self):
+        key = super(MemcachedModel, self).put()
+        self.delete_cached_list()
+        memcache.set(self.__class__.memcache_object_key(key),self)
+        return key
+
+    @classmethod
+    def get_or_insert(cls, key_name, **kwds):
+        obj = super(MemcachedModel, cls).get_or_insert(key_name, **kwds)
+        self.delete_cached_list()
+        return obj
+
+    @classmethod
+    def memcache_list_key(cls):
+        return [cls.__name__ +"_list_" +  query_key  for query_key in cls.querys]
+
+    @classmethod
+    def memcache_object_key(cls,primary_key):
+        return cls.__name__ + '_' + str(primary_key)
+
+    @classmethod
+    def get_cached(cls,primary_key,nocache=False):
+        key_ = cls.__name__ + "_" + primary_key
+        try:
+            result = memcache.get(key_)
+        except Exception:
+            result = None
+        if nocache or result is None:
+            result = cls.get(primary_key)
+            memcache.set(key=key_, value=result)
+        return result
+
+    @classmethod
+    def get_cached_list(cls, query_key,params=[],nocache=False):
+        """Return the cached list with the specified key.
+        User must keep the key unique, and the query must
+        be same instance of the class .
+        """
+        key_ = cls.__name__ +"_list_" + query_key
+        try:
+            result = memcache.get(key_)
+        except Exception:
+            result = None
+        if nocache or result is None:
+            if query_key in cls.querys:
+                params_ = [cls.querys[query_key]] + params
+                query = db.GqlQuery(*params_ )
+                result = query.fetch(1000)
+                memcache.add(key=key_, value=result)
+            else:
+                raise Exception("Query for object list does not define in the Class Model.")
+        return result
+
+class Counter(object):
+    """A counter using sharded writes to prevent contentions.
+
+    Should be used for counters that handle a lot of concurrent use.
+    Follows pattern described in Google I/O talk:
+        http://sites.google.com/site/io/building-scalable-web-applications-with-google-app-engine
+
+    Memcache is used for caching counts, although you can force
+    non-cached counts.
+
+    Usage:
+        hits = Counter('hits')
+        hits.increment()
+        hits.get_count()
+        hits.get_count(nocache=True)  # Forces non-cached count.
+        hits.decrement()
+    """
+    MAX_SHARDS = 50
+
+    def __init__(self, name, num_shards=5, cache_time=30):
+        self.name = name
+        self.num_shards = min(num_shards, Counter.MAX_SHARDS)
+        self.cache_time = cache_time
+
+    def delete(self):
+        q = db.Query(CounterShard).filter('name =', self.name)
+        # Need to use MAX_SHARDS since current number of shards
+        # may be smaller than previous value.
+        shards = q.fetch(limit=Counter.MAX_SHARDS)
+        for shard in shards:
+            shard.delete()
+
+    def memcache_key(self):
+        return 'Counter' + self.name
+
+    def get_count(self, nocache=False):
+        total = memcache.get(self.memcache_key())
+        if nocache or total is None:
+            total = 0
+            q = db.Query(CounterShard).filter('name =', self.name)
+            shards = q.fetch(limit=Counter.MAX_SHARDS)
+            for shard in shards:
+                total += shard.count
+            memcache.add(self.memcache_key(), str(total),
+                         self.cache_time)
+            return total
+        else:
+            logging.debug("Using cache on %s = %s", self.name, total)
+            return int(total)
+    count = property(get_count)
+
+    def increment(self):
+        CounterShard.increment(self.name, self.num_shards)
+        return memcache.incr(self.memcache_key())
+
+    def decrement(self):
+        CounterShard.increment(self.name, self.num_shards,
+                               downward=True)
+        return memcache.decr(self.memcache_key())
+
+class CounterShard(db.Model):
+    name = db.StringProperty(required=True)
+    count = db.IntegerProperty(default=0)
+
+    @classmethod
+    def increment(cls, name, num_shards, downward=False):
+        index = random.randint(1, num_shards)
+        shard_key_name = 'Shard' + name + str(index)
+        def get_or_create_shard():
+            shard = CounterShard.get_by_key_name(shard_key_name)
+            if shard is None:
+                shard = CounterShard(key_name=shard_key_name,
+                                     name=name)
+            if downward:
+                shard.count -= 1
+            else:
+                shard.count += 1
+            key = shard.put()
+        try:
+            db.run_in_transaction(get_or_create_shard)
+            return True
+        except db.TransactionFailedError():
+            logging.error("CounterShard (%s, %d) - can't increment",
+                          name, num_shards)
+            return False
+
+class Archive(SerializableModel):
     monthyear = db.StringProperty(multiline=False)
     """July 2008"""
     weblogcount = db.IntegerProperty(default=0)
     date = db.DateTimeProperty(auto_now_add=True)
 
-class Tag(db.Model):
+class Tag(SerializableModel):
     tag = db.StringProperty(multiline=False)
     entrycount = db.IntegerProperty(default=0)
     valid = db.BooleanProperty(default = True)
 
-
-class Weblog(db.Model):
+class Weblog(SerializableModel):
     permalink = db.StringProperty()
     title = db.StringProperty()
     content = db.TextProperty()
@@ -57,7 +304,7 @@ class Weblog(db.Model):
     tags = db.ListProperty(db.Category)
     monthyear = db.StringProperty(multiline=False)
     entrytype = db.StringProperty(multiline=False,default='post',choices=[
-        'post','page'])
+            'post','page'])
     _weblogId = db.IntegerProperty()   ##for data migration from the mysql system
     assoc_dict = db.BlobProperty()     # Pickled dict for sidelinks, associated Amazon items, etc.
 
@@ -76,11 +323,11 @@ class Weblog(db.Model):
     def get_tags(self):
         '''comma delimted list of tags'''
         return ','.join([urllib.unquote(tag.encode('utf8')) for tag in self.tags])
-  
+
     def set_tags(self, tags):
         if tags:
             self.tags = [db.Category(urllib.quote(tag.strip().encode('utf8'))) for tag in tags.split(',')]
-  
+
     tags_commas = property(get_tags,set_tags)
 
     #for data migration
@@ -94,15 +341,15 @@ class Weblog(db.Model):
             archive.put()
         else:
             if not update:
-                # ratchet up the count
+            # ratchet up the count
                 archive[0].weblogcount += 1
                 archive[0].put()
 
     def update_tags(self,update):
         """Update Tag cloud info"""
-        if self.tags: 
+        if self.tags:
             for tag_ in self.tags:
-                #tag_ = tag.encode('utf8')
+            #tag_ = tag.encode('utf8')
                 tags = Tag.all().filter('tag',tag_).fetch(10)
                 if tags == []:
                     tagnew = Tag(tag=tag_,entrycount=1)
@@ -126,8 +373,7 @@ class Weblog(db.Model):
             self.update_archive(True)
         self.put()
 
-
-class WeblogReactions(db.Model):
+class WeblogReactions(SerializableModel):
     weblog = db.ReferenceProperty(Weblog)
     user = db.StringProperty()
     date = db.DateTimeProperty(auto_now_add=True)
@@ -147,16 +393,14 @@ class WeblogReactions(db.Model):
             self.weblog.commentcount += 1
             self.weblog.put()
 
-
 class AuthSubStoredToken(db.Model):
     user_email = db.StringProperty(required=True)
     target_service = db.StringProperty(multiline=False,default='base',choices=[
-          'apps','base','blogger','calendar','codesearch','contacts','docs',
-          'albums','spreadsheet','youtube'])
+            'apps','base','blogger','calendar','codesearch','contacts','docs',
+            'albums','spreadsheet','youtube'])
     session_token = db.StringProperty(required=True)
 
-
-class CPediaLog(db.Model):
+class CPediaLog(SerializableModel):
     title = db.StringProperty(multiline=False, default='Your Blog Title')
     author = db.StringProperty(multiline=False, default='Your Blog Author')
     email = db.StringProperty(multiline=False, default='')
@@ -167,24 +411,25 @@ class CPediaLog(db.Model):
     num_post_per_page = db.IntegerProperty(default=8)
     cache_time = db.IntegerProperty(default=0)
     debug = db.BooleanProperty(default = True)
- 
+
     recaptcha_enable = db.BooleanProperty(default = False)
     recaptcha_public_key = db.StringProperty(multiline=False,default='')
     recaptcha_private_key = db.StringProperty(multiline=False,default='')
- 
+
     delicious_enable = db.BooleanProperty(default = False)
     delicious_username = db.StringProperty(multiline=False, default='cpedia')
- 
+
     google_ajax_feed_enable = db.BooleanProperty(default = True)
     google_ajax_feed_key = db.StringProperty(multiline=False,
-       default='ABQIAAAAOY_c0tDeN-DKUM-NTZldZhQG0TqTy2vJ9mpRzeM1HVuOe9SdDRSieJccw-q7dBZF5aGxGJ-oZDyf5Q')  #this key only for support from google. It's optional.
+                                             default='ABQIAAAAOY_c0tDeN-DKUM-NTZldZhQG0TqTy2vJ9mpRzeM1HVuOe9SdDRSieJccw-q7dBZF5aGxGJ-oZDyf5Q'
+            )  #this key only for support from google. It's optional.
     google_ajax_feed_result_num = db.IntegerProperty(default = 10)
     google_ajax_feed_title = db.StringProperty(multiline=False,default='Your feeds')
-    
+
     host_ip = db.StringProperty()
     host_domain = db.StringProperty()
     default = db.BooleanProperty(default = True)
- 
+
     def get_logo_images_list(self):
         '''space delimted list of tags'''
         if not self.logo_images:
@@ -207,31 +452,29 @@ class CPediaLog(db.Model):
 
     logo_images_space = property(get_logo_images,set_logo_images)
 
-
-class Portal(db.Model):
+class Portal(SerializableModel):
     body_size = db.StringProperty()
     sidebar = db.StringProperty()
     body_split = db.StringProperty()
 
-
-class Portlet(db.Model):
+class Portlet(SerializableModel):
     title = db.StringProperty(multiline=False)
     system_reserved = db.BooleanProperty(default = False)
     content = db.TextProperty()
     valid = db.BooleanProperty(default = False)
 
 portlets_system_reserved = {
-    "Header":"../main_top.html",
-    "Footer":"../footer.html",
-    "albums":"http://picasaweb.google.com/data/feed/",
-    "blogger":"http://www.blogger.com/feeds/",
-    "base":"http://www.google.com/base/feeds/",
-    "site":"https://www.google.com/webmasters/tools/feeds/",
-    "spreadsheets":"http://spreadsheets.google.com/feeds/",
-    "codesearch":"http://www.google.com/codesearch/feeds/",
-    "finance":"http://finance.google.com/finance/feeds/",
-    "contacts":"http://www.google.com/m8/feeds/",
-    "youtube":"http://gdata.youtube.com/feeds/",
+"Header":"../main_top.html",
+"Footer":"../footer.html",
+"albums":"http://picasaweb.google.com/data/feed/",
+"blogger":"http://www.blogger.com/feeds/",
+"base":"http://www.google.com/base/feeds/",
+"site":"https://www.google.com/webmasters/tools/feeds/",
+"spreadsheets":"http://spreadsheets.google.com/feeds/",
+"codesearch":"http://www.google.com/codesearch/feeds/",
+"finance":"http://finance.google.com/finance/feeds/",
+"contacts":"http://www.google.com/m8/feeds/",
+"youtube":"http://gdata.youtube.com/feeds/",
 }
 
 class User(EmailUser):
@@ -273,11 +516,11 @@ class User(EmailUser):
     #make User object can be adaptable with google user object
     def nickname(self):
         return self.username
-    
+
     nickname = property(get_nickname,set_nickname)
     firstname = property(get_firstname,set_firstname)
     lastname = property(get_lastname,set_lastname)
-    
+
 
 #User session will be control by cpedia.session.sessions
 class UserSession(db.Model):
@@ -301,59 +544,39 @@ class UserSessionData(db.Model):
     keyname = db.StringProperty()
     content = db.BlobProperty()
 
-
-class Album(db.Model):
+class Album(SerializableModel):
     album_username = db.StringProperty()
     owner = db.UserProperty()
     date = db.DateTimeProperty(auto_now_add=True)
     access = db.StringProperty(multiline=False,default='public',choices=[
-        'public','private','login'])     #public: all can access the album; private:only the owner can access;
-                                         #login:login user can access.
+            'public','private','login'])     #public: all can access the album; private:only the owner can access;
+    #login:login user can access.
     album_type = db.StringProperty(multiline=False,default='public',choices=[
-        'public','private'])    #private album need to authorize by user and store the session token.
+            'public','private'])    #private album need to authorize by user and store the session token.
     order = db.IntegerProperty()
     valid = db.BooleanProperty(default = True)
 
-class Menu(db.Model):
+class Menu(SerializableModel):
     title = db.StringProperty()
-    permalink = db.StringProperty()          
+    permalink = db.StringProperty()
     target = db.StringProperty(multiline=False,default='_self',choices=[
-        '_self','_blank','_parent','_top'])
+            '_self','_blank','_parent','_top'])
     order = db.IntegerProperty()
     valid = db.BooleanProperty(default = True)
 
     def full_permalink(self):
         return  '/' + self.permalink
 
-
-class Images(db.Model):
+class Images(SerializableModel):
     uploader = db.UserProperty()
     image = db.BlobProperty()
     date = db.DateTimeProperty(auto_now_add=True)
 
-
-class Greeting(db.Model):
-    date = db.DateTimeProperty(auto_now_add=True)
-    user = db.StringProperty()
-    author = db.UserProperty()
-    content = db.StringProperty()
-    valid = db.BooleanProperty(default = True)
-
-
-class FavouriteSite(db.Model):
-    title = db.StringProperty()
-    permalink = db.StringProperty()
-    target = db.StringProperty(multiline=False,default='_self',choices=[
-        '_self','_blank','_parent','_top'])
-    order = db.IntegerProperty()
-    valid = db.BooleanProperty(default = True)
-
-class Feeds(db.Model):
+class Feeds(SerializableModel):
     title = db.StringProperty()
     feed = db.StringProperty()
     order = db.IntegerProperty()
     valid = db.BooleanProperty(default = True)
-
 
 class DeliciousPost(object):
     def __init__(self, item):
@@ -362,7 +585,8 @@ class DeliciousPost(object):
         self.description = item.get("n", "")
         self.tags = item["t"]
 
-class CSSFile(db.Model):
+class CSSFile(SerializableModel):
     filename = db.StringProperty()
     contents = db.StringProperty(multiline=True)
     default = db.BooleanProperty(default=False)
+    
