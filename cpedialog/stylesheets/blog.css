@@ -45,9 +45,10 @@ a:hover {
 .align_center {
         text-align: center !important;
  }
-.full_width {
-        width: 100%;
- }
+
+.yui-skin-sam .yui-dt table{
+   width:100%
+}
 
 #title a, #title a:hover, #title a:link, #title a:visited {
     background-color: inherit !important;
@@ -218,7 +219,7 @@ a:hover {
     text-transform: uppercase;
 }
 
-#login, #tagclound, #greeting {
+#login, #tagclound {
     border-bottom: 1px dashed #b2b2b2;
     padding: 10px 0.5em;
 }
