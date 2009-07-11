@@ -27,6 +27,7 @@
         {% include "main_top.html" %}
     </div>
     <br>
+    {% block main_body %}
     <div id="bd">
         <div id="yui-main">
             <div class="yui-b">
@@ -48,6 +49,7 @@
             {% include "menu_right_right.html" %}
         </div>
     </div>
+    {% endblock %}
     <div id="ft">
         {% include "footer.html" %}
     </div>
