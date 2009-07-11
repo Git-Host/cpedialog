@@ -3,17 +3,24 @@
 {% block title %}{{title}} - My Google Profile{% endblock %}
 {% block header %}
 <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js" ></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/get/get-min.js" ></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/utilities/utilities.js" ></script>
 <script type="text/javascript" src="/jscripts/yui-plugin-dispatcher-min.js"></script>
 {% endblock %}
-{% block blogcontainer %}
+{% block main_body %}
 <script type="text/javascript">
-    (function() {
-         var profile_url = "http://www.google.com/profiles/{{username}}";
-         YAHOO.plugin.Dispatcher.fetch ( 'profile_content', profile_url );
-    })();
+    YAHOO.util.Event.onDOMReady(function() {
+        var profile_content = YAHOO.util.Dom.get("profile_content");
+        //set all the link in profile content to open in new window.
+        var profile_links = profile_content.getElementsByTagName("a");
+        for(var i=0;i<profile_links.length;i++){
+           profile_links[i].target = "_blank"; 
+        }
+        //YAHOO.plugin.Dispatcher.process('profile_content', profile_content);        
+    });
 </script>
-<div class="yui-g" id="albumsdiv">
+<div class="yui-g">
 
     {% if error %}
     <div class="error">
@@ -22,6 +29,9 @@
     {% endif %}
 
     <div id="profile_content">
+        {% if profile_content %}
+        {{profile_content}}
+        {% endif %}
     </div>
 </div>
 {% endblock %}
