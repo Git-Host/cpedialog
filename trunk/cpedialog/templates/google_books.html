@@ -1,12 +1,25 @@
 {% load i18n %}
 {% extends "main.html" %}
-{% block title %}{{title}} - My Google Profile{% endblock %}
+{% block title %}{{title}} - My Google Books Library{% endblock %}
 {% block blogcontainer %}
 <script type="text/javascript">
     (function() {
     })();
 </script>
-<div class="yui-g" id="albumsdiv">
+<style type="text/css">
+    .rsi {
+        margin-bottom: 5px;
+        margin-left: -10px;
+        margin-top: 15px;
+    }
+    .coverdstd {
+        padding: 8px 8px 0 18px;
+        text-align: center;
+        vertical-align: top;
+        width: 85px;
+    }
+</style>
+<div class="yui-g">
 
     {% if error %}
     <div class="error">
@@ -14,7 +27,51 @@
     </div>
     {% endif %}
 
-    <div id="profile_content">
+    <div id="books_content">
+        {% for book in books%}
+        <table cellspacing="0" cellpadding="0" border="0" class="rsi">
+            <tbody>
+            <tr>
+                <td align="center" class="coverdstd">
+                    <div class="dsbwrap">
+                        <div class="dsb">
+                            <div class="cornert"/>
+                            <div class="cornerb"/>
+                            <div class="casmall"><a
+                                    href="http://books.google.com/books?id={{book.identifiers}}&amp;printsec=frontcover&amp;lr="><img
+                                    width="60" height="80" border="0"
+                                    src="{{book.thumbnail}}"
+                                    dir="ltr" title="{{book.title}}" class="coverthumb"
+                                    alt="{{book.title}}"/></a></div>
+                        </div>
+                    </div>
+                    <div class="starrating">
+<span class="sbsentry">
+<span id="rtg_spn_dEYKR-WUIh8C" class="sbs">
+<span class="readonly">
+</span>
+</span>
+</span>
+                    </div>
+                </td>
+                <td valign="top">
+                    <div class="resbdy"><h2 class="resbdy"><a
+                            href="http://books.google.com/books?id=dEYKR-WUIh8C&amp;printsec=frontcover&amp;lr="><span
+                            dir="ltr">Kaplan GRE Exam Vocabulary in a Box</span>‎</a></h2><font size="-1"><span
+                            style="line-height: 1.2em;"><span class="ln2">by Kaplan, Carly Schnur - <a class="link_aux"
+                                                                                                       href="http://books.google.com/books?q=+subject:%22Study+Aids%22&amp;lr=">Study
+                        Aids</a> - 2007 - 1004 pages - <span class="lim">Limited preview</span></span><br/><div
+                            dir="ltr" class="snippet sa">-500 flashcards covering the most-tested GRE vocabulary
+                        words-Sample sentences provide the words in context-Also includes synonyms and a pronunciation
+                        key
+                    </div>
+</span></font></div>
+                </td>
+                <td align="right"/>
+            </tr>
+            </tbody>
+        </table>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
