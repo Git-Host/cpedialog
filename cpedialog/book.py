@@ -16,9 +16,9 @@
 
 __author__ = 'Ping Chen'
 
-import gdata.photos.service
-import gdata.media
-import gdata.geo
+#import gdata.books
+import gdata.books.service
+
 import atom
 
 import cgi
@@ -42,8 +42,8 @@ from google.appengine.api import urlfetch
 import authorized
 import view
 
-#import gdata.urlfetch
-#gdata.service.http_request_handler = gdata.urlfetch
+import gdata.urlfetch
+gdata.service.http_request_handler = gdata.urlfetch
 
 class BaseRequestHandler(webapp.RequestHandler):
     def generate(self, template_name, template_values={}):
@@ -98,9 +98,19 @@ class ProfileHandler(BaseRequestHandler):
         self.generate('google_profiles.html',template_values)
 
 class BooksHandler(BaseRequestHandler):
-    def get(self, username):
+    def get(self, userId):
+        gd_client = gdata.books.service.BookService()
+        key_books = "books_"+userId
+        try:
+            feed_books = memcache.get(key_books)
+        except Exception:
+            feed_books = None
+        if not feed_books:
+            feed_books = gd_client.get_library(id=userId).next()
+            memcache.add(key=key_books, value=feed_books, time=3600)
         template_values = {
-        "username":username
+        "userId":userId,
+        "books":feed_books
         }
         self.generate('google_books.html',template_values)
 

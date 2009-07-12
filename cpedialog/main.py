@@ -23,7 +23,7 @@ from google.appengine.ext import webapp
 import rpc
 import blog
 import album
-import books
+import book
 import admin
 import login
 import logging
@@ -90,8 +90,8 @@ def main():
                                         ('/sitemap/*$', blog.SiteMapHandler),  #for live.com SEO
                                         ('(/css/.*)', blog.CSSHandler),
 
-                                        ('/profiles/(.*)/*$', books.ProfileHandler),
-                                        ('/books/(.*)/*', books.BooksHandler),
+                                        ('/profiles/(.*)/*$', book.ProfileHandler),
+                                        ('/books/(.*)/*', book.BooksHandler),
 
                                         ('/albums/*$', album.MainPage),
                                         ('/albums/([-\w\.]+)/*$', album.UserHandler),
