@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import BeautifulSoup
 
 __author__ = 'Ping Chen'
 
@@ -102,17 +103,18 @@ class BooksHandler(BaseRequestHandler):
         gd_client = gdata.books.service.BookService()
         key_books = "books_"+userId
         try:
-            feed_books = memcache.get(key_books)
+            books = memcache.get(key_books)
         except Exception:
-            feed_books = None
-        if not feed_books:
+            books = None
+        if not books:
             feed_books = gd_client.get_library(id=userId)
-
-            #memcache.add(key=key_books, value=feed_books, time=3600)
+            books = []
+            for book in feed_books:
+                books+=[book]
+            memcache.add(key=key_books, value=books, time=3600)
         template_values = {
         "userId":userId,
-        "books":feed_books,
-        "book_ratings":[1,2,3,4,5]
+        "books":books,
         }
         self.generate('google_books.html',template_values)
 
