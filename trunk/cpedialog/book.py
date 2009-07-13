@@ -116,47 +116,4 @@ class BooksHandler(BaseRequestHandler):
         }
         self.generate('google_books.html',template_values)
 
-class GoogleBooksHandler(BaseRequestHandler):
-    def get(self, username):
-        key_ = "google_books_"+username
-        try:
-            profile_content = memcache.get(key_)
-        except Exception:
-            profile_content = None
-        if profile_content is None:
-            url_="http://www.google.com/profiles/"+username
-            profile_page = urlfetch.fetch(
-                    url=url_,
-                    method=urlfetch.GET,
-                    headers={'Content-Type': 'text/html; charset=UTF-8'}
-                    )
-            if profile_page.status_code == 200:
-                profile_html = BeautifulSoup(profile_page.content)
-                #profile_html = profile_soap.find("html")
-                line_divs = profile_html.findAll("div",attrs={"class":"gbh"})
-                [line_div.extract() for line_div in line_divs]
-                ft_divs = profile_html.findAll("div",attrs={"id":["ft","gbar","guser"]})
-                [ft_div.extract() for ft_div in ft_divs]
-                report_links = profile_html.findAll("a",attrs={"id":"reportprofilelink"})
-                [report_link.extract() for report_link in report_links]
-                images_ = profile_html.findAll("img")
-                for image_ in images_:
-                    image_url = image_.get("src")
-                    if image_url and image_url.rfind("http:")==-1:
-                        image_url = "http://www.google.com"+image_url
-                        image_["src"] = image_url
-                profile_content = profile_html.prettify()
-                memcache.add(key=key_, value=profile_content, time=36000)
-            else:
-                template_values = {
-                "username":username,
-                "error":"Can not fetch the profile from Google, please check the profile url. \n"+url_
-                }
-                self.generate('google_profiles.html',template_values)
-        template_values = {
-        "username":username,
-        "profile_content":profile_content
-        }
-        self.generate('google_profiles.html',template_values)
-
 

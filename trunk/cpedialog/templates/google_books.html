@@ -2,9 +2,12 @@
 {% extends "main.html" %}
 {% block title %}{{title}} - My Google Books Library{% endblock %}
 {% block header %}
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/paginator/assets/skins/sam/paginator.css" />
 <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js" ></script>
 <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-{% endblock %}        
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/element/element-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/paginator/paginator-min.js"></script>
+{% endblock %}
 {% block blogcontainer %}
 <script type="text/javascript">
     YAHOO.util.Event.onDOMReady(function() {
@@ -23,6 +26,16 @@
         margin-bottom: 5px;
         margin-left: -10px;
         margin-top: 15px;
+    }
+
+    .casmall {
+        left: -5px;
+        position: relative;
+        top: -5px;
+    }
+    .coverthumb {
+        background-color: #FFFFFF;
+        border: 1px solid #0000CC;
     }
     .coverdstd {
         padding: 8px 8px 0 18px;
@@ -65,7 +78,7 @@
 <span id="rtg_spn_dEYKR-WUIh8C" class="sbs">
 <span class="readonly">
     {% for i in book_ratings%}
-    <img border="0" alt="star" src="/img/showtimes-star-{% ifequal book.rating.value i %}on{% else %}off{% endifequal %}.gif"/>
+     <img border="0" alt="star" src="/img/showtimes-star-{% ifequal book.rating.value i %}on{% else %}off{% endifequal %}.gif"/>
     {% endfor %}
 </span>
 </span>
