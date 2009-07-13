@@ -512,3 +512,9 @@ html>body .album_thumbnail {
 #recaptcha a, #recaptcha a.link, #recaptcha a.visited {
     border-bottom: none !important;
 }
+
+#books_content{
+    border: 1px #cccccc solid;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
