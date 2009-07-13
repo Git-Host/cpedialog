@@ -16,6 +16,34 @@
         for(var i=0;i<book_link.length;i++){
            book_link[i].target = "_blank";
         }
+        var Ex = YAHOO.namespace('googlebooks');
+        Ex.content = YAHOO.util.Dom.getElementsByClassName("rsi","table");
+        Ex.handlePagination = function (state) {
+            // Gather the content for the requested page
+            var startIndex = state.recordOffset,
+                recs = Ex.content.slice(startIndex, startIndex + state.rowsPerPage);
+            // Update the content UI
+            Ex.content.start = startIndex + 1;
+            YAHOO.util.Dom.get("book_list").innerHTML = "";
+            for(var i=0;i<recs.length;i++){
+               YAHOO.util.Dom.get("book_list").appendChild(recs[i].cloneNode(true)); 
+            }
+            // Confirm state change with the Paginator
+            Ex.paginator.setState(state);
+        };
+
+        Ex.paginator = new YAHOO.widget.Paginator({
+            rowsPerPage : 10,
+            totalRecords : Ex.content.length,
+            containers : ['span_container','p_container'],
+            template : "{PreviousPageLink} {CurrentPageReport} {NextPageLink}",
+            previousPageLinkLabel : "&lt;",
+            nextPageLinkLabel : "&gt;",
+            pageReportTemplate : "{startRecord} - {endRecord} of {totalRecords}"
+        });
+        Ex.paginator.subscribe('changeRequest', Ex.handlePagination);
+        Ex.paginator.render();
+        Ex.handlePagination(Ex.paginator.getState());
     });
 </script>
 <style type="text/css">
@@ -43,6 +71,29 @@
         vertical-align: top;
         width: 85px;
     }
+
+    h2.resbdy {
+        font-size: 1.2em;
+        font-weight: normal;
+        line-height: normal;
+        margin: -0.1em 0 0;
+        padding: 0;
+    }
+    .lim {
+        color: #99522E;
+    }
+
+    .dsb {
+        -moz-background-clip: border;
+        -moz-background-inline-policy: continuous;
+        -moz-background-origin: padding;
+        background: #FFFFFF url(/img/cover_shadow_bg.gif) no-repeat scroll right bottom;
+        display: table-cell;
+        float: left;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
 </style>
 <div class="yui-g">
 
@@ -54,6 +105,10 @@
 
     <div id="books_content">
         <span class="title">Books in my Google library</span>
+        <p id="span_container"></p>
+        <div id="book_list">
+        </div>
+        <div id="books_data" style="display:none">
         {% for book in books%}
         {% if book.dc_title %}
         <table cellspacing="0" cellpadding="0" border="0" class="rsi">
@@ -73,17 +128,6 @@
                                     alt="{% if book.dc_title %}{% for title in book.dc_title %}{{title.text}} {% endfor %} {% endif %}"/></a></div>
                         </div>
                     </div>
-                    <div class="starrating">
-<span class="sbsentry">
-<span id="rtg_spn_dEYKR-WUIh8C" class="sbs">
-<span class="readonly">
-    {% for i in book_ratings%}
-     <img border="0" alt="star" src="/img/showtimes-star-{% ifequal book.rating.value i %}on{% else %}off{% endifequal %}.gif"/>
-    {% endfor %}
-</span>
-</span>
-</span>
-                    </div>
                 </td>
                 <td valign="top">
                     <div class="resbdy"><h2 class="resbdy"><a
@@ -91,9 +135,8 @@
                             dir="ltr">{% if book.dc_title %}{% for title in book.dc_title %}{{title.text}} {% endfor %} {% endif %}</span>‎</a></h2><font size="-1"><span
                             style="line-height: 1.2em;"><span class="ln2">by
                         {% for author in book.creator %}{{author.text}} {% if not forloop.last %},{% endif %}{% endfor %}
-                        - <a class="link_aux" href="http://books.google.com/books?q=+subject:%22Study+Aids%22&amp;lr=">
-                            {% for subject in book.subject %}{{subject.text}} {% if not forloop.last %},{% endif %}{% endfor %}
-                        </a> - {{book.date.text|slice:":4"}} - <span class="lim">{%if book.GetPreviewLink%}Limited preview{%endif%}</span></span><br/><div
+                        - {% for subject in book.subject %}<a class="link_aux" href="http://books.google.com/books?q=+subject:{{subject.text}}">{{subject.text}}</a> {% if not forloop.last %},{% endif %}{% endfor %}
+                         - {{book.date.text|slice:":4"}} - <span class="lim">{%if book.GetPreviewLink%}Limited preview{%endif%}</span></span><br/><div
                             dir="ltr" class="snippet sa">{{book.description.text}}
                     </div>
 </span></font></div>
@@ -104,6 +147,8 @@
         </table>
         {% endif %}
         {% endfor %}
+         </div>
+        <p id="p_container"></p>
     </div>
 </div>
 {% endblock %}
