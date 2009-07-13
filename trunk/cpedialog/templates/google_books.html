@@ -1,12 +1,24 @@
 {% load i18n %}
 {% extends "main.html" %}
 {% block title %}{{title}} - My Google Books Library{% endblock %}
+{% block header %}
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js" ></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+{% endblock %}        
 {% block blogcontainer %}
 <script type="text/javascript">
-    (function() {
-    })();
+    YAHOO.util.Event.onDOMReady(function() {
+        var books_content = YAHOO.util.Dom.get("books_content");
+        var book_link = books_content.getElementsByTagName("a");
+        for(var i=0;i<book_link.length;i++){
+           book_link[i].target = "_blank";
+        }
+    });
 </script>
 <style type="text/css">
+    .title{
+        font-size:18px;margin-bottom:5px;margin-left:10px;margin-top:10px;
+    }
     .rsi {
         margin-bottom: 5px;
         margin-left: -10px;
@@ -28,7 +40,9 @@
     {% endif %}
 
     <div id="books_content">
+        <span class="title">Books in my Google library</span>
         {% for book in books%}
+        {% if book.dc_title %}
         <table cellspacing="0" cellpadding="0" border="0" class="rsi">
             <tbody>
             <tr>
@@ -38,17 +52,21 @@
                             <div class="cornert"/>
                             <div class="cornerb"/>
                             <div class="casmall"><a
-                                    href="http://books.google.com/books?id={{book.identifiers}}&amp;printsec=frontcover&amp;lr="><img
+                                    href="{%if book.GetPreviewLink%}{{book.GetPreviewLink.href}}{% else %}{% if book.GetInfoLink %}{{book.GetInfoLink.href}}{% endif %}{%endif%}">
+                                <img
                                     width="60" height="80" border="0"
-                                    src="{{book.thumbnail}}"
-                                    dir="ltr" title="{{book.title}}" class="coverthumb"
-                                    alt="{{book.title}}"/></a></div>
+                                    src="{%if book.GetThumbnailLink%}{{book.GetThumbnailLink.href}}{%endif%}"
+                                    dir="ltr" title="{% if book.dc_title %}{% for title in book.dc_title %}{{title.text}} {% endfor %} {% endif %}" class="coverthumb"
+                                    alt="{% if book.dc_title %}{% for title in book.dc_title %}{{title.text}} {% endfor %} {% endif %}"/></a></div>
                         </div>
                     </div>
                     <div class="starrating">
 <span class="sbsentry">
 <span id="rtg_spn_dEYKR-WUIh8C" class="sbs">
 <span class="readonly">
+    {% for i in book_ratings%}
+    <img border="0" alt="star" src="/img/showtimes-star-{% ifequal book.rating.value i %}on{% else %}off{% endifequal %}.gif"/>
+    {% endfor %}
 </span>
 </span>
 </span>
@@ -56,14 +74,14 @@
                 </td>
                 <td valign="top">
                     <div class="resbdy"><h2 class="resbdy"><a
-                            href="http://books.google.com/books?id=dEYKR-WUIh8C&amp;printsec=frontcover&amp;lr="><span
-                            dir="ltr">Kaplan GRE Exam Vocabulary in a Box</span>‎</a></h2><font size="-1"><span
-                            style="line-height: 1.2em;"><span class="ln2">by Kaplan, Carly Schnur - <a class="link_aux"
-                                                                                                       href="http://books.google.com/books?q=+subject:%22Study+Aids%22&amp;lr=">Study
-                        Aids</a> - 2007 - 1004 pages - <span class="lim">Limited preview</span></span><br/><div
-                            dir="ltr" class="snippet sa">-500 flashcards covering the most-tested GRE vocabulary
-                        words-Sample sentences provide the words in context-Also includes synonyms and a pronunciation
-                        key
+                            href="{%if book.GetPreviewLink%}{{book.GetPreviewLink.href}}{% else %}{% if book.GetInfoLink %}{{book.GetInfoLink.href}}{% endif %}{%endif%}"><span
+                            dir="ltr">{% if book.dc_title %}{% for title in book.dc_title %}{{title.text}} {% endfor %} {% endif %}</span>‎</a></h2><font size="-1"><span
+                            style="line-height: 1.2em;"><span class="ln2">by
+                        {% for author in book.creator %}{{author.text}} {% if not forloop.last %},{% endif %}{% endfor %}
+                        - <a class="link_aux" href="http://books.google.com/books?q=+subject:%22Study+Aids%22&amp;lr=">
+                            {% for subject in book.subject %}{{subject.text}} {% if not forloop.last %},{% endif %}{% endfor %}
+                        </a> - {{book.date.text|slice:":4"}} - <span class="lim">{%if book.GetPreviewLink%}Limited preview{%endif%}</span></span><br/><div
+                            dir="ltr" class="snippet sa">{{book.description.text}}
                     </div>
 </span></font></div>
                 </td>
@@ -71,6 +89,7 @@
             </tr>
             </tbody>
         </table>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
