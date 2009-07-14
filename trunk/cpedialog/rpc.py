@@ -176,10 +176,10 @@ class RPCHandler(webapp.RequestHandler):
       return True
         
   @authorized.role('admin')
-  def AddMenu(self,request):
+  def AddMenu(self,title,permalink):
       menu = datastore.Entity("Menu")
-      menu["title"] = "New Menu"
-      menu["permalink"] = "New permalink"
+      menu["title"] = title
+      menu["permalink"] = permalink
       menu["target"] = "_self"
       menu["order"] = 0
       menu["valid"] = False
