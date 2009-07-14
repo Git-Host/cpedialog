@@ -251,7 +251,7 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-#: .\templates\google_ajax_feed.html.py:33 .\templates\tagclound.html.py:15
+#: .\templates\google_ajax_feed.html.py:33 .\templates\tagcloud.html.py:15
 
 msgid "My"
 msgstr ""
@@ -438,12 +438,12 @@ msgstr ""
 msgid "Please try another tag or use the full-text search."
 msgstr ""
 
-#: .\templates\tagclound.html.py:3
+#: .\templates\tagcloud.html.py:3
 
-msgid "Tag Clound"
+msgid "Tag Cloud"
 msgstr ""
 
-#: .\templates\tagclound.html.py:5
+#: .\templates\tagcloud.html.py:5
 
 msgid "My Blog Tags"
 msgstr ""

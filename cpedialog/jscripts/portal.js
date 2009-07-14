@@ -80,16 +80,18 @@ YUI(yuiConfig).use('dd', 'anim', 'anim-easing', 'io', 'cookie', 'json', function
         //Create the DD instance
         var dd = new Y.DD.Drag({
             node: node,
-            proxy: true,
+            data: data,
+            bubbles: Y.Portal
+        }).plug(Y.Plugin.DDProxy, {
             moveOnEnd: false,
-            borderStyle: 'none',
-            data: data
+            borderStyle: 'none'
         });
         //Setup some stopper events
         dd.on('drag:start', _handleStart);
         dd.on('drag:end', stopper);
         dd.on('drag:drophit', stopper);
     };
+
 
 
     //Handle the node:click event

@@ -79,6 +79,8 @@ class BaseRequestHandler(webapp.RequestHandler):
   def validatorFeedAndReturnTemplate(self,feed,album_username,usernames):
       if feed == None:
           template_values ={
+              'username':album_username,
+              'usernames':usernames,
               'error':"Can not retrieve the picasaweb album(s) of user '"+album_username+"', please " +
               "make sure you set the correct picasaweb account."
           }
