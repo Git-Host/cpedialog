@@ -1,7 +1,7 @@
 {% load i18n %}
 {% extends "main.html" %}
 {% block title %}{{title}} - Albums - {{username}}{% endblock %}
-    {% block header %}<link rel="alternate" href="/atom/albums" type="application/rss+xml" title="{{ BLOG.title }} - Albums Slideshow"/>
+    {% block header %}<link rel="alternate" href="{{BLOG.root_url}}/atom/albums"  id="gallery" type="application/rss+xml" title="{{ BLOG.title }} - Albums Slideshow"/>
     <script type="text/javascript" src="http://lite.piclens.com/current/piclens.js"></script>{% endblock %}
 {% block blogcontainer %}
 <script type="text/javascript">
