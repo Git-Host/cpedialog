@@ -1,4 +1,4 @@
-YAHOO.util.Event.onDOMReady(function() {
+YAHOO.util.Event.onContentReady("yui-main",function() {
     //get all the images in blogcontent div.
     var blog_div = YAHOO.util.Dom.get("yui-main");
     var images = blog_div.getElementsByTagName("img");

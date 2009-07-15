@@ -56,7 +56,7 @@ class BaseRequestHandler(webapp.RequestHandler):
   """
   def generate(self, template_name, template_values={}):
     values = {
-      'archiveList': util.getArchiveList(),
+      'archiveList': Archive.list(),
     }
     values.update(template_values)
     view.ViewPage(cache_time=0).render(self, template_name, values)
@@ -313,6 +313,7 @@ class ArchiveHandler(BaseRequestHandler):
         blogs = util.getArchiveBlog(monthyear)
         recentReactions = util.getRecentReactions()
         template_values = {
+          'monthyear':monthyear,
           'blogs':blogs,
           'recentReactions':recentReactions,
           }
