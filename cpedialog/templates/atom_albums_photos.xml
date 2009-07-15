@@ -4,15 +4,15 @@
     <channel>
         {% for photo in photos %}
         <item>
-            <title>{{photo.title}}</title>
-            <media:description>{{photo.description}}</media:description>
-            <link>{{photo.content.src}}</link>
+            <title>{{photo.title.text}}</title>
+            <media:description>{{photo.description.text}}</media:description>
+            <link>{{photo.content.src}}?imgmax=800</link>
              {% for thumbnail in photo.media.thumbnail%}
                  {% ifequal forloop.counter 2 %}
-                 <media:thumbnail url="{{thumbnail.url}}"/>
+                 <media:thumbnail url="{{thumbnail.url}}" type="image/jpeg"/>
                  {% endifequal %}
              {% endfor %}
-            <media:content url="{{photo.content.src}}"/>
+            <media:content url="{{photo.content.src}}?imgmax=800" type="image/jpeg"/>
         </item>
         {% endfor %}
     </channel>
