@@ -130,6 +130,12 @@ class AdminSystemPage(BaseRequestHandler):
         else:
             cpedialog.delicious_enable = False
 
+        if self.request.get("analytics_enable"):
+            cpedialog.analytics_enable = True
+            cpedialog.analytics_web_property_id =  self.request.get("analytics_web_property_id")
+        else:
+            cpedialog.analytics_enable = False
+
         if self.request.get("google_ajax_feed_enable"):
             cpedialog.google_ajax_feed_enable = True
             cpedialog.google_ajax_feed_title =  self.request.get("google_ajax_feed_title")
