@@ -127,7 +127,8 @@ class MemcachedModel(SerializableModel):
 #All the query to this model need to be self-stored.
 #The dict need to set a unique key, and the value must be db.Query() object.
     querys = {}
-
+    list_includes = []
+    
     def delete_cached_list(self):
         memcache_list_keys = self.__class__.memcache_list_key()
         if memcache_list_keys is not None and len(memcache_list_keys) > 0:
@@ -145,6 +146,10 @@ class MemcachedModel(SerializableModel):
         memcache.set(self.__class__.memcache_object_key(key),self)
         return key
 
+    def _to_repr(self):
+        return repr(to_dict(self, self.__class__.list_includes,
+                    self._to_entity))
+
     @classmethod
     def get_or_insert(cls, key_name, **kwds):
         obj = super(MemcachedModel, cls).get_or_insert(key_name, **kwds)
@@ -153,7 +158,9 @@ class MemcachedModel(SerializableModel):
 
     @classmethod
     def memcache_list_key(cls):
-        return [cls.__name__ +"_list_" +  query_key  for query_key in cls.querys]
+        keys =  [cls.__name__ +"_list_" +  query_key  for query_key in cls.querys]
+        keys += ['PS_' + cls.__name__ + '_ALL']
+        return keys
 
     @classmethod
     def memcache_object_key(cls,primary_key):
@@ -171,6 +178,26 @@ class MemcachedModel(SerializableModel):
             memcache.set(key=key_, value=result)
         return result
 
+    @classmethod
+    def memcache_all_key(cls):
+        return 'PS_' + cls.__name__ + '_ALL'
+
+    @classmethod
+    def list(cls, nocache=False):
+        """Returns a list of up to 1000 dicts of model values.
+           Unless nocache is set to True, memcache will be checked first.
+        Returns:
+          List of dicts with each dict holding an entities property names
+          and values.
+        """
+        list_repr = memcache.get(cls.memcache_all_key())
+        if nocache or list_repr is None:
+            q = db.Query(cls)
+            objs = q.fetch(limit=1000)
+            list_repr = '[' + ','.join([obj._to_repr() for obj in objs]) + ']'
+            memcache.set(cls.memcache_all_key(), list_repr)
+        return eval(list_repr)
+        
     @classmethod
     def get_cached_list(cls, query_key,params=[],nocache=False):
         """Return the cached list with the specified key.
@@ -278,13 +305,13 @@ class CounterShard(db.Model):
                           name, num_shards)
             return False
 
-class Archive(SerializableModel):
+class Archive(MemcachedModel):
     monthyear = db.StringProperty(multiline=False)
     """July 2008"""
     weblogcount = db.IntegerProperty(default=0)
     date = db.DateTimeProperty(auto_now_add=True)
 
-class Tag(SerializableModel):
+class Tag(MemcachedModel):
     tag = db.StringProperty(multiline=False)
     entrycount = db.IntegerProperty(default=0)
     valid = db.BooleanProperty(default = True)
@@ -331,22 +358,36 @@ class Weblog(SerializableModel):
     tags_commas = property(get_tags,set_tags)
 
     #for data migration
-    def update_archive(self,update):
+    def update_archive(self,action):
         """Checks to see if there is a month-year entry for the
-        month of current blog, if not creates it and increments count"""
+        month of current blog, if not creates it and increments count
+        action: 0 update the blog.
+                1 add a new blog.
+                2 delete the blog.
+        """
         my = self.date.strftime('%B %Y') # July 2008
         archive = Archive.all().filter('monthyear',my).fetch(10)
         if archive == []:
             archive = Archive(monthyear=my,date=self.date,weblogcount=1)
             archive.put()
         else:
-            if not update:
+            if action==1:
             # ratchet up the count
                 archive[0].weblogcount += 1
                 archive[0].put()
+            elif action == 2:
+                archive[0].weblogcount -= 1
+                if archive[0].weblogcount == 0:
+                    archive[0].delete()
+                else:
+                    archive[0].put()
 
-    def update_tags(self,update):
-        """Update Tag cloud info"""
+    def update_tags(self,action):
+        """Update Tag cloud info
+        action: 0 update the blog.
+                1 add a new blog.
+                2 delete the blog.
+        """
         if self.tags:
             for tag_ in self.tags:
             #tag_ = tag.encode('utf8')
@@ -355,23 +396,36 @@ class Weblog(SerializableModel):
                     tagnew = Tag(tag=tag_,entrycount=1)
                     tagnew.put()
                 else:
-                    if not update:
+                    if action==1:
                         tags[0].entrycount+=1
                         tags[0].put()
+                    elif action ==2:
+                        tags[0].entrycount-=1
+                        if tags[0].entrycount == 0:
+                            tags[0].delete()
+                        else:
+                            tags[0].put()
 
     def save(self):
-        self.update_tags(False)
+        self.update_tags(1)
         if self.entrytype == "post":
-            self.update_archive(False)
+            self.update_archive(1)
         my = self.date.strftime('%B %Y') # July 2008
         self.monthyear = my
         self.put()
 
     def update(self):
-        self.update_tags(True)
+        self.update_tags(0)
         if self.entrytype == "post":
-            self.update_archive(True)
+            self.update_archive(0)
         self.put()
+
+    def delete(self):
+        self.update_tags(2)
+        if self.entrytype == "post":
+            self.update_archive(2)
+        super(Weblog, self).delete()
+
 
 class WeblogReactions(SerializableModel):
     weblog = db.ReferenceProperty(Weblog)

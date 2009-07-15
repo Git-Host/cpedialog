@@ -79,7 +79,7 @@ YAHOO.util.Event.onDOMReady(function() {
             alert("Please input the Google profile user id.");
             profile_id.focus();
         } else {
-            addMenu(e,["Profile","/profils/"+encodeURIComponent(profile_id.value)]);
+            addMenu(e,["Profile","/profiles/"+encodeURIComponent(profile_id.value)]);
         }
     };
     var addBookMenu = function(e) {

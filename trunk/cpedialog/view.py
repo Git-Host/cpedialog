@@ -31,6 +31,7 @@ import time
 import urlparse
 import string
 import util
+import model
 
 from cpedia.sessions import sessions
 
@@ -75,7 +76,7 @@ class ViewPage(object):
                 'logoImages': cpedialog.get_logo_images_list(),
                 "BLOG": cpedialog,
                 "nav_menus": util.getMenuList(),
-                "tags": util.getTagList(),
+                "tags": model.Tag.list(),
                 "feeds": feeds,
                 "delicious": delicious,
                 "user_gravatar_url":util.getGravatarUrlByUser(session.get_current_user()),

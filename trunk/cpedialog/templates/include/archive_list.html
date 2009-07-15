@@ -1,10 +1,20 @@
 {% load i18n %}
+<script type="text/javascript">
+    function showArchivedBlogs(obj) {
+        var archive_value = obj[obj.selectedIndex].value;
+        window.location.href = "/archive/" + archive_value;
+    }
+</script>
 <div id="archives">
     <h2>{% trans "Archives" %}</h2>
     <ul>
+        {% if archiveList %}
+        <select onchange="showArchivedBlogs(this)">
         {% for archive in archiveList %}
-        <li><a href='/archive/{{archive.monthyear|replace:" -"}}'>{{ archive.monthyear }} ({{archive.weblogcount}})</a>
-        </li>
+        <option value='{{archive.monthyear|replace:" -"}}'>{{ archive.monthyear }} ({{archive.weblogcount}})
+        </option>
         {% endfor %}
+        </select>
+        {% endif %}
     </ul>
 </div>
