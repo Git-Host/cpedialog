@@ -56,7 +56,7 @@ class BaseRequestHandler(webapp.RequestHandler):
   """
   def generate(self, template_name, template_values={}):
     archiveList = Archive.list()
-    archiveList.sort(lambda x,y: cmp(x["date"],y["date"]))
+    archiveList.sort(lambda x,y: cmp(y["date"],x["date"]))
     values = {
       'archiveList': archiveList,
     }
