@@ -49,9 +49,10 @@
            </div>
             <div class="album_thumbnail_title"><b>{{album.media.title}} </b>({{album.numphotos.text}})  <br>
                {{album.datetime|date:"m/d/y"}}
-                <img src="/img/cooliris_icon_off.gif" alt="PicLens"  style="cursor: pointer;"
+                <img src="/img/cooliris_icon_off.gif" style="cursor: pointer;"
                      onmousemove="javascript:{this.src = '/img/cooliris_icon_on.gif'}"
                      onmouseout="javascript:{this.src = '/img/cooliris_icon_off.gif'}"
+                     alt="Start slideshow (Powered by cooliris)"
                      onclick="javascript:PicLensLite.start({feedUrl:'{{BLOG.root_url}}/atom/albums/{{username}}/{{album.name.text}}'});"
                      border="0" align="absmiddle">
             </div>
