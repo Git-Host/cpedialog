@@ -81,6 +81,7 @@ def main():
                                         ('/404.html', blog.NotFoundHandler),
                                         ('/archive/(.*)/*$', blog.ArchiveHandler),
                                         ('/([12]\d\d\d)/(\d|[01]\d)/([-\w]+)/*$', blog.ArticleHandler),
+                                        ('/search_google/*$', blog.SearchGoogleHandler),
                                         ('/search/(.*)/*$', blog.SearchHandler),
                                         ('/tag/(.*)', blog.TagHandler),
                                         ('/delicious/(.*)', blog.DeliciousHandler),

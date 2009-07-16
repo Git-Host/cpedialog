@@ -406,6 +406,11 @@ class FeedHandler(BaseRequestHandler):
         self.generate('atom.xml',{'blogs':blogs,'last_updated':last_updated})
     
 
+class SearchGoogleHandler(BaseRequestHandler):
+    def get(self):
+        search_term = self.request.get('q')
+        self.generate('google_search.html',{"search_term":search_term})
+
 class SearchHandler(BaseRequestHandler):
     def get(self,search_term):
         pageStr = self.request.get('page')
