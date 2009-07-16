@@ -55,8 +55,10 @@ class BaseRequestHandler(webapp.RequestHandler):
   in the 'request' variable.
   """
   def generate(self, template_name, template_values={}):
+    archiveList = Archive.list()
+    archiveList.sort(lambda x,y: cmp(x["date"],y["date"]))
     values = {
-      'archiveList': Archive.list(),
+      'archiveList': archiveList,
     }
     values.update(template_values)
     view.ViewPage(cache_time=0).render(self, template_name, values)

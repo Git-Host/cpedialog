@@ -9,6 +9,7 @@
         var username = obj[obj.selectedIndex].value;
         window.location.href = "/albums/"+username;
     }
+    
 </script>
 <div class="yui-g" id="albumsdiv">
 
@@ -30,8 +31,10 @@
         <p>
             Here are the album list of user {{username}}.
         <br>
+<!--
         <a href="javascript:PicLensLite.start();">Start slideshow
         <img src="http://lite.piclens.com/images/PicLensButton.png" alt="PicLens" width="16" height="12" border="0" align="absmiddle"></a>
+-->
     </div>
    {% if albums %}
     <div id="albums">
@@ -46,6 +49,9 @@
            </div>
             <div class="album_thumbnail_title"><b>{{album.media.title}} </b>({{album.numphotos.text}})  <br>
                {{album.datetime|date:"m/d/y"}}
+                <img src="/img/cooliris_icon_on.gif" alt="PicLens"
+                     onclick="javascript:PicLensLite.start({feedUrl:'{{BLOG.root_url}}/atom/albums/{{username}}/{{album.name.text}}'});"
+                     border="0" align="absmiddle">
             </div>
          </div>
         {% endfor %}
