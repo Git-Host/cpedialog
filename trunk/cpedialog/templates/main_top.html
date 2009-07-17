@@ -41,6 +41,7 @@
             </div>
         </div>
         <div class="yui-u">
+            <form method="get" action="/search_google" target="_top">
             <div align="right" style="padding-top:10px">
                 <script type="text/javascript">
                     function searchSite(){
@@ -49,8 +50,6 @@
                     }
                 </script>
                 <!-- Search Google -->
-                <center>
-                <form method="get" action="/search_google" target="_top">
                 <table bgcolor="#ffffff">
                 <tr><td nowrap="nowrap" valign="top" align="left" height="32">
 
@@ -64,20 +63,14 @@
                 <input type="hidden" name="ie" value="UTF-8"></input>
                 <input type="hidden" name="oe" value="UTF-8"></input>
                 <input type="hidden" name="safe" value="active"></input>
-                <input type="hidden" name="cof" value="GALT:#333333;GL:1;DIV:#FFFFFF;VLC:5F9EA0;AH:center;BGC:FFFFFF;LBGC:336699;ALC:5F9EA0;LC:5F9EA0;T:333333;GFNT:555555;GIMP:555555;FORID:11"></input>                <input type="hidden" name="hl" value="en"></input>
+                <input type="hidden" name="cof" value="GALT:#333333;GL:1;DIV:#CCCCCC;VLC:555555;AH:center;BGC:FFFFFF;LBGC:336699;ALC:5F9EA0;LC:5F9EA0;T:333333;GFNT:555555;GIMP:555555;FORID:11"></input>
+                <input type="hidden" name="hl" value="en"></input>
                 </td></tr></table>
-                </form>
-                </center>
                 <!-- Search Google -->
-            </div>            
+            </div>
+            </form>                
         </div>
         </div>
-    </div>
-    <div>
-    <ul id="navbar">
-         {% for menu in nav_menus %}
-           <li><a href="{{menu.permalink}}" target="{{menu.target}}">{{menu.title}}</a></li>
-         {% endfor %}
-    </ul>
     </div>
 </div>
+{% include "include/menu_navigator.html"%}
