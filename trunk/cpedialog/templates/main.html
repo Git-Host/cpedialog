@@ -36,12 +36,11 @@
     <!-- yui -->
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" />
 </head>
-<body class="yui-skin-sam">
+<body class="yui-skin-sam short-head">
 <div id="doc2" class="yui-t5">
     <div id="hd">
         {% include "main_top.html" %}
     </div>
-    <br>
     {% block main_body %}
     <div id="bd">
         <div id="yui-main">
@@ -52,7 +51,7 @@
                     <div class="yui-u first" id="grid_blog">
                         {% block blog %}
                         {% endblock %}
-                        <div id="gc-collapsible" style="height:600px">XXX</div>
+                        <!--<div id="gc-collapsible" style="height:600px"> </div>-->
                     </div>
                     <div class="yui-u" id="grid_menu_right">
                         {% include "menu_right.html" %}
