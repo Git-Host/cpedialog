@@ -23,7 +23,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 18 times in query history.
+# Used 20 times in query history.
 - kind: Feeds
   properties:
   - name: valid
@@ -47,7 +47,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 22 times in query history.
+# Used 24 times in query history.
 - kind: Menu
   properties:
   - name: valid
@@ -91,7 +91,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 55 times in query history.
+# Used 60 times in query history.
 - kind: Weblog
   properties:
   - name: entrytype
