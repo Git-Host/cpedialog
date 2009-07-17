@@ -49,11 +49,12 @@
                 <div id=logo style='BACKGROUND-IMAGE: url({{logoImages|random}});margin-bottom:15px'></div>
                 {% block blogcontainer %}
                 <div class="yui-gc" id="blogcontainer">
-                    <div class="yui-u first">
+                    <div class="yui-u first" id="grid_blog">
                         {% block blog %}
                         {% endblock %}
+                        <div id="gc-collapsible" style="height:600px">XXX</div>
                     </div>
-                    <div class="yui-u">
+                    <div class="yui-u" id="grid_menu_right">
                         {% include "menu_right.html" %}
                     </div>
                 </div>
