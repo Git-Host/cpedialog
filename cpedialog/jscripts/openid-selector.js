@@ -119,7 +119,7 @@
 
         var headRight = pdoc.createElement('div');
         headRight.style[document.all ? 'styleFloat' : 'cssFloat'] = 'right';
-        headRight.innerHTML = '<a href="https://www.myopenid.com/signup" style="color:#fff;" target="_blank">Get an OpenID</a>';
+        headRight.innerHTML = '<a href="http://openid.net/get/" style="color:#fff;" target="_blank">Get an OpenID</a>';
 
         var header = pdoc.createElement('div');
         s = header.style;

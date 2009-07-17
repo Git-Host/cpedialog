@@ -34,6 +34,14 @@ register = webapp.template.create_template_register()
 
 
 @register.filter
+def contain_substr ( str, substr ):
+       index_  = string.find(str, substr)
+       if index_ ==-1:
+           return False;
+       else:
+           return True;
+
+@register.filter
 def replace ( string, args ):
         search  = args[0]
         replace = args[1]

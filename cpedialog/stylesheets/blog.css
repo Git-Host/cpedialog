@@ -61,46 +61,14 @@ a:hover {
     padding-top: 10px;
 }
 
-#doc2 {min-height: 100%; height: auto !important; height: 100%; margin: 0 0 -262px; background: transparent url(/img/header-back.png) repeat-x 0 !important; }
-body.short-head #doc2 {background: transparent url(/img/header-back-proj.png) repeat-x 0 5px !important; }
-
 /* Header Navigation */
-#nav {display: block!important; margin: 0 0 5px -10px!important; padding: 0; width: 100%!important; height: 59px!important; clear: both; font-size: 123.1%;}
+#nav {display: block!important; margin: 0 0 15px 0!important; padding: 0;height: 50px!important; clear: both; font-size: 123.1%;}
 #nav li {float: left; clear: none; background: transparent url(/img/nav-split.gif) no-repeat 100% 14px;}
 #nav li.last {background-image: none;}
-#nav li a {display: block; margin: 0; padding: 15px 10px 14px; color: #0092e8; position: relative; font-weight: normal;text-decoration:none!important;}
-#nav li a:hover {text-decoration: none!important; padding-bottom: 8px!important; border-bottom: 2px solid #0092e8!important;background-color:transparent!important;}
-
-#navbar {
-    background: #fbfaf4;
-    /*border-bottom: 1px dashed #b2b2b2;*/
-    /*border-top: 1px dashed #b2b2b2;*/
-    font: 1.2em georgia, times, serif!important;
-    height: 1.8em;
-    overflow: hidden;
-    padding: 0 0 3px 180px;
-}
-
-#navbar li {
-    float: left;
-    margin-right: 5px;
-    padding: 0 0 0 33px;
-    background: transparent url(/img/nav-split.gif) no-repeat 100% 14px
-}
-
-#navbar li a, #navbar li a:link {
-    text-decoration: none;
-    color: #000;
-    display: block;
-    padding: 0.5em 0 0.25em;
-}
-
-#navbar a:hover, .articles #navbar #articles a, .topics #navbar #topics a, .about #navbar #about a,
-    .contact #navbar #contact a, .contribute #navbar #contribute a, .feed #navbar #feed a {
-    background: url(/img/navbarlinkbg.gif) bottom left repeat-x;
-    text-decoration: none;
-    color: #555;
-}
+#nav li a {display: block; margin: 0; padding: 15px 10px 14px; color: #0092e8; position: relative; text-decoration:none!important;}
+#nav li a:hover {text-decoration: none!important; padding-bottom: 6px!important; border-bottom: 2px solid #0092e8!important;background-color:transparent!important;}
+#nav_back{background: transparent url(/img/menu_background.png) repeat-x  0 !important;
+    height: 50px!important;left: 0; right: 0;}
 
 #footer {
     background: #fbfaf4;
