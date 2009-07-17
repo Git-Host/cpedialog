@@ -15,19 +15,6 @@
     {% block header %}
     {% endblock %}
 
-    {% if BLOG.analytics_enable %}
-    <script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-    try {
-    var pageTracker = _gat._getTracker("{{ BLOG.analytics_web_property_id }}");
-    pageTracker._trackPageview();
-    } catch(err) {}
-    </script>
-    {% endif %}
-
     <link rel="alternate" type="application/atom+xml" title="{{ BLOG.title }}" href="{{ BLOG.root_url }}/atom" />
     {% for sheet in stylesheets %}
         <link type="text/css" rel="stylesheet" href="{{ sheet.filename }}"/>
@@ -68,5 +55,18 @@
         {% include "footer.html" %}
     </div>
 </div>
+
+{% if BLOG.analytics_enable %}
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("{{ BLOG.analytics_web_property_id }}");
+pageTracker._trackPageview();
+} catch(err) {}
+</script>
+{% endif %}
 </body>
 </html>
