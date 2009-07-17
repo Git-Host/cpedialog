@@ -12,9 +12,10 @@
     <title>{% block title %}{{title}}{% endblock %}</title>
 
     {% block header %}
+    {% endblock %}
+    
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js"></script>
-    {% endblock %}
 
     {% if BLOG.analytics_enable %}
     <script type="text/javascript">

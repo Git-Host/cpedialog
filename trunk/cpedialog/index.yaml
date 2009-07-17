@@ -91,7 +91,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 290 times in query history.
+# Used 295 times in query history.
 - kind: Weblog
   properties:
   - name: entrytype
