@@ -315,7 +315,7 @@ class ArchiveHandler(BaseRequestHandler):
         blogs = util.getArchiveBlog(monthyear)
         recentReactions = util.getRecentReactions()
         template_values = {
-          'monthyear':monthyear,
+          'monthyear':re.sub("-", " ", monthyear),
           'blogs':blogs,
           'recentReactions':recentReactions,
           }
