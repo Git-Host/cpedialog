@@ -7,7 +7,7 @@
     {% if forloop.first %}class="first"{% endif %}
     {% if forloop.last %}class="last"{% endif %}
     {% if request.url|contain_substr:menu.permalink %}class="selected"{% endif %}
-        ><a href="{{menu.permalink}}" target="{{menu.target}}">{{menu.title}}</a></li>
+        ><a href="{{menu.permalink}}" target="{{menu.target}}" {% if request.url|contain_substr:menu.permalink %}class="selected"{% endif %}>{{menu.title}}</a></li>
      {% endfor %}
 </ul>
 </div>

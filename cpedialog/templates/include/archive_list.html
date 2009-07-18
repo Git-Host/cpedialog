@@ -12,7 +12,7 @@
         {% if archiveList %}
         <select onchange="showArchivedBlogs(this)">
         {% for archive in archiveList %}
-        <option value='{{archive.monthyear|replace:" -"}}'>{{ archive.monthyear }} ({{archive.weblogcount}})
+        <option value='{{archive.monthyear|replace:" -"}}' {% if monthyear %}{% ifequal  monthyear archive.monthyear %}selected{% endifequal %}{%endif%}>{{ archive.monthyear }} ({{archive.weblogcount}})
         </option>
         {% endfor %}
         </select>

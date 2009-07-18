@@ -10,7 +10,7 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 18 times in query history.
+# Used 27 times in query history.
 - kind: Album
   properties:
   - name: valid
@@ -23,7 +23,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 42 times in query history.
+# Used 52 times in query history.
 - kind: Feeds
   properties:
   - name: valid
@@ -47,7 +47,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 49 times in query history.
+# Used 59 times in query history.
 - kind: Menu
   properties:
   - name: valid
@@ -91,7 +91,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 300 times in query history.
+# Used 437 times in query history.
 - kind: Weblog
   properties:
   - name: entrytype
@@ -138,7 +138,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 43 times in query history.
+# Used 45 times in query history.
 - kind: WeblogReactions
   properties:
   - name: weblog
