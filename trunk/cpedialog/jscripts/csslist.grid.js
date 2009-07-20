@@ -25,7 +25,7 @@ YAHOO.util.Event.onDOMReady(function() {
 
         var myColumnDefs = [
             {key:"cssfile",label:"CSS File",sortable:true,formatter:function(elCell,oRecord) {
-                var cssUrl = oRecord.getData("cssfile")
+                var cssUrl = oRecord.getData("cssfile");
                 elCell.innerHTML = cssUrl;
                 elCell.style.cursor = 'pointer';}},
             {key:"url",label:"URL", formatter:YAHOO.widget.DataTable.formatLink},

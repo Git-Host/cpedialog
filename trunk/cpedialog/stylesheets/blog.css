@@ -257,6 +257,8 @@ a:hover {
 .feedth {
     width: 200px !important;
     word-break: break-all;
+    white-space:nowrap;
+    overflow: hidden;
 }
 
 #gravatar {
