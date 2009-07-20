@@ -48,6 +48,14 @@ def replace ( string, args ):
         return re.sub( search, replace, string )
 
 @register.filter
+def url_fix ( str ):
+    index_  = string.find(string.lower(str), "http://")
+    if index_ ==-1:
+        return "http://"+str;
+    else:
+        return str;
+
+@register.filter
 def email_username ( email ):
         return email.split("@")[0]
 
