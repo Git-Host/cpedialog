@@ -1,7 +1,9 @@
 YAHOO.util.Event.onDOMReady (function() {
         var myColumnDefs = [
             {key:"title",label:"Title",sortable:true,editor:"textbox"},
-            {key:"feed",label:"Feed URL",sortable:true,editor:"textbox",className:"feedth"},
+            {key:"feed",label:"Feed URL",sortable:true,editor:"textbox",className:"feedth",formatter:function(elCell,oRecord) {
+                elCell.innerHTML = '<div class=feedth>'+ oRecord.getData("feed")+"</div>";
+            }},
             {key:"order",label:"Order",formatter:YAHOO.widget.DataTable.formatNumber,sortable:true,editor:"textbox",editorOptions:{validator:YAHOO.widget.DataTable.validateNumber}},
             {key:"valid",label:"Valid",sortable:true,editor:"radio",editorOptions:{radioOptions:[true,false],disableBtns:true}},
             {key:"id",label:"Id",sortable:true,isPrimaryKey:true},
