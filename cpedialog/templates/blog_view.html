@@ -63,7 +63,7 @@
 <div class='{% cycle comment,comment1 %}'>
 {% endif %}
             <p> {% if reaction.authorWebsite %}
-                <a href="{{reaction.authorWebsite}}">
+                <a href="{{reaction.authorWebsite|url_fix}}">
                 {% endif%}
                 <b>{%if not reaction.author %}{{reaction.user}}{%else%}{{reaction.author.email|email_username}}{% endif %}</b> |
                 {% if reaction.authorWebsite %}
@@ -116,7 +116,14 @@
                 <label for="website"><b>{% trans "Website" %}</b></label>
             </div>
             <div id="recaptcha">
-                {%if captchahtml%}{{captchahtml}}{%endif%}
+                {%if captchahtml%}
+                <script>
+                var RecaptchaOptions = {
+                   theme : 'white'
+                };
+                </script>
+                {{captchahtml}}
+                {%endif%}
             </div>
             <h2 class="comments-post">{% trans "Comment" %}</h2>
             <div id="blogpost">
