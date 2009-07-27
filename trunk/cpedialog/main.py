@@ -76,7 +76,7 @@ def main():
                                         ('/rpc/css', rpc.CSS),
 
                                         ('/*$', blog.MainPage),
-                                        ('/page/(\d*)/*$', blog.PageHandle),
+                                        ('/page/(\d*)/*$', blog.BlogPageHandle),
                                         ('/403.html', blog.UnauthorizedHandler),
                                         ('/404.html', blog.NotFoundHandler),
                                         ('/archive/(.*)/*$', blog.ArchiveHandler),

@@ -23,6 +23,19 @@ from paginator import \
 adjacent_pages = 8
 page_offset = 2
 
+class YUIPaginator(object):
+    def __init__(self, gqlQuery,page_number,per_page,count=None):
+        if count is not None:
+            #for the list large than 1000, we should pass the count value from the counter outside.
+            #as google appengine has the limitation of 1000 records from the GqlQuery.
+            self.count = count
+        else:
+            self.count = int(gqlQuery.count())
+        self.page_number = page_number
+        bottom = (self.page_number - 1) * per_page
+        self.object_list = gqlQuery.fetch(per_page,bottom)
+
+
 class GqlQueryPaginator(Paginator):
     """
     Like Paginator, but works on google GqlQuery.
