@@ -314,7 +314,10 @@ def getDeliciousTag(username):
     if tags is None:
         try:
             url = "http://feeds.delicious.com/v2/json/tags/%s" % username
-            result = urlfetch.fetch(url)
+            result = urlfetch.fetch(url,
+                        method=urlfetch.GET,
+                        headers={'Content-Type': 'application/json'})
+            #getLogger(__name__).debug("delicious content: %s" % result.content)
             tags = []
             if result.status_code == 200:
                 objs = eval(result.content)
@@ -336,7 +339,9 @@ def getDeliciousPost(username,tag):
         posts = None
     if posts is None:
         url = "http://feeds.delicious.com/v2/json/%s/%s" % (username, tag)
-        result = urlfetch.fetch(url)
+        result = urlfetch.fetch(url,
+                        method=urlfetch.GET,
+                        headers={'Content-Type': 'application/json'})
         posts = []
         if result.status_code == 200:
             posts = map(DeliciousPost,simplejson.loads(result.content))
