@@ -92,7 +92,7 @@ class MainPage(BaseRequestHandler):
       }
     self.generate('blog_main.html',template_values)
 
-class PageHandle(BaseRequestHandler):
+class BlogPageHandle(BaseRequestHandler):
   def get(self,pagenum):
     page = int(pagenum)
     #get blog pagination from cache.

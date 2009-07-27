@@ -1,57 +1,27 @@
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/paginator/assets/skins/sam/paginator.css">
 <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/element/element-min.js"></script>
 <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/paginator/paginator-min.js"></script>
-
 <script type="text/javascript">
     YAHOO.util.Event.onDOMReady(function () {
-
     // Set up the application under the YAHOO.cpedialog namespace
     var Ex = YAHOO.namespace('cpedialog');
-
     Ex.handlePagination = function (state) {
         window.location.href = "/page/"+ state.page;
         // Update the Paginator's state, confirming change
         Ex.paginator.setState(state);
     };
-
     // Create the Paginator widget and subscribe to its changeRequest event
     Ex.paginator = new YAHOO.widget.Paginator({
-        currentPage :{{page.number}},        
+        initialPage :{{page.page_number}},
         rowsPerPage : {{BLOG.num_post_per_page}},
-        totalRecords : {{page.paginator.count}},
-        alwaysVisible : true,
+        totalRecords : {{page.count}},
+        alwaysVisible : false,
+        pageLinks : 8,
         containers : 'paging'
     });
-
     Ex.paginator.subscribe('changeRequest', Ex.handlePagination);
-
     // Render the Paginator into the configured container(s)
     Ex.paginator.render();
-
     });
 </script>
-
 <div id="paging"></div>
-
-{% if page and page.number %}
-<div id="pagination">
-<div class="p_bar"><a class="p_total">&nbsp;{{page.paginator.count}} &nbsp;</a><a class="p_pages">
-    &nbsp;{{page.number}}/{{page.real_pages}} &nbsp;</a></div>
-
-{% if page.show_first %}<a href="/page/1" class="p_redirect">|&lsaquo;</a> {% endif %}
-
-{% if page.has_previous %} <a href="/page/{{ page.previous_page_number }}" class="p_redirect">&lsaquo;&lsaquo;</a> {% endif %}
-
-{% for num in page.page_numbers %}
-  {% ifequal num page.number %}
-    <a class="p_curpage">{{ num }}</a>
-  {% else %}
-    <a href="/page/{{ num }}" class="p_num">{{ num }}</a>
-  {% endifequal %}
-{% endfor %}
-
-{% if page.has_next %}<a href="/page/{{ page.next_page_number }}" class="p_redirect">&rsaquo;&rsaquo;</a> {% endif %}
-
-{% if page.show_last %} <a href="/page/{{ page.real_pages }}" class="p_redirect">&rsaquo;|</a> {% endif %}
-</div>
- {% endif %}

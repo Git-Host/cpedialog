@@ -27,11 +27,11 @@ from google.appengine.ext import db
 from google.appengine.api import memcache
 from google.appengine.api import urlfetch
 
-from cpedia.pagination.GqlQueryPaginator import GqlQueryPaginator,GqlPage
+from cpedia.pagination.GqlQueryPaginator import YUIPaginator,GqlQueryPaginator,GqlPage
 from cpedia.pagination.paginator import InvalidPage,Paginator
 import cpedia.sessions.sessions
 
-from model import Archive,Weblog,WeblogReactions,\
+from model import Counter,Archive,Weblog,WeblogReactions,\
     AuthSubStoredToken,Album,Menu,Tag,DeliciousPost,Feeds,CPediaLog,User,CSSFile
 import simplejson
 import cgi
@@ -126,7 +126,8 @@ def getBlogPagination(page):
         blogs_query = Weblog.gql('WHERE entrytype=:1 ORDER BY date desc','post')
         try:
             cpedialog = getCPedialog()
-            obj_page  =  GqlQueryPaginator(blogs_query,page,cpedialog.num_post_per_page).page()
+            #todo:get blog count from the Counter object
+            obj_page  =  YUIPaginator(blogs_query,page,cpedialog.num_post_per_page)
             if obj_pages is None:
                 obj_pages = {}
             obj_pages[page] = obj_page
