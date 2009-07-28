@@ -10,7 +10,19 @@
                 time_zone_offset.options[time_zone_offset.options.length-1].selected = true;
             }
         }
-    });    
+    });
+    (function(){
+        var Dom = YAHOO.util.Dom;
+        var show_description = Dom.get("show_description");
+        var showDescription = function(){
+            if(show_description.checked){
+               Dom.get("description_next").innerHTML = Dom.get("description").value;
+            }else{
+                Dom.get("description_next").innerHTML = null;
+            }
+        };
+        YAHOO.util.Event.addListener(show_description,"click",showDescription);
+    })();
     function checkDelicious(){
         var delicious = document.getElementById("delicious_enable");
         var delicious_username = document.getElementById("delicious_username");
@@ -141,7 +153,9 @@
         var sUrl = "/admin/system?time=" + new Date().getTime();
         var updateSystemConfigurationSuccess = function(o) {
             if (o.responseText !== undefined) {
+               // var result = YAHOO.lang.JSON.parse(o.responseText);
                 alert("Update System Configuration successfully.");
+                //YAHOO.util.Dom.get('site_logo_image').src= result.site_logo;
             }
         };
         var callback =
@@ -196,11 +210,24 @@
             </td>
         </tr>
         <tr>
-            <th><label for="logo_images">{% trans "Logo images" %}:</label></th>
+            <th><label for="logo_images">{% trans "Logo image" %}:</label></th>
+            <td>
+                Current logo: <img src="{{BLOG.site_logo}}" alt="{{BLOG.title}}" id="site_logo_image"/> <span id="description_next"></span>
+                <br/><br/>
+                <p><input type="checkbox" id="show_description" name="show_description" {% if BLOG.description_next_logo %}checked{% endif %}/> Show blog description next to logo. </p>
+                <div class="closed">
+                <p><b>Upload a new image to use as your logo:</b>
+                </div>
+                <p><input name="custom_logo" size="60" type="file"></p>
+                <p><small>{% trans "The image file should be in PNG, JPG or GIF format and a maximum of 200 x 60 pixels. Larger images will be scaled automatically." %}</small></p>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="logo_images">{% trans "Banner images" %}:</label></th>
             <td>
                 <input type="hidden" id="logo_images_space" name="logo_images_space"/>
                 <textarea id="logo_images" name="logo_images"  rows="4" cols="50" style="">{% for logo in logoImages %}{{logo}}{% if not forloop.last %} {% endif %}{% endfor %}</textarea>
-                <p><small>{% trans "Separate logo image urls with commas and/or newlines. These images will randomly display on the site." %}</small></p>
+                <p><small>{% trans "Separate banner image urls with commas and/or newlines. These images will randomly display on the site." %}</small></p>
             </td>
         </tr>
         <tr>

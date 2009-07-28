@@ -461,7 +461,9 @@ class CPediaLog(SerializableModel):
     description = db.StringProperty(default='Blog powered by cpedialog.')
     root_url = db.StringProperty(multiline=False,default='http://cpedialog.appspot.com')
     time_zone_offset = db.FloatProperty(default=-8.0)
-    logo_images = db.ListProperty(db.Category)
+    logo_images = db.ListProperty(db.Category)   #todo: this should named as banner images
+    site_logo = db.StringProperty(multiline=False,default='/img/cpedia_zone.gif')
+    description_next_logo = db.BooleanProperty(default = True)    
     num_post_per_page = db.IntegerProperty(default=8)
     cache_time = db.IntegerProperty(default=0)
     debug = db.BooleanProperty(default = True)
