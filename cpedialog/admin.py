@@ -149,16 +149,16 @@ class AdminSystemPage(BaseRequestHandler):
             cpedialog.description_next_logo = False
 
         custom_logo = self.request.get("custom_logo")
-        if not custom_logo:
+        if custom_logo:
             images = Images()
             images.image = db.Blob(custom_logo)
             images.uploader = users.GetCurrentUser()
             key = images.put()
-            cpedialog.site_logo = "/rpc/img?img_id="+str(key)
+            cpedialog.site_logo = "/rpc/img?img_id=%s" % (key)
 
         cpedialog.put()
         util.flushCPedialog()
-        self.response.out.write(cpedialog.to_json)
+        self.redirect('/admin')
 
         
 class AdminPagesPage(BaseRequestHandler):

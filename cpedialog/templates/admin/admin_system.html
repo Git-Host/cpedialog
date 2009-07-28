@@ -150,6 +150,12 @@
         }
         document.forms["configForm"]["logo_images_space"].value = logo_images_space;
 
+        //replace the AJAX post form submit because of the bug of YUI in firefox 3.0
+        //see: http://developer.yahoo.com/yui/connection/#issues
+        var formObject = document.getElementById('configForm');
+        formObject.action = "/admin/system";
+        formObject.submit();
+/*
         var sUrl = "/admin/system?time=" + new Date().getTime();
         var updateSystemConfigurationSuccess = function(o) {
             if (o.responseText !== undefined) {
@@ -166,6 +172,7 @@
         var formObject = document.getElementById('configForm');
         YAHOO.util.Connect.setForm(formObject);
         YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
+*/
     }
 </script>
 <fieldset id="admin_system">
@@ -212,7 +219,7 @@
         <tr>
             <th><label for="logo_images">{% trans "Logo image" %}:</label></th>
             <td>
-                Current logo: <img src="{{BLOG.site_logo}}" alt="{{BLOG.title}}" id="site_logo_image"/> <span id="description_next"></span>
+                Current logo: <img src="{{BLOG.site_logo}}" alt="{{BLOG.title}}" id="site_logo_image"/> <span id="description_next">{% if BLOG.description_next_logo %}{{BLOG.}}{% endif %}</span>
                 <br/><br/>
                 <p><input type="checkbox" id="show_description" name="show_description" {% if BLOG.description_next_logo %}checked{% endif %}/> Show blog description next to logo. </p>
                 <div class="closed">
