@@ -142,9 +142,23 @@ class AdminSystemPage(BaseRequestHandler):
             cpedialog.google_ajax_feed_result_num = int(self.request.get("google_ajax_feed_result_num"))
         else:
             cpedialog.google_ajax_feed_enable = False
+
+        if self.request.get("show_description"):
+            cpedialog.description_next_logo = True
+        else:
+            cpedialog.description_next_logo = False
+
+        custom_logo = self.request.get("custom_logo")
+        if not custom_logo:
+            images = Images()
+            images.image = db.Blob(custom_logo)
+            images.uploader = users.GetCurrentUser()
+            key = images.put()
+            cpedialog.site_logo = "/rpc/img?img_id="+str(key)
+
         cpedialog.put()
         util.flushCPedialog()
-        return True
+        self.response.out.write(cpedialog.to_json)
 
         
 class AdminPagesPage(BaseRequestHandler):

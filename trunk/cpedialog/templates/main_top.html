@@ -37,9 +37,9 @@
         <div class="yui-g">
         <div class="yui-u first">
             <div id="title" style="vertical-align:top;">
-                <a href="/"><img src="/img/cpedia_zone.gif" alt="{{BLOG.title}}"
+                <a href="/"><img src="{{BLOG.site_logo}}" alt="{{BLOG.title}}"
                                  style="vertical-align:middle;padding-right:5px"></a>
-                Anything is possible, I believe!
+                {% if BLOG.description_next_logo %}{{BLOG.description}}{% endif %}
             </div>
         </div>
         <div class="yui-u">
