@@ -148,8 +148,11 @@ class AdminSystemPage(BaseRequestHandler):
         else:
             cpedialog.description_next_logo = False
 
+        custom_logo_url = self.request.get("custom_logo_url")
         custom_logo = self.request.get("custom_logo")
-        if custom_logo:
+        if custom_logo_url:
+            cpedialog.site_logo = custom_logo_url
+        elif custom_logo:
             images = Images()
             images.image = db.Blob(custom_logo)
             images.uploader = users.GetCurrentUser()
@@ -160,7 +163,6 @@ class AdminSystemPage(BaseRequestHandler):
         util.flushCPedialog()
         self.redirect('/admin')
 
-        
 class AdminPagesPage(BaseRequestHandler):
   @authorized.role('admin')
   def get(self):
