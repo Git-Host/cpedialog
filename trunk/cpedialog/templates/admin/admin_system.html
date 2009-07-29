@@ -13,15 +13,16 @@
     });
     (function(){
         var Dom = YAHOO.util.Dom;
-        var show_description = Dom.get("show_description");
-        var showDescription = function(){
-            if(show_description.checked){
-               Dom.get("description_next").innerHTML = Dom.get("description").value;
+        var logo_select = function(){
+            if(Dom.get("logo_select_url").checked){
+               Dom.get("custom_logo_url").disabled = false;
+               Dom.get("custom_logo").disabled = true;
             }else{
-                Dom.get("description_next").innerHTML = null;
+                Dom.get("custom_logo_url").disabled = true;
+                Dom.get("custom_logo").disabled = false;
             }
         };
-        YAHOO.util.Event.addListener(show_description,"click",showDescription);
+        YAHOO.util.Event.addListener(["logo_select_url","logo_select_upload"],"click",logo_select);
     })();
     function checkDelicious(){
         var delicious = document.getElementById("delicious_enable");
@@ -155,30 +156,12 @@
         var formObject = document.getElementById('configForm');
         formObject.action = "/admin/system";
         formObject.submit();
-/*
-        var sUrl = "/admin/system?time=" + new Date().getTime();
-        var updateSystemConfigurationSuccess = function(o) {
-            if (o.responseText !== undefined) {
-               // var result = YAHOO.lang.JSON.parse(o.responseText);
-                alert("Update System Configuration successfully.");
-                //YAHOO.util.Dom.get('site_logo_image').src= result.site_logo;
-            }
-        };
-        var callback =
-        {
-            success:updateSystemConfigurationSuccess,
-            failure:handleFailure
-        };
-        var formObject = document.getElementById('configForm');
-        YAHOO.util.Connect.setForm(formObject);
-        YAHOO.util.Connect.asyncRequest('POST', sUrl, callback);
-*/
     }
 </script>
 <fieldset id="admin_system">
     <legend>{% trans "System Configuration" %}</legend>
     <div class="fieldsetdiv">
-    <form method=post id="configForm" name="configForm">
+    <form method=post id="configForm" name="configForm" enctype= "multipart/form-data">
     <table cellspacing="0" class="yui-skin-sam noborder_table">
         <tr>
             <th><label for="title">{% trans "Blog Title" %}:</label></th>
@@ -219,13 +202,17 @@
         <tr>
             <th><label for="logo_images">{% trans "Logo image" %}:</label></th>
             <td>
-                Current logo: <img src="{{BLOG.site_logo}}" alt="{{BLOG.title}}" id="site_logo_image"/> <span id="description_next">{% if BLOG.description_next_logo %}{{BLOG.}}{% endif %}</span>
-                <br/><br/>
+                <br/>
                 <p><input type="checkbox" id="show_description" name="show_description" {% if BLOG.description_next_logo %}checked{% endif %}/> Show blog description next to logo. </p>
-                <div class="closed">
-                <p><b>Upload a new image to use as your logo:</b>
-                </div>
-                <p><input name="custom_logo" size="60" type="file"></p>
+                <br/>
+                <p><input type="radio" checked="checked" name="logo_select" id="logo_select_url"/>
+                <b>Set the logo image url:</b></p>
+                <input id="custom_logo_url" name="custom_logo_url" size="60" type="text" value="{{BLOG.site_logo}}" />
+                 <br/>
+                 <br/>
+                <p><input type="radio" name="logo_select" id="logo_select_upload"/>
+                <b>Upload a new image to use as your logo:</b></p>
+                <input name="custom_logo" id="custom_logo" size="60" type="file" disabled="disabled">
                 <p><small>{% trans "The image file should be in PNG, JPG or GIF format and a maximum of 200 x 60 pixels. Larger images will be scaled automatically." %}</small></p>
             </td>
         </tr>
@@ -282,7 +269,7 @@
             <th><label for="delicious_enable">del.icio.us {% trans "enable" %}:</label></th>
             <td>
                 <input id="delicious_enable" name="delicious_enable" onclick="checkDelicious()" type="checkbox" {% if BLOG.delicious_enable %} checked {% endif %}/>
-                <p><small>{% trans "Delicious is a Social Bookmarking service." %} </small></p>
+                <small>{% trans "Delicious is a Social Bookmarking service." %} </small>
             </td>
         </tr>
         <tr>
@@ -316,12 +303,13 @@
             <th><label for="analytics_enable">{% trans "Google Analytics enable" %}:</label></th>
             <td>
                 <input id="analytics_enable" name="analytics_enable" type="checkbox" {% if BLOG.analytics_enable %} checked {% endif %}/>
+                <small>You may track visits to your site in <a href="http://www.google.com/analytics/">Google Analytics</a>.</small>
             </td>
         </tr>
         <tr>
             <th><label for="analytics_web_property_id">{% trans "Google Analytics Web Property ID" %}:</label></th>
             <td>
-                <input id="analytics_web_property_id" name="analytics_web_property_id"  size="15" type="text" value="{{BLOG.analytics_web_property_id}}"/>
+                <input id="analytics_web_property_id" name="analytics_web_property_id"  size="15" type="text" value="{{BLOG.analytics_web_property_id}}"/> <small>Example: UA-1234567-1</small>
             </td>
         </tr>
         <tr>
