@@ -4,7 +4,7 @@
 = Introduction =
 The new features or refactors in version 2.0
 
-
+   
 = Details =
 
 ===What's new in this version?===
