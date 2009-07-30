@@ -1,5 +1,5 @@
 #summary This article will tell you how to install cpedialog on appengine.
-#labels cpedialog,install
+#labels cpedialog,install,Featured
 
 == Preface ==
 
