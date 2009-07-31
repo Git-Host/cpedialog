@@ -1,0 +1,118 @@
+.p_bar a {
+ 	float: left;
+	text-decoration: none;
+}
+
+.p_input {
+	background: #EBEBEB;
+	border: 0;
+	height: 16px;
+    margin: 0;
+	width: 40px;
+}
+
+.p_total {
+	border: 1px solid #CEDEF7;
+	border-right: 0;
+    padding:1px 5px;
+}
+
+.p_pages {
+	border: 1px solid #CEDEF7;
+	margin-right: 1px;
+	vertical-align: middle;
+    padding:1px 5px;
+}
+
+.p_num {
+	border: 1px solid #CEDEF7;
+	margin-right: 1px;
+	vertical-align: middle;
+    padding:1px 5px;
+}
+
+a:hover .p_num {
+	background-color: #DEF7FF;
+	border: 1px solid #CEDEF7;
+ 	text-decoration: none;
+}
+
+.p_redirect {
+	border: 1px solid #CEDEF7;
+    padding:0px 5px 2px;
+}
+
+a:hover .p_redirect {
+	border: 1px solid #CEDEF7;
+	text-decoration: none;
+}
+
+.p_curpage {
+	background-color: #FFDE7A;
+	border: 1px solid #CEDEF7;
+	margin-right: 1px;
+	vertical-align: middle;
+    padding:1px 5px;
+}
+
+/* Start Tag Cloud CSS */
+.cloud {text-decoration:none;padding:0 1px 0 1px; line-height:150%;text-align:justify;background: #FAFAFA none repeat scroll 0 0;}
+.cloud a{text-decoration:none}
+a.tag1 { font-size: 0.9em; font-weight: 100; }
+a.tag2, a.tag3 { font-size: 1.0em; }
+a.tag4 ,a.tag5, a.tag6 { font-size: 1.0em; }
+a.tag7, a.tag8, a.tag9  { font-size: 1.1em; }
+a.tag10, a.tag11, a.tag12 { font-size: 1.2em; }
+a.tag13, a.tag14, a.tag15 { font-size: 1.3em; }
+a.tag16, a.tag17, a.tag18 { font-size: 1.4em; }
+a.tag19, a.tag20, a.tag21 { font-size: 1.5em; }
+a.tag22, a.tag23, a.tag24 { font-size: 1.6em; }
+a.tag25, a.tag26, a.tag27 { font-size: 1.7em; }
+a.tag28, a.tag29, a.tag30 { font-size: 1.8em; }
+/* End Tag Cloud CSS */
+
+/*Start Google Ajax Feed CSS
+  override some default style.
+ */
+.gfg-root {
+    border: 0 !important;
+}
+
+.gfg-title {
+    color: #333 !important;
+    background-color: #EEEEEE !important;
+}
+
+.gfg-title a {
+    color: #555 !important;
+}
+
+.gfg-subtitle {
+    color: #333 !important;
+    padding-left: 5px !important;    
+    background-color: #EEEEEE !important;
+}
+
+.gfg-subtitle a {
+    color: #333 !important;
+}
+
+.gfg-listentry-odd {
+    background-color: #F6F6F6 !important;
+}
+
+.gfg-listentry-even {
+    background-color: #FAFAFA !important;
+}
+
+.gfg-listentry {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.gfg-root .gfg-entry .gf-result {
+    padding-left: 10px !important;
+    padding-right: 5px !important;
+}
+
+/*End Google Ajax Feed CSS*/
