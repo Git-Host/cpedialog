@@ -86,9 +86,11 @@ class MainPage(BaseRequestHandler):
     obj_page = util.getBlogPagination(page)
 
     recentReactions = util.getRecentReactions()
+    recentFeatured = util.getRecentFeatured()
     template_values = {
       'page':obj_page,
       'recentReactions':recentReactions,
+      'recentFeatured':recentFeatured,
       }
     self.generate('blog_main.html',template_values)
 
@@ -101,9 +103,11 @@ class BlogPageHandle(BaseRequestHandler):
         self.redirect('/')
 
     recentReactions = util.getRecentReactions()
+    recentFeatured = util.getRecentFeatured()
     template_values = {
       'page':obj_page,
       'recentReactions':recentReactions,
+      'recentFeatured':recentFeatured,
       }
     self.generate('blog_main.html',template_values)
 
@@ -159,6 +163,7 @@ class AddBlog(BaseRequestHandler):
         util.flushBlogMonthCache(blog)
         util.flushBlogPagesCache()
         util.flushTagList()
+        util.flushRecentFeatured()
         self.redirect('/'+blog.relative_permalink())
 
 class EditBlog(BaseRequestHandler):
@@ -187,6 +192,7 @@ class EditBlog(BaseRequestHandler):
         blog.update()
         util.flushBlogMonthCache(blog)
         util.flushBlogPagesCache()
+        util.flushRecentFeatured()
         self.redirect('/'+blog.relative_permalink())
 
 class DeleteBlog(BaseRequestHandler):
@@ -209,6 +215,7 @@ class DeleteBlog(BaseRequestHandler):
         blog.delete()
         util.flushBlogMonthCache(blog)
         util.flushBlogPagesCache()
+        util.flushRecentFeatured()                
     self.redirect('/')
 
 class AddBlogReaction(BaseRequestHandler):
@@ -371,10 +378,12 @@ class TagHandler(BaseRequestHandler):
         tag = encoded_tag
         blogs = Weblog.all().filter('tags', tag).order('-date')
         recentReactions = util.getRecentReactions()
+        recentFeatured = util.getRecentFeatured()
         template_values = {
           'blogs':blogs,
           'tag':tag,
           'recentReactions':recentReactions,
+          'recentFeatured':recentFeatured,
           }
         self.generate('tag.html',template_values)
 
@@ -385,10 +394,12 @@ class DeliciousHandler(BaseRequestHandler):
         cpedialog = util.getCPedialog()
         posts = util.getDeliciousPost(cpedialog.delicious_username,tag)
         recentReactions = util.getRecentReactions()
+        recentFeatured = util.getRecentFeatured()
         template_values = {
           'posts':posts,
           'tag':tag,
           'recentReactions':recentReactions,
+          'recentFeatured':recentFeatured,
           }
         self.generate('tag_delicious.html',template_values)
 
@@ -430,10 +441,12 @@ class SearchHandler(BaseRequestHandler):
             self.redirect('/')
 
         recentReactions = util.getRecentReactions()
+        recentFeatured = util.getRecentFeatured()
         template_values = {
           'search_term':search_term,
           'page':obj_page,
           'recentReactions':recentReactions,
+          'recentFeatured':recentFeatured,
           }
         self.generate('blog_main.html',template_values)
 
