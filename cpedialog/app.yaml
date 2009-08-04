@@ -32,6 +32,10 @@ handlers:
   static_files: img/favicon.ico
   upload: img/favicon.ico
   
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
+
 - url: /crossdomain.xml
   static_files: img/crossdomain.xml
   upload: img/crossdomain.xml
@@ -46,6 +50,10 @@ handlers:
 - url: /rpc_relay.html
   static_files: jscripts/friendconnect/rpc_relay.html
   upload: jscripts/friendconnect/rpc_relay.html  
+
+- url: /appadmin/.*
+  script: $PYTHON_LIB/google/appengine/ext/admin
+  login: admin
 
 - url: /.*
   script: main.py
