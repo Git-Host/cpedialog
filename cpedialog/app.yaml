@@ -55,12 +55,6 @@ handlers:
   script: $PYTHON_LIB/google/appengine/ext/admin
   login: admin
 
-- url: /images
-  static_dir: images_cpedia
-
-- url: /album
-  static_dir: album_cpedia
-
 - url: /.*
   script: main.py
 
