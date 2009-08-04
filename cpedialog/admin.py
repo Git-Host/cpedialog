@@ -163,6 +163,7 @@ class AdminSystemPage(BaseRequestHandler):
         cpedialog.put()
         util.flushCPedialog()
         self.redirect('/admin')
+        return
 
 class AdminPagesPage(BaseRequestHandler):
   @authorized.role('admin')
@@ -243,7 +244,7 @@ class AdminLayoutPage(BaseRequestHandler):
       obj_page = util.getBlogPagination(page)
       if obj_page is None:
           self.redirect('/')
-
+          return
       recentReactions = util.getRecentReactions()
       template_values = {
         'page':obj_page,
