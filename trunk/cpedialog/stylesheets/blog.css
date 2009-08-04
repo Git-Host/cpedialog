@@ -327,6 +327,11 @@ a:hover {
     border-bottom: 1px dotted #cccccc;
 }
 
+#featured {
+    border-bottom: 1px dotted #cccccc;
+    margin-bottom:10px;
+}
+
 .commenttime {
     font: 0.7em georgia, "times new roman", serif, italic;
 }

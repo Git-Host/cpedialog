@@ -114,6 +114,21 @@ def getRecentReactions():
 
     return recentReactions
 
+#get recent featured article or blog. Cached.
+def getRecentFeatured():
+    key_ = "blog_recentFeatured_key"
+    try:
+        recentFeatured = memcache.get(key_)
+    except Exception:
+        recentFeatured = None
+    if recentFeatured is None:
+        recentFeatured = Weblog.all().filter('tags', "featured").order('-date').fetch(10)
+        memcache.add(key=key_, value=recentFeatured, time=3600)
+    else:
+        getLogger(__name__).debug("getRecentFeatured from cache. ")
+
+    return recentFeatured
+
 
 #get blog pagination. Cached.
 def getBlogPagination(page):
@@ -284,6 +299,10 @@ def flushArchiveBlog(monthyear):
 #flush recent comments.
 def flushRecentReactions():
     memcache.delete("blog_recentReactions_key")
+
+#flush recent featured.
+def flushRecentFeatured():
+    memcache.delete("blog_recentFeatured_key")
 
 #flush blog pagination.
 def flushBlogPagesCache():
