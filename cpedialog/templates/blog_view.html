@@ -43,7 +43,7 @@
             <a href='/delete/blog/{{blog.key.id}}'>{% trans "delete" %}</a>:</p>
             {% endif  %}
         {% ifnotequal blog.lastModifiedDate Null %}
-        {% blocktrans with blog.lastModifiedDate as blog_lastModData and blog.lastModifiedBy as blog_lastModBy %}Edited at {{blog_lastModData}} by {{blog_lastModBy}}.{% endblocktrans %}
+        {% blocktrans with blog.lastModifiedDate|date:"Y-m-d H:i" as blog_lastModData and blog.lastModifiedBy as blog_lastModBy %}Edited at {{blog_lastModData}} by {{blog_lastModBy}}.{% endblocktrans %}
         {% endifnotequal %}
     </DIV>
 </div>
@@ -87,7 +87,7 @@
                         {% endif %}
 
                         {% ifnotequal reaction.lastModifiedDate Null %}
-                        {% blocktrans with reaction.lastModifiedDate as react_lastModData and reaction.lastModifiedBy as react_lastModBy %}Edited at {{react_lastModData}} by {{react_lastModBy}}.{% endblocktrans %}
+                        {% blocktrans with reaction.lastModifiedDate|date:"Y-m-d H:i" as react_lastModData and reaction.lastModifiedBy as react_lastModBy %}Edited at {{react_lastModData}} by {{react_lastModBy}}.{% endblocktrans %}
                         {% endifnotequal %}
                     </span>
             </DIV>
