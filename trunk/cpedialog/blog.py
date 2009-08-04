@@ -101,7 +101,7 @@ class BlogPageHandle(BaseRequestHandler):
     obj_page = util.getBlogPagination(page)
     if obj_page is None:
         self.redirect('/')
-
+        return
     recentReactions = util.getRecentReactions()
     recentFeatured = util.getRecentFeatured()
     template_values = {
@@ -165,6 +165,7 @@ class AddBlog(BaseRequestHandler):
         util.flushTagList()
         util.flushRecentFeatured()
         self.redirect('/'+blog.relative_permalink())
+        return
 
 class EditBlog(BaseRequestHandler):
     @authorized.role("admin")
@@ -181,6 +182,7 @@ class EditBlog(BaseRequestHandler):
         blog= Weblog.get_by_id(int(blogId))
         if(blog is None):
             self.redirect('/')
+            return
         if blog.entrytype == 'page':
             blog.permalink = self.request.get('permalink') 
         blog.title = self.request.get('title_input')
@@ -194,6 +196,7 @@ class EditBlog(BaseRequestHandler):
         util.flushBlogPagesCache()
         util.flushRecentFeatured()
         self.redirect('/'+blog.relative_permalink())
+        return
 
 class DeleteBlog(BaseRequestHandler):
   @authorized.role("admin")
@@ -217,6 +220,7 @@ class DeleteBlog(BaseRequestHandler):
         util.flushBlogPagesCache()
         util.flushRecentFeatured()                
     self.redirect('/')
+    return
 
 class AddBlogReaction(BaseRequestHandler):
   def post(self):
@@ -224,6 +228,7 @@ class AddBlogReaction(BaseRequestHandler):
     blog= Weblog.get_by_id(int(blogId_))
     if(blog is None):
       self.redirect('/')
+      return
     blogReaction = WeblogReactions()
     blogReaction.weblog = blog
     blogReaction.content = self.request.get('text_input')
@@ -266,6 +271,7 @@ class AddBlogReaction(BaseRequestHandler):
     blogReaction.save()
     util.flushRecentReactions()
     self.redirect('/'+blog.relative_permalink())
+    return
 
 class EditBlogReaction(BaseRequestHandler):
     @authorized.role("user")
@@ -282,6 +288,7 @@ class EditBlogReaction(BaseRequestHandler):
         blogReaction= WeblogReactions.get_by_id(int(reactionId))
         if(blogReaction is None):
             self.redirect('/')
+            return
         blogReaction.content = self.request.get('text_input')
         blogReaction.authorWebsite = self.request.get('website')
         user = users.get_current_user()
@@ -295,6 +302,7 @@ class EditBlogReaction(BaseRequestHandler):
         blogReaction.lastModifiedDate = datetime.datetime.now()
         blogReaction.put()
         self.redirect('/'+blogReaction.weblog.relative_permalink())
+        return
 
 
 class DeleteBlogReaction(BaseRequestHandler):
@@ -314,6 +322,7 @@ class DeleteBlogReaction(BaseRequestHandler):
         db.delete(blogReaction)
         util.flushRecentReactions()
     self.redirect('/'+blogReaction.weblog.relative_permalink())
+    return
 
 
 class ArchiveHandler(BaseRequestHandler):
@@ -342,6 +351,7 @@ class ArticleHandler(BaseRequestHandler):
         blog = db.Query(Weblog).filter('permalink =',perm_stem).get()
         if(blog is None):
             self.redirect('/')
+            return
         reactions = db.GqlQuery("select * from WeblogReactions where weblog =:1  order by date", blog)
         template_values = {
           'blog': blog,
@@ -355,6 +365,7 @@ class PageHandler(BaseRequestHandler):
         blog = db.Query(Weblog).filter('permalink =',perm_stem).get()
         if(blog is None):
             self.redirect('/')
+            return
         reactions = db.GqlQuery("select * from WeblogReactions where weblog =:1  order by date", blog)
         template_values = {
           'blog': blog,
@@ -439,6 +450,7 @@ class SearchHandler(BaseRequestHandler):
             obj_page  =  Paginator(query,1000)
         except InvalidPage:
             self.redirect('/')
+            return
 
         recentReactions = util.getRecentReactions()
         recentFeatured = util.getRecentFeatured()

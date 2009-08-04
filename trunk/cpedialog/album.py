@@ -127,6 +127,7 @@ class UserHandler(BaseRequestHandler):
     album = db.Query(Album).filter('album_username =',username).get()
     if album is None:
         self.redirect("/albums")
+        return
     feed = self.getAlbumFeedEntry(album.album_username)
     template_values = self.validatorFeedAndReturnTemplate(feed,album.album_username,usernames)
     self.generate('album_main.html',template_values)
@@ -138,6 +139,7 @@ class UserPrivateHandler(BaseRequestHandler):
     album = db.Query(Album).filter('album_username =',username).get()
     if album is None:
         self.redirect("/albums")
+        return
     feed = self.getAlbumFeedEntry(album.album_username)
     template_values = self.validatorFeedAndReturnTemplate(feed,album.album_username,usernames)
     self.generate('album_main.html',template_values)

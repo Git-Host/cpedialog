@@ -106,6 +106,7 @@ class Logout(BaseRequestHandler):
             self.redirect(users.create_logout_url(self.request.uri))
             return
         self.redirect("/")
+        return
 
 class Signup(BaseRequestHandler):
     def get(self, error_msg=None):
@@ -136,6 +137,7 @@ class Signup(BaseRequestHandler):
             #init() the session
             sessions.Session().login_user(user)
             self.redirect("/")
+            return
         else:
             error_msg = "That email address has already been registered."
         template_values = {
@@ -170,6 +172,7 @@ class Login(BaseRequestHandler):
             else:
                 sessions.Session().login_user(user)
                 self.redirect("/")
+                return
         template_values = {
            "email": email,
            "error": error_msg
@@ -293,11 +296,13 @@ class LoginOpenIDFinish(BaseRequestHandler):
                 user.put()
                 self.session.login_user(user)
                 self.redirect('/user')
+                return
             else:
                 user = users[0]
 
             self.session.login_user(user)
             self.redirect('/')
+            return
         else:
             #when user add openid from profile setting, just return status.
             if self.session['openid_userid']:
