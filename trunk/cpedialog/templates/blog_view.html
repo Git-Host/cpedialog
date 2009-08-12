@@ -95,27 +95,26 @@
         <br>
         {% endfor %}
         {% endifnotequal %}
-        <br> <br> <br>
         <div class="commentlabel">
             <h4> {% trans "Add a reaction" %} </h4>
         </div>
         <form method=post action='/addBlogReaction?blogId={{blog.key.id}}' onsubmit="return parseBlogContent()" id="reactionForm">
             <h2 class="comments-post">{% trans "About You" %}</h2>
-            <div>
+            <div class="input">
                 <input id="name_input" name='name_input' type=text size="60"
                        value="{% if user %}{{user.nickname}}{%else%}{{blogReaction.user}}{%endif%}" {% if user %}readonly{%endif%}>
                 <label for="name_input"><b>{% trans "Name" %}</b> ({% trans "required" %})</label>
             </div>
-            <div>
+            <div class="input">
                 <input id="mail" name="mail" type=text size="60" value="{% if user %}{{user.email}}{%else%}{%if blogReaction%}{{blogReaction.authorEmail}}{%endif%}{%endif%}"
                 {% if user %}readonly{%endif%}>
                 <label for="mail"><b>{% trans "Mail" %}</b> ({% trans "required" %})</label>
             </div>
-            <div>
+            <div class="input">
                 <input id="website" name="website" type=text size="60" value="{%if blogReaction%}{{blogReaction.authorWebsite}}{%endif%}">
                 <label for="website"><b>{% trans "Website" %}</b></label>
             </div>
-            <div id="recaptcha">
+            <div id="recaptcha" class="input">
                 {%if captchahtml%}
                 <script>
                 var RecaptchaOptions = {
