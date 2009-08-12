@@ -17,23 +17,12 @@ indexes:
   - name: order
     direction: desc
 
-# Unused in query history -- copied from input.
-- kind: Archive
-  properties:
-  - name: date
-    direction: desc
-
 # Used 38 times in query history.
 - kind: Feeds
   properties:
   - name: valid
   - name: order
 
-# Unused in query history -- copied from input.
-- kind: Greeting
-  properties:
-  - name: date
-    direction: desc
 
 # Unused in query history -- copied from input.
 - kind: Images
@@ -91,7 +80,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 163 times in query history.
+# Used 169 times in query history.
 - kind: Weblog
   properties:
   - name: entrytype
@@ -125,7 +114,7 @@ indexes:
   - name: permalink
     direction: desc
 
-# Used 29 times in query history.
+# Used 30 times in query history.
 - kind: Weblog
   properties:
   - name: tags
