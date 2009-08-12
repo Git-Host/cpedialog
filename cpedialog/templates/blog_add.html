@@ -213,12 +213,12 @@
             {% endifequal %}
         </h4>
         {% ifnotequal action "editBlogReaction" %}
-        <div id="blogtitle">
+        <div id="blogtitle" class="input">
          <input name=title_input id="title_input" type=text size="60"
                value='{% if blog %}{{blog.title}}{% endif %}'>
             <label for="title_input"><b>{% trans "Title" %}</b>({% trans "required" %})</label>
         </div>
-        <div id="blogtags">
+        <div id="blogtags" class="input">
          <input type=text size="60" id="tags" name="tags" value="{% if blog %}{{blog.tags_commas}}{% endif %}">
          <label for="tags"><b>{% trans "Tags" %}</b>({% trans "comma separated without space" %}) </label>
         </div>
@@ -226,7 +226,7 @@
 
         {% ifequal action "editBlog"%}
         {% ifequal blog.entrytype "page"%}
-        <div id="blogpermalink">
+        <div id="blogpermalink" class="input">
          <input type=text size="60" id="permalink" name="permalink" value="{% if blog %}{{blog.permalink}}{% endif %}">
          <label for="permalink"><b>{% trans "Permalink" %}</b> </label>
         </div>
@@ -235,15 +235,15 @@
 
         {% ifequal action "editBlogReaction" %}
         <h2 class="comments-post">{% trans "About the author" %}</h2>
-        <div>
+        <div class="input">
             <input id="name_input" name='name_input' type=text size="60" value="{% if blogReaction %}{{blogReaction.user}}{% endif %}">
             <label for="name_input"><b>{% trans "Name" %}</b> ({% trans "required" %})</label>
         </div>
-        <div>
+        <div class="input">
             <input id="mail" name="mail" type=text size="60" value="{% if blogReaction %}{{blogReaction.authorEmail}}{% endif %}">
             <label for="mail"><b>{% trans "Mail" %}</b> ({% trans "required" %})</label>
         </div>
-        <div>
+        <div class="input">
             <input id="website" name="website" type=text size="60" value="{% if blogReaction %}{{blogReaction.authorWebsite}}{% endif %}">
             <label for="website"><b>{% trans "Website" %}</b></label>
         </div>

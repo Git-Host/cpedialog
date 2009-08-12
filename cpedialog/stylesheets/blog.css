@@ -374,7 +374,7 @@ a:hover {
     padding-top: 10px;
 }
 
-#blogview div {
+#blogview div .input {
     margin-bottom: 5px;
 }
 

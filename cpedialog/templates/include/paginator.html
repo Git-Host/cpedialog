@@ -8,7 +8,7 @@
     Ex.handlePagination = function (state) {
         window.location.href = "/page/"+ state.page;
         // Update the Paginator's state, confirming change
-        //Ex.paginator.setState(state);
+        Ex.paginator.setState(state);
     };
     // Create the Paginator widget and subscribe to its changeRequest event
     Ex.paginator = new YAHOO.widget.Paginator({

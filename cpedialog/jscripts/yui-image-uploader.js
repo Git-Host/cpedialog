@@ -37,48 +37,46 @@ function yuiImgUploader(rte, upload_url, upload_image_name) {
 							'<input type="file" id="insertimage_upload" name="'+upload_image_name+
 							'" size="10" style="width: 15em"/>'+
 							'<a href="#"  id="insertimage_upload_btn" style="width: 20%; margin-left: 2em;">Upload Image</a>'+
-							'</label>'; 
-					
+							'</label>';
 						var img_elem=Dom.get('text_input_insertimage_url');
 						Dom.getAncestorByTagName(img_elem, 'form').encoding = 'multipart/form-data';
-						
-						Dom.insertAfter(
-							label,
-							img_elem.parentNode);
-							
-						YAHOO.util.Event.on ( 'insertimage_upload_btn', 'click', function(ev) {
-// 							//alert ( "Upload Click" );
-							YAHOO.util.Event.stopEvent(ev); // no default click action
-							YAHOO.util.Connect.setForm ( img_elem.form, true, true );
-							var c=YAHOO.util.Connect.asyncRequest(
-							'POST', upload_url, {
-								upload:function(r){
-									try {
-                                        // strip pre tags if they got added somehow
-										resp=r.responseText.replace( /<pre>/i, '').replace ( /<\/pre>/i, '');
-										var o=eval('('+resp+')');
-										if (o.status=='UPLOADED') {
-											Dom.get('insertimage_upload').value='';
-											Dom.get('text_input_insertimage_url').value=o.image_url;
-											// tell the image panel the url changed
-											// hack instead of fireEvent('blur')
-											// which for some reason isn't working
-											Dom.get('text_input_insertimage_url').focus();
-											Dom.get('insertimage_upload').focus();
-										} else {
-										alert ( "Upload Failed: "+o.status );
-									}
+						var insertimage_upload = Dom.get("insertimage_upload");
+                        if (YAHOO.lang.isNull(insertimage_upload)) {
+                            Dom.insertAfter(
+                                    label,
+                                    img_elem.parentNode);
+                            YAHOO.util.Event.on('insertimage_upload_btn', 'click', function(ev) {
+                                YAHOO.util.Event.stopEvent(ev); // no default click action
+                                YAHOO.util.Connect.setForm(img_elem.form, true, true);
+                                var c = YAHOO.util.Connect.asyncRequest(
+                                        'POST', upload_url, {
+                                    upload:function(r) {
+                                        try {
+                                            // strip pre tags if they got added somehow
+                                            resp = r.responseText.replace(/<pre>/i, '').replace(/<\/pre>/i, '');
+                                            var o = eval('(' + resp + ')');
+                                            if (o.status == 'UPLOADED') {
+                                                Dom.get('insertimage_upload').value = '';
+                                                Dom.get('text_input_insertimage_url').value = o.image_url;
+                                                // tell the image panel the url changed
+                                                // hack instead of fireEvent('blur')
+                                                // which for some reason isn't working
+                                                Dom.get('text_input_insertimage_url').focus();
+                                                Dom.get('insertimage_upload').focus();
+                                            } else {
+                                                alert("Upload Failed: " + o.status);
+                                            }
 
-									} catch ( eee ) {
-										YAHOO.log( eee.message, 'error' )
-									}
-								}
-							}
-							);
-							return false;
-						});
-						
-					} catch ( ee ) { YAHOO.log( ee.message, 'error' ) }
+                                        } catch (eee) {
+                                            YAHOO.log(eee.message, 'error')
+                                        }
+                                    }
+                                }
+                                        );
+                                return false;
+                            });
+                        }
+                    } catch ( ee ) { YAHOO.log( ee.message, 'error' ) }
 				});
 			} catch ( e ) {
 				YAHOO.log( e.message, 'error' )
