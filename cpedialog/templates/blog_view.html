@@ -108,7 +108,7 @@
             <div class="input">
                 <input id="mail" name="mail" type=text size="60" value="{% if user %}{{user.email}}{%else%}{%if blogReaction%}{{blogReaction.authorEmail}}{%endif%}{%endif%}"
                 {% if user %}readonly{%endif%}>
-                <label for="mail"><b>{% trans "Mail" %}</b> ({% trans "required" %})</label>
+                <label for="mail"><b>{% trans "Mail" %}</b>  (will not be published) ({% trans "required" %})</label>
             </div>
             <div class="input">
                 <input id="website" name="website" type=text size="60" value="{%if blogReaction%}{{blogReaction.authorWebsite}}{%endif%}">
