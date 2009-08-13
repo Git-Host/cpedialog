@@ -72,37 +72,6 @@
         var state = 'off';        
         var myEditor = new YAHOO.widget.Editor('text_input', myConfig);
         myEditor.on('toolbarLoaded', function() {
-            var syntaxhighlighter = {
-                type: 'push', //Using a standard push button
-                label: 'Insert Highlighter Code', //The name/title of the button
-                value: 'inserthighlightercode', //The "Command" for the button
-                menu: function() {
-                    //Create the Overlay instance we are going to use for the menu
-                    var menu = new YAHOO.widget.Overlay('inserthighlightercode', {
-                        width: '210px',
-                        height: '220px',
-                        xy: [-9000,-9000],
-                        visible: false
-                    });
-                    //Setting the body to the container that we wish to render the calendar into.
-                    menu.setBody('<div id="cal1Container"></div>');
-                    //Set the context to the bottom left corner of the Insert Date button
-                    menu.beforeShowEvent.subscribe(function() {
-                        menu.cfg.setProperty('context', [
-                            myEditor.toolbar.getButtonByValue('inserthighlightercode').get('element'),
-                            'tl',
-                            'bl'
-                        ]);
-                    });
-                    //Show the Overlay and prep the calendar's selected date
-                    menu.showEvent.subscribe(function() {
-                    });
-                    menu.render(document.body);
-                    menu.element.style.visibility = 'hidden';
-                    //return the Overlay instance here
-                    return menu;
-                }() //This fires the function right now to return the Overlay Instance to the menu property..
-            };
             var codeConfig = {
                 type: 'push', label: 'Edit HTML Code', value: 'editcode'
             };
