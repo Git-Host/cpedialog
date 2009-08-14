@@ -70,6 +70,11 @@ a:hover {
     overflow: hidden;
 }
 
+/*yui rich text editor text_input_toolbar */
+#text_input_toolbar a:hover{
+    background-color:transparent!important;
+}
+
 /* Header Navigation */
 #nav {display: block!important; margin: 0 0 15px 0!important; padding: 0;height: 50px!important; clear: both; font-size: 123.1%;}
 #nav li {float: left; clear: none; }
@@ -487,7 +492,7 @@ html>body .album_thumbnail {
 
 #recaptcha {
     margin-bottom: 0 !important;
-    padding: 0;
+    padding: 0!important;
 }
 
 #recaptcha div {
