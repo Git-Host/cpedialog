@@ -255,7 +255,7 @@ def getCSS():
     if css is None:
         css = CSSFile().all().filter("default",True).fetch(1)
         if len(css) == 0:
-            css = [ {'filename' : '/stylesheets/blog.css'}, {'filename' : '/stylesheets/weblog.css'} ]
+            css = [ {'filename' : '/stylesheets/blog.css'}]
         memcache.add(key=key_, value=css, time=36000)            
     else:
         getLogger(__name__).debug("get CSS from cache. ")

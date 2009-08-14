@@ -57,8 +57,7 @@ a:hover {
 
 #blogcontainer {
     border: 1px #cccccc solid;
-    padding-bottom: 10px;
-    /*padding-top: 10px;*/
+    padding-bottom: 10px; /*padding-top: 10px;*/
 }
 
 #footer {
@@ -71,17 +70,52 @@ a:hover {
 }
 
 /*yui rich text editor text_input_toolbar */
-#text_input_toolbar a:hover{
-    background-color:transparent!important;
+#text_input_toolbar a:hover {
+    background-color: transparent !important;
 }
 
 /* Header Navigation */
-#nav {display: block!important; margin: 0 0 15px 0!important; padding: 0;height: 50px!important; clear: both; font-size: 123.1%;}
-#nav li {float: left; clear: none; }
-#nav li a {background: transparent url(/img/nav-split.gif) no-repeat 100% 14px!important; display: block; margin: 0; padding: 15px 10px 14px; color: #0092e8; position: relative; text-decoration:none!important;}
-.last a {background-image: none!important;}
-#nav li a:hover {text-decoration: none!important; padding-bottom: 6px!important; border-bottom: 2px solid #0092e8!important;background-color:transparent!important;}
-#nav_back{background: transparent url(/img/menu_background.png) repeat-x  0 !important;height: 50px!important;left: 0; right: 0;}
+#nav {
+    display: block !important;
+    margin: 0 0 15px 0 !important;
+    padding: 0;
+    height: 50px !important;
+    clear: both;
+    font-size: 123.1%;
+}
+
+#nav li {
+    float: left;
+    clear: none;
+}
+
+#nav li a {
+    background: transparent url(/img/nav-split.gif) no-repeat 100% 14px !important;
+    display: block;
+    margin: 0;
+    padding: 15px 10px 14px;
+    color: #0092e8;
+    position: relative;
+    text-decoration: none !important;
+}
+
+.last a {
+    background-image: none !important;
+}
+
+#nav li a:hover {
+    text-decoration: none !important;
+    padding-bottom: 6px !important;
+    border-bottom: 2px solid #0092e8 !important;
+    background-color: transparent !important;
+}
+
+#nav_back {
+    background: transparent url(/img/menu_background.png) repeat-x 0 !important;
+    height: 50px !important;
+    left: 0;
+    right: 0;
+}
 
 /* collapse div for hide/show the grid_menu_right */
 .gc-collapsible {
@@ -98,16 +132,15 @@ a:hover {
     background: transparent url(/img/hide-arrow.gif) no-repeat scroll left top;
     height: 12px;
     width: 4px;
-    position: absolute;    
+    position: absolute;
 }
 
 .gc-collapsible-arrow-collapsed {
-    background: transparent url(/img/show-arrow.gif) no-repeat scroll left top!important;
+    background: transparent url(/img/show-arrow.gif) no-repeat scroll left top !important;
     height: 12px;
     width: 4px;
     position: absolute;
 }
-
 
 #imagetable .thumbnail {
     background: white none repeat scroll 0 0;
@@ -139,6 +172,7 @@ a:hover {
 .post {
     border-bottom: 1px dotted #cccccc;
     margin-bottom: 10px;
+    padding-bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -226,7 +260,7 @@ a:hover {
 }
 
 #login, #tagcloud, #ajaxfeed {
-    /*border-bottom: 1px dashed #b2b2b2;*/
+/*border-bottom: 1px dashed #b2b2b2;*/
     padding: 10px 0;
 }
 
@@ -243,12 +277,12 @@ a:hover {
     padding-top: 0;
 }
 
-#login ul{
+#login ul {
     list-style-type: none;
     margin: 0;
 }
 
-#login ul li{
+#login ul li {
     margin: 0 0 0.5em 0.5em;
     padding: 0 0 0 5px;
 
@@ -262,7 +296,7 @@ a:hover {
 .feedth {
     width: 200px !important;
     word-break: break-all;
-    white-space:nowrap;
+    white-space: nowrap;
     overflow: hidden;
 }
 
@@ -298,7 +332,7 @@ a:hover {
 
 #menu_right {
     padding-right: 10px;
-    padding-top:10px;
+    padding-top: 10px;
 }
 
 #menu_right ul {
@@ -334,7 +368,7 @@ a:hover {
 
 #featured {
     border-bottom: 1px dotted #cccccc;
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
 .commenttime {
@@ -361,10 +395,10 @@ a:hover {
 }
 
 #bloglist {
-    /*background: url(/img/threecolbg.gif) right repeat-y;*/
+/*background: url(/img/threecolbg.gif) right repeat-y;*/
     padding-left: 10px;
     padding-right: 10px;
-    padding-top:10px;
+    padding-top: 10px;
 }
 
 #pagination {
@@ -492,7 +526,7 @@ html>body .album_thumbnail {
 
 #recaptcha {
     margin-bottom: 0 !important;
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 #recaptcha div {
@@ -508,3 +542,109 @@ html>body .album_thumbnail {
     border: 1px #cccccc solid;
     padding: 10px 10px 10px 20px;
 }
+
+/* Start Tag Cloud CSS */
+.cloud {
+    text-decoration: none;
+    padding: 0 1px 0 1px;
+    line-height: 150%;
+    text-align: justify;
+    background: #FAFAFA none repeat scroll 0 0;
+}
+
+.cloud a {
+    text-decoration: none
+}
+
+a.tag1 {
+    font-size: 0.9em;
+    font-weight: 100;
+}
+
+a.tag2, a.tag3 {
+    font-size: 1.0em;
+}
+
+a.tag4, a.tag5, a.tag6 {
+    font-size: 1.0em;
+}
+
+a.tag7, a.tag8, a.tag9 {
+    font-size: 1.1em;
+}
+
+a.tag10, a.tag11, a.tag12 {
+    font-size: 1.2em;
+}
+
+a.tag13, a.tag14, a.tag15 {
+    font-size: 1.3em;
+}
+
+a.tag16, a.tag17, a.tag18 {
+    font-size: 1.4em;
+}
+
+a.tag19, a.tag20, a.tag21 {
+    font-size: 1.5em;
+}
+
+a.tag22, a.tag23, a.tag24 {
+    font-size: 1.6em;
+}
+
+a.tag25, a.tag26, a.tag27 {
+    font-size: 1.7em;
+}
+
+a.tag28, a.tag29, a.tag30 {
+    font-size: 1.8em;
+}
+
+/* End Tag Cloud CSS */
+
+/*Start Google Ajax Feed CSS
+  override some default style.
+ */
+.gfg-root {
+    border: 0 !important;
+}
+
+.gfg-title {
+    color: #333 !important;
+    background-color: #EEEEEE !important;
+}
+
+.gfg-title a {
+    color: #555 !important;
+}
+
+.gfg-subtitle {
+    color: #333 !important;
+    padding-left: 5px !important;
+    background-color: #EEEEEE !important;
+}
+
+.gfg-subtitle a {
+    color: #333 !important;
+}
+
+.gfg-listentry-odd {
+    background-color: #F6F6F6 !important;
+}
+
+.gfg-listentry-even {
+    background-color: #FAFAFA !important;
+}
+
+.gfg-listentry {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.gfg-root .gfg-entry .gf-result {
+    padding-left: 10px !important;
+    padding-right: 5px !important;
+}
+
+/*End Google Ajax Feed CSS*/
