@@ -10,6 +10,7 @@
     <title>{% block title %}{{title}}{% endblock %}</title>    
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js"></script>
     <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/get/get-min.js" ></script>
     {% block header %}
     {% endblock %}
 
@@ -56,7 +57,7 @@
 <script type="text/javascript" src="/jscripts/syntaxhighlighter-loader.js"></script>
 <script type="text/javascript">
   var syntaxhighlighter_url = "/jscripts/syntaxhighlighter/";
-  BrushUtils.loadLibs(syntaxhighlighter_url);
+  YAHOO.highlighter.loader.loadLibs(syntaxhighlighter_url);
  </script>
 
 {% if BLOG.analytics_enable %}
