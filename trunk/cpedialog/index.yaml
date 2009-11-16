@@ -10,83 +10,70 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 64 times in query history.
 - kind: Album
   properties:
   - name: valid
   - name: order
     direction: desc
 
-# Used 91 times in query history.
 - kind: Feeds
   properties:
   - name: valid
   - name: order
 
-# Unused in query history -- copied from input.
 - kind: Images
   properties:
   - name: -date
     direction: desc
 
-# Unused in query history -- copied from input.
 - kind: Images
   properties:
   - name: date
     direction: desc
 
-# Used 98 times in query history.
 - kind: Menu
   properties:
   - name: valid
   - name: order
 
-# Unused in query history -- copied from input.
 - kind: OpenID
   properties:
   - name: user
   - name: valid
 
-# Unused in query history -- copied from input.
 - kind: Tag
   properties:
   - name: entrycount
     direction: desc
 
-# Used 25 times in query history.
 - kind: Tag
   properties:
   - name: valid
   - name: tag
 
-# Unused in query history -- copied from input.
 - kind: UsedNonce
   properties:
   - name: salt
   - name: server_url
   - name: timestamp
 
-# Unused in query history -- copied from input.
 - kind: Weblog
   properties:
   - name: __searchable_text_index
   - name: date
     direction: desc
 
-# Unused in query history -- copied from input.
 - kind: Weblog
   properties:
   - name: date
     direction: desc
 
-# Used 677 times in query history.
 - kind: Weblog
   properties:
   - name: entrytype
   - name: date
     direction: desc
 
-# Unused in query history -- copied from input.
 - kind: Weblog
   properties:
   - name: entrytype
@@ -94,39 +81,33 @@ indexes:
   - name: date
     direction: desc
 
-# Unused in query history -- copied from input.
 - kind: Weblog
   properties:
   - name: lastCommentedDate
     direction: desc
 
-# Unused in query history -- copied from input.
 - kind: Weblog
   properties:
   - name: monthyear
   - name: date
     direction: desc
 
-# Unused in query history -- copied from input.
 - kind: Weblog
   properties:
   - name: permalink
     direction: desc
 
-# Used 5 times in query history.
 - kind: Weblog
   properties:
   - name: tags
   - name: date
     direction: desc
 
-# Unused in query history -- copied from input.
 - kind: WeblogReactions
   properties:
   - name: date
     direction: desc
 
-# Used 90 times in query history.
 - kind: WeblogReactions
   properties:
   - name: weblog
