@@ -17,20 +17,21 @@ YAHOO.util.Event.onDOMReady(function() {
     collapse.innerHTML = " ";
     collapse.className = "gc-collapsible";
 
-    var grid_blog_right_x = Dom.getX(grid_blog) + grid_blog.offsetWidth;
-    Dom.setX(collapse, grid_blog_right_x);
-    Dom.setY(collapse, Dom.getY(grid_blog));
-    var height_ = Dom.getStyle(grid_blog, "height");
-    if (height_ != "auto") {
-        Dom.setStyle(collapse, "height", Dom.getStyle(grid_blog, "height"));
-    } else {
-        Dom.setStyle(collapse, "height", grid_blog.offsetHeight); //fix for bug of IE.
-    }
-
-    arrow.innerHTML = " ";
-    arrow.className = "gc-collapsible-arrow";
-    Dom.setX(arrow, grid_blog_right_x + 15);
-    Dom.setStyle(arrow, "display", "none");
+    var renderCollapse = function(e){
+        var grid_blog_right_x = Dom.getX(grid_blog) + grid_blog.offsetWidth;
+        Dom.setX(collapse, grid_blog_right_x,true);
+        Dom.setY(collapse, Dom.getY(grid_blog));
+        var height_ = Dom.getStyle(grid_blog, "height");
+        if (height_ != "auto") {
+            Dom.setStyle(collapse, "height", Dom.getStyle(grid_blog, "height"));
+        } else {
+            Dom.setStyle(collapse, "height", grid_blog.offsetHeight); //fix for bug of IE.
+        }
+        arrow.innerHTML = " ";
+        arrow.className = "gc-collapsible-arrow";
+        Dom.setX(arrow, grid_blog_right_x + 15);
+        Dom.setStyle(arrow, "display", "none");
+    };
 
     //binding the action to hide/show grid_menu_right.
     var hoverCollapse = function(e) {
@@ -82,6 +83,8 @@ YAHOO.util.Event.onDOMReady(function() {
             Dom.setX(arrow, Dom.getX(grid_blog) + grid_blog.offsetWidth + 15);
         }
     };
+    renderCollapse();
+    Event.addListener(window, "resize", renderCollapse);
     Event.addListener(collapse, "mousemove", hoverCollapse);
     Event.addListener(collapse, "mouseout", mouseoutCollapse);
     Event.addListener(collapse, "click", doCollapse);
