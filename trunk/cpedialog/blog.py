@@ -147,7 +147,7 @@ class AddBlog(BaseRequestHandler):
     else:
       if submitted =='1':
         try:
-            permalink =  util.get_permalink(blog.date,translate.translate('zh-CN','en', util.u(blog.title,'utf-8')))
+            permalink =  util.get_permalink(blog.date,translate.translate(util.u(blog.title,'utf-8')))
             if not permalink:
                 raise Exception
         except Exception:

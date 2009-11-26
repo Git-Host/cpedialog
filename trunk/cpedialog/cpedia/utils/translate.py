@@ -16,44 +16,58 @@
 
 __author__ = 'Ping Chen'
 
+# -*- coding: utf-8 -*-
 
 """
 translate.py
 
-Translates strings using Google Translate
+Translates strings using Google AJAX Language API
 
-All input and output is in unicode.
 """
 
-__all__ = ('source_languages', 'target_languages', 'translate')
 
+import re
 import sys
 import urllib
+import simplejson
+
 from google.appengine.api import urlfetch
 
-from BeautifulSoup import BeautifulSoup
 
-def translate(sl, tl, text):
+baseUrl = "http://ajax.googleapis.com/ajax/services/language/translate"
 
-    assert type(text) == type(u''), "Expects input to be unicode."
+def getSplits(text,splitLength=4500):
+    '''
+    Translate Api has a limit on length of text(4500 characters) that can be translated at once,
+    '''
+    return (text[index:index+splitLength] for index in xrange(0,len(text),splitLength))
 
-    # Do a POST to google
 
-    # I suspect "ie" to be Input Encoding.
-    # I have no idea what "hl" is.
 
-    translated_page = urlfetch.fetch(
-        url="http://translate.google.com/translate_t?" + urllib.urlencode({'sl': sl, 'tl': tl}),
-        payload=urllib.urlencode({'hl': 'en',
+def translate(text, sl='', tl='en' ):
+    '''
+    A Python Wrapper for Google AJAX Language API:
+    * Uses Google Language Detection, in cases source language is not provided with the source text
+    * Splits up text if it's longer then 4500 characters, as a limit put up by the API
+    '''
+
+    retText=''
+    for text in getSplits(text):      
+            translated_page = urlfetch.fetch(
+                url='%s' % (baseUrl),
+                payload= urllib.urlencode(
+                              {'langpair': '%s|%s' % (sl, tl),
+                               'v': '1.0',
                                'ie': 'UTF8',
-                               'text': text.encode('utf-8'),
-                               'sl': sl, 'tl': tl}),
-        method=urlfetch.POST,
-        headers={'Content-Type': 'application/x-www-form-urlencoded'}
-    )
+                               'q': text.encode('utf-8')}),
+                method=urlfetch.POST,
+                headers={'Content-Type': 'application/x-www-form-urlencoded'}
+            )
 
-    if translated_page.status_code == 200:
-        translated_soup = BeautifulSoup(translated_page.content)
-        return translated_soup('div', id='result_box')[0].string
-    else:
-        return ""
+            if translated_page.status_code == 200:
+                resp = simplejson.loads(translated_page.content)
+                try:
+                        retText += resp['responseData']['translatedText']
+                except:
+                        raise
+    return retText
