@@ -39,3 +39,6 @@ wait until the command execute finished.
 
 Now you can access your app running on App Engine:
 http://your_app_id.appspot.com
+
+If you met the index not found error, please refer to:
+http://code.google.com/p/cpedialog/wiki/How_to_fix_the_index_not_found_error_when_deploy_to_production
