@@ -1,0 +1,19 @@
+#labels index,Phase-Deploy
+# How to fix the index not found error when deploy to production environment?
+
+
+= Index not found error =
+
+If you download cpedialog, and then deploy it to the appengine server directly for the first time, you may meet the index not found error as below.
+
+[http://cpedialog.googlecode.com/svn/branches/wiki_images/v2/index_not_found.jpg?nonsense=something_that_ends_with.png]
+
+
+= How to resolve? =
+
+As cpedialog use appengine's [http://code.google.com/appengine/docs/python/config/indexconfig.html#Automatic_and_Manual_Indexes  automatic index generation mechanism], but the index can not be generated automatic in the production environment. *_I think this is a bug of appengine, you can only generate the index in your development enviroment firstly to resolve this issue_*:
+  * Run cpedialog in your local environment to generate correct index.
+[http://cpedialog.googlecode.com/svn/branches/wiki_images/v2/run_local.jpg?nonsense=something_that_ends_with.png]
+
+  * Then deploy it to appengine server.
+[http://cpedialog.googlecode.com/svn/branches/wiki_images/v2/deploy_to_appengine.jpg?nonsense=something_that_ends_with.png]
