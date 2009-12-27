@@ -1,5 +1,5 @@
+#summary How to fix the index not found error when deploy to production environment?
 #labels index,Phase-Deploy
-# How to fix the index not found error when deploy to production environment?
 
 
 = Index not found error =
