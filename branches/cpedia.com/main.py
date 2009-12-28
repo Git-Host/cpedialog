@@ -30,6 +30,8 @@ import logging
 import util
 import os
 
+import cpedia
+
 from google.appengine.ext.webapp import template
 template.register_template_library('cpedia.filter.replace')
 template.register_template_library('cpedia.filter.gravatar')
@@ -109,7 +111,8 @@ def main():
                                         ('/lost_password/*$', login.LostPassword),
                                         ('/reset_password/*$', login.ResetPassword),
 
-                                        ('/([-\w]+)/*$', blog.PageHandler),                                        
+                                        #('/([-\w]+)/*$', blog.PageHandler),
+                                        ('/([-\w]+)/*$', cpedia.MainPage),                                        
                                        ],
                                        debug=cpedialog.debug)
     wsgiref.handlers.CGIHandler().run(application)
