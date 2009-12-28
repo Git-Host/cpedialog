@@ -15,8 +15,8 @@ As cpedialog use appengine's [http://code.google.com/appengine/docs/python/confi
   * Run cpedialog in your local environment to generate correct index.
 [http://cpedialog.googlecode.com/svn/branches/wiki_images/v2/run_local.jpg?nonsense=something_that_ends_with.png]
 
-  * Access your application in your local environment, for example:
-http://localhost:8080
+  * Access your application in your local environment, for example: http://localhost:8080
+
 
 
   * Then deploy it to appengine server.
