@@ -29,22 +29,17 @@
     <div id="bd">
         <div id="yui-main">
             <div class="yui-b">
-                <div id=logo style='BACKGROUND-IMAGE: url({{logoImages|random}});margin-bottom:10px'></div>
                 {% block blogcontainer %}
                 <div class="yui-gc" id="blogcontainer">
                     <div class="yui-u first" id="grid_blog">
-                        {% block blog %}
-                        {% endblock %}
+                        {% include "bio.html" %}
                     </div>
                     <div class="yui-u" id="grid_menu_right">
-                        {% include "menu_right.html" %}
+                        {% include "twitter.html" %}
                     </div>
                 </div>
                 {% endblock %}
             </div>
-        </div>
-        <div class="yui-b">
-            {% include "menu_right_right.html" %}
         </div>
     </div>
     {% endblock %}
