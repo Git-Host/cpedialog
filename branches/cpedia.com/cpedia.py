@@ -118,6 +118,6 @@ class MainPage(BaseRequestHandler):
         template_values ={
             'error':"Please set picasaweb album(s) in the system configuration."
         }
-    self.generate('album_main.html',template_values)
+    self.generate('com/cpedia/main.html',template_values)
 
         
