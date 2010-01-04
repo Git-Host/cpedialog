@@ -93,7 +93,7 @@ class BaseRequestHandler(webapp.RequestHandler):
       return template_values
 
   def getPhotoFeed(self, username, album_name):
-      gd_client = gdata.photos.service.PhotosService()    
+      gd_client = gdata.photos.service.PhotosService()
       key_photos = "photos_"+username+"_"+album_name
       try:
           feed_photos = memcache.get(key_photos)
@@ -108,16 +108,6 @@ class BaseRequestHandler(webapp.RequestHandler):
 
 class MainPage(BaseRequestHandler):
   def get(self):
-    usernames = util.getAlbumList()
-    if usernames:
-        defaultAlbum = usernames[0]
-        album_username = defaultAlbum.album_username
-        feed = self.getAlbumFeedEntry(album_username)
-        template_values = self.validatorFeedAndReturnTemplate(feed,album_username,usernames)
-    else:
-        template_values ={
-            'error':"Please set picasaweb album(s) in the system configuration."
-        }
-    self.generate('com/cpedia/main.html',template_values)
+    self.generate('com/cpedia/main.html',{})
 
         

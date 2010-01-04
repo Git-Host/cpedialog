@@ -22,6 +22,7 @@ from google.appengine.ext import webapp
 
 import rpc
 import blog
+import cpediacom
 import album
 import book
 import admin
@@ -30,7 +31,6 @@ import logging
 import util
 import os
 
-import cpedia
 
 from google.appengine.ext.webapp import template
 template.register_template_library('cpedia.filter.replace')
@@ -77,7 +77,7 @@ def main():
                                         ('/rpc/img', rpc.Image),
                                         ('/rpc/css', rpc.CSS),
 
-                                        ('/*$', blog.MainPage),
+                                        #('/*$', blog.MainPage),
                                         ('/page/(\d*)/*$', blog.BlogPageHandle),
                                         ('/403.html', blog.UnauthorizedHandler),
                                         ('/404.html', blog.NotFoundHandler),
@@ -112,7 +112,7 @@ def main():
                                         ('/reset_password/*$', login.ResetPassword),
 
                                         #('/([-\w]+)/*$', blog.PageHandler),
-                                        ('/([-\w]+)/*$', cpedia.MainPage),                                        
+                                        ('/*$', cpediacom.MainPage),                                        
                                        ],
                                        debug=cpedialog.debug)
     wsgiref.handlers.CGIHandler().run(application)
