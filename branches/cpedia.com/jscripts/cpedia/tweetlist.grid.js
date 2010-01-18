@@ -20,28 +20,29 @@ YAHOO.util.Event.onDOMReady(function() {
             generateRequest        : buildQueryString,
             paginationEventHandler : DataTable.handleDataSourcePagination,
             paginator              : myPaginator,
-            sortedBy               :{key:"date",dir:"desc"}
-        };        
+            sortedBy               :{key:"created_at",dir:"desc"}
+        };
 
-        var myColumnDefs = [
-            {key:"image",label:"Image",sortable:true,formatter:function(elCell,oRecord) {
-                var imgUrl = oRecord.getData("image")
-                elCell.innerHTML = '<img src="'+imgUrl+'" width=36px/>';
-                elCell.style.cursor = 'pointer';}},
-            {key:"url",label:"URL", formatter:YAHOO.widget.DataTable.formatLink},
-            {key:"date",label:"Date",sortable:true,formatter:YAHOO.widget.DataTable.formatDate},
+    var tweet_status = function(elCell, oRecord) {
+        var text = oRecord.getData("text")
+        elCell.innerHTML = text;
+        //elCell.style.cursor = 'pointer';
+    };
+
+    var myColumnDefs = [
+            {key:"statu",label:"Status",sortable:false,formatter:tweet_status},
             {key:"id",label:"Id",sortable:true,isPrimaryKey:true},
             {key:"delete",label:"Delete",action:'delete',formatter:function(elCell) {
                 elCell.innerHTML = '<img src="/img/delete.gif" title="delete row" />';
                 elCell.style.cursor = 'pointer';}}
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource('/rpc?action=GetImages');
+        this.myDataSource = new YAHOO.util.DataSource('/rpc?action=GetTweets');
         this.myDataSource.responseType   = YAHOO.util.DataSource.TYPE_JSON;
         this.myDataSource.responseSchema = {
             resultsList : 'records',
-            fields: [{key:"image"},{key:"url"},
-                {key:"date"}, {key:"id"}, {key:"delete"}
+            fields: [{key:"status"},{key:"created_at"},
+                {key:"text"}, {key:"id"}, {key:"delete"}
             ],
             metaFields : {
              totalRecords:'totalRecords',
@@ -49,7 +50,7 @@ YAHOO.util.Event.onDOMReady(function() {
         }
         };
 
-        this.myDataTable = new YAHOO.widget.DataTable("imagediv", myColumnDefs, this.myDataSource,myTableConfig);
+        this.myDataTable = new YAHOO.widget.DataTable("tweetdiv", myColumnDefs, this.myDataSource,myTableConfig);
 
         // Set up editing flow
         this.highlightEditableCell = function(oArgs) {
@@ -77,9 +78,9 @@ YAHOO.util.Event.onDOMReady(function() {
             var target = YAHOO.util.Event.getTarget(ev);
             var column = this.getColumn(target);
             if (column.action == 'delete') {
-                if (confirm('Are you sure to delete the image?')) {
+                if (confirm('Are you sure to delete the tweet?')) {
                     var record = this.getRecord(target);
-                    YAHOO.util.Connect.asyncRequest('POST','/rpc?action=DeleteImage' + myBuildUrl(this,record),
+                    YAHOO.util.Connect.asyncRequest('POST','/rpc?action=DeleteTweet' + myBuildUrl(this,record),
                     {
                         success: function (o) {
                             if (o.responseText == 'true') {

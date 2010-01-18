@@ -35,6 +35,7 @@ from model import Archive,Weblog,WeblogReactions,\
 
 import authorized
 import util
+import twitter
 from cpedia.openid import fetcher
 import cpedia.sessions.sessions
 
@@ -446,6 +447,30 @@ class RPCHandler(webapp.RequestHandler):
   def UpdateLayout(self,request):
       dd = simplejson.loads(request.get("dd"))
       grid = simplejson.loads(request.get("grid"))
+
+  def GetTweets(self,startIndex,results):
+      api = twitter.Api()
+      cpedialog = util.getCPedialog()
+      statuses = api.GetUserTimeline(cpedialog.twitter_username)
+      tweets = []
+      for tweet in statuses:
+          tweets+=[tweet.AsDict()]
+      totalRecords = tweets.count()
+      returnValue = {"records":tweets,"totalRecords":totalRecords,"startIndex":startIndex}
+      return returnValue
+
+  @authorized.role('admin')
+  def DeleteTweet(self,startIndex,results):
+      api = twitter.Api()
+      cpedialog = util.getCPedialog()
+      statuses = api.GetUserTimeline(cpedialog.twitter_username)
+      tweets = []
+      for tweet in statuses:
+          tweets+=[tweet.AsDict()]
+      totalRecords = tweets.count()
+      returnValue = {"records":tweets,"totalRecords":totalRecords,"startIndex":startIndex}
+      return returnValue
+
       
       
       

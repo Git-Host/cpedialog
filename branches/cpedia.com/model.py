@@ -500,6 +500,11 @@ class CPediaLog(SerializableModel):
 
     host_ip = db.StringProperty()
     host_domain = db.StringProperty()
+
+    twitter_username = db.StringProperty()
+    twitter_password = db.StringProperty()
+    icp_number = db.StringProperty()
+
     default = db.BooleanProperty(default = True)
 
     def get_logo_images_list(self):

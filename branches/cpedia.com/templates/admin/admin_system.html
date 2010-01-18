@@ -313,6 +313,24 @@
             </td>
         </tr>
         <tr>
+            <th><label for="twitter_username">{% trans "Twitter Username" %}:</label></th>
+            <td>
+                <input id="twitter_username" name="twitter_username"  size="15" type="text" value="{{BLOG.twitter_username}}"/>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="twitter_password">{% trans "Twitter Password" %}:</label></th>
+            <td>
+                <input id="twitter_password" name="twitter_password"  size="15" type="password" value="{{BLOG.twitter_password}}"/>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="icp_number">{% trans "ICP number" %}:</label></th>
+            <td>
+                <input id="icp_number" name="icp_number"  size="15" type="text" value="{{BLOG.icp_number}}"/> <small>Example: ICP 05006833</small>
+            </td>
+        </tr>
+        <tr>
             <th> </th>
             <td><input name="commit" type="button" value="Save" id="save_btn" onclick="saveConfiguration()"/></td>
         </tr>

@@ -104,6 +104,9 @@ class AdminSystemPage(BaseRequestHandler):
         cpedialog.email = users.GetCurrentUser().email()
         cpedialog.root_url = self.request.get("root_url")
         cpedialog.description = self.request.get("description")
+        cpedialog.twitter_username = self.request.get("twitter_username")
+        cpedialog.twitter_password = self.request.get("twitter_password")
+        cpedialog.icp_number = self.request.get("icp_number")
         cpedialog.logo_images_space = self.request.get("logo_images_space")
         if(int(self.request.get("num_post_per_page"))!=cpedialog.num_post_per_page):
             cpedialog.num_post_per_page = int(self.request.get("num_post_per_page"))
