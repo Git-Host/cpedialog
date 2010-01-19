@@ -653,3 +653,15 @@ a.tag28, a.tag29, a.tag30 {
 }
 
 /*End Google Ajax Feed CSS*/
+
+#twitter legend{
+    font: 1.6em georgia, times, serif;
+}
+
+#tweetdiv {
+    padding-top:20px
+}
+
+#bd {
+    padding-top:20px;
+}

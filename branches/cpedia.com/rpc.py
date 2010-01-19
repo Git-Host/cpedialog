@@ -448,27 +448,33 @@ class RPCHandler(webapp.RequestHandler):
       dd = simplejson.loads(request.get("dd"))
       grid = simplejson.loads(request.get("grid"))
 
-  def GetTweets(self,startIndex,results):
+  def GetTweets(self):
       api = twitter.Api()
       cpedialog = util.getCPedialog()
       statuses = api.GetUserTimeline(cpedialog.twitter_username)
       tweets = []
-      for tweet in statuses:
-          tweets+=[tweet.AsDict()]
-      totalRecords = tweets.count()
-      returnValue = {"records":tweets,"totalRecords":totalRecords,"startIndex":startIndex}
+      for status in statuses:
+          tweet = {}
+          tweet['text'] = status.GetText()
+          tweet['id'] = status.GetId()
+          tweet['created_at'] = status.GetCreatedAt()
+          tweets+=[tweet]
+      returnValue = {"records":tweets}
       return returnValue
 
   @authorized.role('admin')
-  def DeleteTweet(self,startIndex,results):
+  def DeleteTweet(self):
       api = twitter.Api()
       cpedialog = util.getCPedialog()
       statuses = api.GetUserTimeline(cpedialog.twitter_username)
       tweets = []
-      for tweet in statuses:
-          tweets+=[tweet.AsDict()]
-      totalRecords = tweets.count()
-      returnValue = {"records":tweets,"totalRecords":totalRecords,"startIndex":startIndex}
+      for status in statuses:
+          tweet = {}
+          tweet['text'] = status.GetText()
+          tweet['id'] = status.GetId()
+          tweet['created_at'] = status.GetCreatedAt()
+          tweets+=[tweet]
+      returnValue = {"records":tweets}
       return returnValue
 
       

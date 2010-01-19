@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" />
 </head>
 <body class="yui-skin-sam short-head">
-<div id="doc" class="yui-t2"> 
+<div id="doc" class="yui-t2">
     <div id="hd">
         {% include "main_top.html" %}
     </div>
@@ -30,16 +30,14 @@
         <div id="yui-main">
             <div class="yui-b">
                 {% block blogcontainer %}
-                <div class="yui-gc" id="blogcontainer">
-                    <div class="yui-u first" id="grid_blog">
-                        {% include "bio.html" %}
-                    </div>
-                    <div class="yui-u" id="grid_menu_right">
-                        {% include "twitter.html" %}
-                    </div>
+                <div class="yui-g">
+                    {% include "twitter.html" %}
                 </div>
                 {% endblock %}
             </div>
+        </div>
+        <div class="yui-b">
+            {% include "bio.html" %}
         </div>
     </div>
     {% endblock %}
