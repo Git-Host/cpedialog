@@ -1,36 +1,35 @@
+YAHOO.namespace("cpedia");
+YAHOO.namespace("cpedia.twitter");
 YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.GetTweets = new function() {
-        this.formatUrl = function(elCell, oRecord, oColumn, sData) {
-            elCell.innerHTML = "<a href='" + oRecord.getData("ClickUrl") + "' target='_blank'>" + sData + "</a>";
-        };
-
+    YAHOO.cpedia.twitter.GetTweets = new function() {
         var myColumnDefs = [
-            {key:"text", label:"Tweet", sortable:true },
-            {key:"created_at", label:"Created At", formatter:YAHOO.widget.DataTable.formatDate, sortable:true},
-            {key:"id"}
+            {key:"text", label:"Tweet", sortable:true,formatter:function(elCell,oRecord) {
+                var text = oRecord.getData("text")+"<br/>"+oRecord.getData("created_at")+" from "+oRecord.getData("source");
+                elCell.innerHTML = text;}}
         ];
 
-        this.myDataSource = new YAHOO.util.DataSource("rpc?action=GetTweets");
+        this.myDataSource = new YAHOO.util.DataSource("/rpc?action=GetTweets");
         this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
-        //this.myDataSource.connXhrMode = "queueRequests";
         this.myDataSource.responseSchema = {
             resultsList: "records",
-            fields: ["text","id",{key:"created_at",parser:"date"}]
+            fields: ["text","id","source",{key:"created_at",parser:"date"}]
         };
 
         this.myDataTable = new YAHOO.widget.DataTable("tweetdiv", myColumnDefs,
                 this.myDataSource, {initialRequest:"&date="+ new Date().getTime()});
 
-        var myCallback = function() {
-            this.set("sortedBy", null);
-            this.onDataReturnAppendRows.apply(this,arguments);
+        this.myDataTable.subscribe("rowMouseoverEvent", this.myDataTable.onEventHighlightRow);
+        this.myDataTable.subscribe("rowMouseoutEvent", this.myDataTable.onEventUnhighlightRow);
+
+        // Set up polling
+        var myCallback = {
+            success: this.myDataTable.onDataReturnInitializeTable,
+            failure: function() {
+                YAHOO.log("Polling tweets failure", "error");
+            },
+            scope: this.myDataTable
         };
-        var callback1 = {
-            success : myCallback,
-            failure : myCallback,
-            scope : this.myDataTable
-        };
-        this.myDataSource.sendRequest("&date="+ new Date().getTime(),
-                callback1);
-    };
+        this.myDataSource.setInterval(30000, null, myCallback);
+        
+     };
 });

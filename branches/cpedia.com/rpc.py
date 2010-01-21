@@ -451,14 +451,24 @@ class RPCHandler(webapp.RequestHandler):
   def GetTweets(self):
       api = twitter.Api()
       cpedialog = util.getCPedialog()
-      statuses = api.GetUserTimeline(cpedialog.twitter_username)
+      #statuses = api.GetUserTimeline(cpedialog.twitter_username,10)
       tweets = []
-      for status in statuses:
+#      for status in statuses:
+#          tweet = {}
+#          tweet['text'] = status.GetText()
+#          tweet['id'] = status.GetId()
+#          tweet['created_at'] = status.GetCreatedAt()
+#          tweet['source'] = status.GetSource()
+#          tweets+=[tweet]
+      i=0
+      while i<10:
           tweet = {}
-          tweet['text'] = status.GetText()
-          tweet['id'] = status.GetId()
-          tweet['created_at'] = status.GetCreatedAt()
+          tweet['text'] = "teeeeee"
+          tweet['id'] = '0'
+          tweet['created_at'] = 'test'
+          tweet['source'] = 'testtt'
           tweets+=[tweet]
+          i=i+1
       returnValue = {"records":tweets}
       return returnValue
 
@@ -466,13 +476,14 @@ class RPCHandler(webapp.RequestHandler):
   def DeleteTweet(self):
       api = twitter.Api()
       cpedialog = util.getCPedialog()
-      statuses = api.GetUserTimeline(cpedialog.twitter_username)
+      statuses = api.GetUserTimeline(cpedialog.twitter_username,10)
       tweets = []
       for status in statuses:
           tweet = {}
           tweet['text'] = status.GetText()
           tweet['id'] = status.GetId()
           tweet['created_at'] = status.GetCreatedAt()
+          tweet['source'] = status.GetSource()
           tweets+=[tweet]
       returnValue = {"records":tweets}
       return returnValue

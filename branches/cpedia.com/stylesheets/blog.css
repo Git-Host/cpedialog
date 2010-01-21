@@ -61,7 +61,7 @@ a:hover {
 }
 
 #footer {
-    background: #fbfaf4;
+    /*background: #fbfaf4;*/
     height: 3em;
     margin-bottom: 20px;
     margin-top: 20px;
@@ -659,9 +659,25 @@ a.tag28, a.tag29, a.tag30 {
 }
 
 #tweetdiv {
-    padding-top:20px
+    padding-top: 10px;
+    overflow-y: auto;
+    overflow-x:hidden;
+    height: 500px;
+    border: 0!important;
 }
 
 #bd {
     padding-top:20px;
+}
+
+#tweetdiv thead{
+    display:none;
+}
+
+#tweetdiv table, #tweetdiv tbody, #tweetdiv th, #tweetdiv td{
+    border:none!important;
+}
+
+.yui-skin-sam .yui-dt tr.yui-dt-first td {
+    border-top: 0!important;
 }
