@@ -662,7 +662,7 @@ a.tag28, a.tag29, a.tag30 {
     padding-top: 10px;
     overflow-y: auto;
     overflow-x:hidden;
-    height: 500px;
+    height: 450px;
     border: 0!important;
 }
 
@@ -678,6 +678,9 @@ a.tag28, a.tag29, a.tag30 {
     border:none!important;
 }
 
+#twitter_profile_img{
+    border: 1px #cccccc solid;
+}
 .yui-skin-sam .yui-dt tr.yui-dt-first td {
     border-top: 0!important;
 }

@@ -44,6 +44,7 @@ from google.appengine.api import memcache
 import authorized
 import view
 import util
+import twitter
 
 from model import Album
 
@@ -107,7 +108,8 @@ class BaseRequestHandler(webapp.RequestHandler):
       return feed_photos
 
 class MainPage(BaseRequestHandler):
-  def get(self):
-    self.generate('com/cpedia/main.html',{})
+    def get(self):
+        twitter_user = util.getTwitterUser()
+        self.generate('com/cpedia/main.html',{'twitter_user':twitter_user})
 
         

@@ -37,6 +37,8 @@ import simplejson
 import cgi
 import urllib, hashlib
 
+import twitter
+
 # Functions to generate permalinks
 def get_permalink(date,title):
     return get_friendly_url(title)
@@ -416,3 +418,17 @@ def getUser():
     session = cpedia.sessions.sessions.Session()
     return session.get_current_user()
 
+def getTwitterUser():
+    key_ = "twitter_user_key"
+    try:
+        twitter_user = memcache.get(key_)
+    except Exception:
+        twitter_user = None
+    if twitter_user is None:
+        cpedialog = getCPedialog()
+        api = twitter.Api(cpedialog.twitter_username,cpedialog.twitter_password)
+        twitter_user = api.GetUser(cpedialog.twitter_username)
+        memcache.add(key=key_, value=twitter_user, time=36000)
+    else:
+        getLogger(__name__).debug("getTwitterUser from cache. ")
+    return twitter_user
