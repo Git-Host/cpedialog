@@ -4,11 +4,13 @@ body {
 }
 
 a, a:link, a:visited, a:link {
+    outline: none;
     color: #555;
     text-decoration: underline;
     border-bottom-color: #555;
 }
-
+a:link,a:visited,a:hover,a:active {blr:expression(this.onFocus=this.blur())}
+:focus { -moz-outline-style: none; }
 a:hover {
     background-color: #F4F2E4;
 }
@@ -48,7 +50,8 @@ a:hover {
     width: 100%
 }
 
-#title a, #title a:hover, #title a:link, #title a:visited {
+#title a, #title a:hover, #title a:link, #title a:visited,
+#appengine_bar a, #appengine_bar a:hover, #appengine_bar a:link, #appengine_bar a:visited {
     background-color: inherit !important;
     border: none !important;
     font-size: 2.4em !important;
@@ -654,16 +657,20 @@ a.tag28, a.tag29, a.tag30 {
 
 /*End Google Ajax Feed CSS*/
 
-#twitter legend{
-    font: 1.6em georgia, times, serif;
+#twitter legend, #bio legend{
+    font: 1.4em Georgia,"Bitstream Vera Serif","Times New Roman",serif;
 }
 
-#tweetdiv {
+#tweetdiv,#twitter_bio {
     padding-top: 10px;
-    overflow-y: auto;
-    overflow-x:hidden;
-    height: 450px;
+    /*overflow-y: auto;*/
+    /*overflow-x:hidden;*/
+    /*height: 450px;*/
     border: 0!important;
+}
+
+#sidebar_div{
+    padding-left:10px;
 }
 
 #bd {
@@ -677,10 +684,64 @@ a.tag28, a.tag29, a.tag30 {
 #tweetdiv table, #tweetdiv tbody, #tweetdiv th, #tweetdiv td{
     border:none!important;
 }
-
+.tweet-meta{
+    font-size:0.8em;   
+}
+#moretweets{
+    text-align:right;
+}
 #twitter_profile_img{
     border: 1px #cccccc solid;
 }
 .yui-skin-sam .yui-dt tr.yui-dt-first td {
     border-top: 0!important;
+}
+
+.yui-skin-sam tr.yui-dt-highlighted,
+    .yui-skin-sam tr.yui-dt-even td.yui-dt-highlighted,
+    .yui-skin-sam tr.yui-dt-odd td.yui-dt-highlighted {
+    cursor: default !important;
+}
+
+.ll_photobox {
+    float: right;
+    margin: 1px;
+    padding-right:40px;    
+}
+
+.ll_profilephoto {
+    border: 1px solid #666666;
+    clear: right;
+}
+.ll_name{
+    font-size:1.2em;
+}
+.ll_nickname{
+    padding-bottom:3px;
+    font-size:0.9em;
+}
+.ll_address{
+    padding-bottom:8px;
+}
+.ll_description{
+    font-size:0.9em;
+    padding-bottom:8px;
+    padding-right:20px;
+}
+.ll_viewmore{
+    font-size:0.8em;
+    padding-bottom:8px;
+}
+#google_voice_message{
+    padding-top:20px;
+}
+.gv_notes{
+    font-size:0.8em;
+}
+.gv_title{
+    font-size:1.1em;
+}
+.gv_message_send_button{
+    padding-top:3px;
+    text-align:center;
 }

@@ -1,6 +1,30 @@
-<div>
-    {{twitter_user.name}} <br/>
-    {{twitter_user.description}}<br/>
-    {{twitter_user.location}}<br/>
-    <img src="{{twitter_user.profile_image_url}}" alt="" id="twitter_profile_img"/>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/connection/connection-min.js"></script>
+<script type="text/javascript" src="/jscripts/cpedia/google_voice.js"></script>        
+<div id="sidebar_div">
+    <div>
+        <fieldset id="bio">
+            <legend>Who am I?</legend>
+            <div id="twitter_bio">
+                <div class="ll_photobox">
+                    <img alt="" src="{{twitter_user.profile_image_url}}" class="ll_profilephoto photo"></div>
+                <div class="ll_name"> {{twitter_user.name}}</div>
+                <div class="ll_nickname">"{{twitter_user.screen_name}}" when posting publicly</div>
+                <div class="ll_address">{{twitter_user.location}}</div>
+                <div class="ll_description">{{twitter_user.description}}</div>
+                <div class="ll_viewmore"><p>
+                    <a target="_blank" class="ll_profilelinks" href="http://www.google.com/profiles/cpedia">View my full
+                        profile</a></p></div>
+            </div>
+        </fieldset>
+    </div>
+    <div id="google_voice_message">
+        <div class="gv_title">Send me an SMS message:</div>
+        <div class="gv_notes">Yes, I can receive it in my phone immediately.</div>
+        <div>
+            <form id="gv_form">
+            <div><textarea rows="3" cols="30" id="gv_message"></textarea></div>
+            <div class="gv_message_send_button"><input type="button" id="gv_message_send_button"
+                                                       value="Send SMS to me"/></div> </form>
+        </div>
+    </div>
 </div>

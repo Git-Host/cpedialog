@@ -51,16 +51,19 @@ from model import Album
 import gdata.urlfetch
 gdata.service.http_request_handler = gdata.urlfetch
 
-
-
 class BaseRequestHandler(webapp.RequestHandler):
   def generate(self, template_name, template_values={}):
-    values = {
-      'request': self.request,
-    }
-    values.update(template_values)
-    directory = os.path.dirname(__file__)
-    view.ViewPage(cache_time=0).render(self, template_name,values)
+        google_login_url = users.create_login_url(self.request.uri)
+        google_logout_url = users.create_logout_url(self.request.uri)
+        values = {
+        "google_login_status":users.get_current_user(),
+        "google_login_url":google_login_url,
+        "google_logout_url":google_logout_url,
+        'request': self.request,
+        }
+        values.update(template_values)
+        directory = os.path.dirname(__file__)
+        view.ViewPage(cache_time=0).render(self, template_name,values)
 
   def getAlbumFeedEntry(self,album_username):
       key_albums = "albums_"+ album_username

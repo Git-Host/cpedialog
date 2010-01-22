@@ -39,6 +39,9 @@ import twitter
 from cpedia.openid import fetcher
 import cpedia.sessions.sessions
 
+from googlevoice import Voice
+from googlevoice.util import input
+
 class Image (webapp.RequestHandler):
   def get(self):
     image = db.get(self.request.get("img_id"))
@@ -448,6 +451,15 @@ class RPCHandler(webapp.RequestHandler):
       dd = simplejson.loads(request.get("dd"))
       grid = simplejson.loads(request.get("grid"))
 
+  def SendGoogleVoiceSMS(self,request):
+      gv_message = request.get("gv_message")
+      cpedialog = util.getCPedialog()
+      voice = Voice()
+      voice.login(cpedialog.google_voice_username,cpedialog.google_voice_password)
+      phoneNumber = input(cpedialog.cell_phone_number)
+      text = input(gv_message)
+      voice.send_sms(phoneNumber, text)
+
   def GetTweets(self):
       api = twitter.Api()
       cpedialog = util.getCPedialog()
@@ -457,7 +469,7 @@ class RPCHandler(webapp.RequestHandler):
           tweet = {}
           tweet['text'] = status.GetText()
           tweet['id'] = status.GetId()
-          tweet['created_at'] = status.GetCreatedAt()
+          tweet['created_at'] = status.GetRelativeCreatedAt()
           tweet['source'] = status.GetSource()
           tweets+=[tweet]
       returnValue = {"records":tweets}
@@ -473,7 +485,7 @@ class RPCHandler(webapp.RequestHandler):
           tweet = {}
           tweet['text'] = status.GetText()
           tweet['id'] = status.GetId()
-          tweet['created_at'] = status.GetCreatedAt()
+          tweet['created_at'] = status.GetRelativeCreatedAt()
           tweet['source'] = status.GetSource()
           tweets+=[tweet]
       returnValue = {"records":tweets}

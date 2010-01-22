@@ -501,9 +501,12 @@ class CPediaLog(SerializableModel):
     host_ip = db.StringProperty()
     host_domain = db.StringProperty()
 
-    twitter_username = db.StringProperty()
-    twitter_password = db.StringProperty()
-    icp_number = db.StringProperty()
+    google_voice_username = db.StringProperty(multiline=False,default='')
+    google_voice_password = db.StringProperty(multiline=False,default='')
+    cell_phone_number = db.StringProperty(multiline=False,default='')
+    twitter_username = db.StringProperty(multiline=False,default='')
+    twitter_password = db.StringProperty(multiline=False,default='')
+    icp_number = db.StringProperty(multiline=False,default='')
 
     default = db.BooleanProperty(default = True)
 
