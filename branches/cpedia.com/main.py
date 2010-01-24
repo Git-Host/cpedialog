@@ -110,6 +110,7 @@ def main():
                                         ('/signup/*$', login.Signup),
                                         ('/lost_password/*$', login.LostPassword),
                                         ('/reset_password/*$', login.ResetPassword),
+                                        ('/twitteroauth/signin/*$', login.LoginTwitterOAuth),
 
                                         #('/([-\w]+)/*$', blog.PageHandler),
                                         ('/*$', cpediacom.MainPage),                                        

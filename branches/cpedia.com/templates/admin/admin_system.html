@@ -23,6 +23,25 @@
             }
         };
         YAHOO.util.Event.addListener(["logo_select_url","logo_select_upload"],"click",logo_select);
+        var loginTwitterOAuth = function(){
+            var twitter_consumer_key = document.forms["configForm"]["twitter_consumer_key"];
+            if(twitter_consumer_key.value==""){
+                alert("Please input Twitter Consumer Key.");
+                twitter_consumer_key.focus();
+                return false;
+            }
+            var twitter_consumer_secret = document.forms["configForm"]["twitter_consumer_secret"];
+            if(twitter_consumer_secret.value==""){
+                alert("Please input Twitter Consumer Secret.");
+                twitter_consumer_secret.focus();
+                return false;
+            }
+            var formObject = document.getElementById('configForm');
+            formObject.action = "/twitteroauth/signin";
+            formObject.target ="_blank";
+            formObject.submit();
+        };
+        YAHOO.util.Event.addListener("twitter_oauth_login_button","click",loginTwitterOAuth);
     })();
     function checkDelicious(){
         var delicious = document.getElementById("delicious_enable");
@@ -155,6 +174,7 @@
         //see: http://developer.yahoo.com/yui/connection/#issues
         var formObject = document.getElementById('configForm');
         formObject.action = "/admin/system";
+        formObject.target ="_self";
         formObject.submit();
     }
 </script>
@@ -331,15 +351,18 @@
             </td>
         </tr>
         <tr>
-            <th><label for="twitter_username">{% trans "Twitter Username" %}:</label></th>
+            <th><label for="twitter_consumer_key">{% trans "Twitter Consumer key" %}:</label></th>
             <td>
-                <input id="twitter_username" name="twitter_username"  size="15" type="text" value="{{BLOG.twitter_username}}"/>
+                <input id="twitter_consumer_key" name="twitter_consumer_key"  size="30" type="text" value="{{BLOG.twitter_consumer_key}}"/>
+                <small>Get from: <a href="http://twitter.com/oauth_clients" target="_blank">http://twitter.com/oauth_clients</a></small>
             </td>
         </tr>
         <tr>
-            <th><label for="twitter_password">{% trans "Twitter Password" %}:</label></th>
+            <th><label for="twitter_consumer_secret">{% trans "Twitter Consumer Secret" %}:</label></th>
             <td>
-                <input id="twitter_password" name="twitter_password"  size="15" type="password" value="{{BLOG.twitter_password}}"/>
+                <input id="twitter_consumer_secret" name="twitter_consumer_secret"  size="30" type="text" value="{{BLOG.twitter_consumer_secret}}"/>
+                &nbsp;&nbsp; <a href="javascript:void(0);">
+                <img src="/img/id_logo_twitter.jpg" alt="Twitter"  height="32" id="twitter_oauth_login_button"></a>
             </td>
         </tr>
         <tr>

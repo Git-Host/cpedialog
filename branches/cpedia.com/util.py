@@ -426,8 +426,8 @@ def getTwitterUser():
         twitter_user = None
     if twitter_user is None:
         cpedialog = getCPedialog()
-        api = twitter.Api(cpedialog.twitter_username,cpedialog.twitter_password)
-        twitter_user = api.GetUser(cpedialog.twitter_username)
+        api = twitter.Api()
+        twitter_user = api.GetUser("cpedia")
         memcache.add(key=key_, value=twitter_user, time=36000)
     else:
         getLogger(__name__).debug("getTwitterUser from cache. ")

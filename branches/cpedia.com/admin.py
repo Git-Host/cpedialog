@@ -107,8 +107,8 @@ class AdminSystemPage(BaseRequestHandler):
         cpedialog.google_voice_username = self.request.get("google_voice_username")
         cpedialog.google_voice_password = self.request.get("google_voice_password")
         cpedialog.cell_phone_number = self.request.get("cell_phone_number")
-        cpedialog.twitter_username = self.request.get("twitter_username")
-        cpedialog.twitter_password = self.request.get("twitter_password")
+        cpedialog.twitter_consumer_key = self.request.get("twitter_consumer_key")
+        cpedialog.twitter_consumer_secret = self.request.get("twitter_consumer_secret")
         cpedialog.icp_number = self.request.get("icp_number")
         cpedialog.logo_images_space = self.request.get("logo_images_space")
         if(int(self.request.get("num_post_per_page"))!=cpedialog.num_post_per_page):

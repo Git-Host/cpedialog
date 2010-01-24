@@ -42,6 +42,7 @@ from cpedia.openid import store
 from cpedia.sessions import sessions
 
 from model import User
+import tweepy
 import view
 import authorized
 import util
@@ -416,4 +417,43 @@ class EditSocial(BaseRequestHandler):
            "error": error_msg
         }
         self.generate('user/user_social.html',template_values)
+
+class LoginTwitterOAuth(BaseRequestHandler):
+    def get(self, error_msg=None):
+        verifier = self.request.get('oauth_verifier')
+        cpedialog = util.getCPedialog()
+        auth = tweepy.OAuthHandler(cpedialog.twitter_consumer_key, cpedialog.twitter_consumer_secret)
+        request_token = self.session['request_token']
+        auth.set_request_token(request_token[0], request_token[1])
+        try:
+            access_token=auth.get_access_token(verifier)
+            cpedialog.twitter_access_key = access_token.key
+            cpedialog.twitter_access_secret = access_token.secret
+            cpedialog.twitter_request_token_key = request_token[0]
+            cpedialog.twitter_request_token_secret = request_token[1]
+            cpedialog.put()
+            util.flushCPedialog()
+            template_values = {
+            }
+            self.generate('com/cpedia/login_twitter_oauth.html',template_values)
+        except tweepy.TweepError:
+            print 'Error! Failed to get access token.'
+            return
+
+    def post(self, error_msg=None):
+        twitter_consumer_key = self.request.get("twitter_consumer_key")
+        twitter_consumer_secret = self.request.get("twitter_consumer_secret")
+        cpedialog = util.getCPedialog()
+        cpedialog.twitter_consumer_key = twitter_consumer_key
+        cpedialog.twitter_consumer_secret = twitter_consumer_secret
+        cpedialog.put()
+        util.flushCPedialog()
+        auth = tweepy.OAuthHandler(twitter_consumer_key, twitter_consumer_secret,self.request.host_url+"/twitteroauth/signin")
+        try:
+            redirect_url = auth.get_authorization_url()
+            self.session['request_token'] =(auth.request_token.key,auth.request_token.secret)
+            self.redirect(redirect_url)
+        except tweepy.TweepError:
+            print 'Error! Failed to get request token.'
+            return
 

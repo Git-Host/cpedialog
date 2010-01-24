@@ -35,7 +35,7 @@ from model import Archive,Weblog,WeblogReactions,\
 
 import authorized
 import util
-import twitter
+import tweepy
 from cpedia.openid import fetcher
 import cpedia.sessions.sessions
 
@@ -98,6 +98,18 @@ class UploadCSS (webapp.RequestHandler):
 # be called automatically by remote code.
 class RPCHandler(webapp.RequestHandler):
   session = cpedia.sessions.sessions.Session()
+  api = None
+  
+  def __init__(self):
+      try:
+          cpedialog = util.getCPedialog()
+          auth = tweepy.OAuthHandler(cpedialog.twitter_consumer_key, cpedialog.twitter_consumer_secret)
+          auth.set_request_token(cpedialog.twitter_request_token_key, cpedialog.twitter_request_token_secret)
+          auth.set_access_token(cpedialog.twitter_access_key, cpedialog.twitter_access_secret)
+          self.api = tweepy.API(auth)
+      except Exception:
+          self.api = None
+
   def get(self):
     action = self.request.get('action')
     arg_counter = 0;
@@ -461,35 +473,11 @@ class RPCHandler(webapp.RequestHandler):
       voice.send_sms(phoneNumber, text)
 
   def GetTweets(self):
-      api = twitter.Api()
-      cpedialog = util.getCPedialog()
-      statuses = api.GetUserTimeline(cpedialog.twitter_username,8)
-      tweets = []
-      for status in statuses:
-          tweet = {}
-          tweet['text'] = status.GetText()
-          tweet['id'] = status.GetId()
-          tweet['created_at'] = status.GetRelativeCreatedAt()
-          tweet['source'] = status.GetSource()
-          tweets+=[tweet]
-      returnValue = {"records":tweets}
-      return returnValue
+      if self.api is not None:
+          statuses = self.api.user_timeline()
+          returnValue = {"records":statuses}
+          return returnValue
 
-  @authorized.role('admin')
-  def DeleteTweet(self):
-      api = twitter.Api()
-      cpedialog = util.getCPedialog()
-      statuses = api.GetUserTimeline(cpedialog.twitter_username,8)
-      tweets = []
-      for status in statuses:
-          tweet = {}
-          tweet['text'] = status.GetText()
-          tweet['id'] = status.GetId()
-          tweet['created_at'] = status.GetRelativeCreatedAt()
-          tweet['source'] = status.GetSource()
-          tweets+=[tweet]
-      returnValue = {"records":tweets}
-      return returnValue
 
       
       
