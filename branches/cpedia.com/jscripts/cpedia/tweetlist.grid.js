@@ -47,14 +47,12 @@ YAHOO.util.Event.addListener(window, "load", function() {
         };
         show_or_hide_link();
         var show_more_tweets = function(ev,linkId){
-            alert("ttt");
             var target = YAHOO.util.Event.getTarget(ev);
-            if(target.id="newer_tweets"){
+            if(target.id=="newer_tweets"){
                 pageCount--;
             }else{
                 pageCount++;
             }
-            alert(target.id);
             this.myDataSource.sendRequest( '&arg0='+pageCount+'&arg1='+pageSize+'&time='+ new Date().getTime() ,
                     myCallback);                            
         };
