@@ -4,7 +4,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
     YAHOO.cpedia.twitter.GetTweets = new function() {
         var DataTable  = YAHOO.widget.DataTable;
         var pageCount = 1;
-        var pageSize=8;
+        var pageSize=9;
         var myTableConfig = {
             initialRequest         : '&arg0='+pageCount+'&arg1='+pageSize+'&time='+ new Date().getTime()  //'startIndex=0&results=25'
         };
@@ -20,6 +20,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
             resultsList: "records",
             fields: ["text","id","source",{key:"created_at"}]
         };
+        //this.myDataSource.subscribe("dataErrorEvent",this.myDataSource.sendRequest());        
         this.myDataTable = new YAHOO.widget.DataTable("tweetdiv", myColumnDefs,
                 this.myDataSource, myTableConfig);
         //this.myDataTable.subscribe("rowMouseoverEvent", this.myDataTable.onEventHighlightRow);
@@ -45,13 +46,15 @@ YAHOO.util.Event.addListener(window, "load", function() {
             scope: this.myDataTable
         };
         show_or_hide_link();
-        var show_more_tweets = function(e,linkId){
-            alert(linkId.id);
-            if(linkId.id="newer_tweets"){
+        var show_more_tweets = function(ev,linkId){
+            alert("ttt");
+            var target = YAHOO.util.Event.getTarget(ev);
+            if(target.id="newer_tweets"){
                 pageCount--;
             }else{
                 pageCount++;
             }
+            alert(target.id);
             this.myDataSource.sendRequest( '&arg0='+pageCount+'&arg1='+pageSize+'&time='+ new Date().getTime() ,
                     myCallback);                            
         };
