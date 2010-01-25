@@ -20,6 +20,8 @@ __author__ = 'Ping Chen'
 import os
 import logging
 import datetime
+import rfc822
+import time
 import simplejson
 import wsgiref.handlers
 
@@ -36,6 +38,7 @@ from model import Archive,Weblog,WeblogReactions,\
 import authorized
 import util
 import tweepy
+import twitter
 from cpedia.openid import fetcher
 import cpedia.sessions.sessions
 
@@ -98,7 +101,7 @@ class UploadCSS (webapp.RequestHandler):
 # be called automatically by remote code.
 class RPCHandler(webapp.RequestHandler):
   session = cpedia.sessions.sessions.Session()
-  api = None
+  auth_api = None
   
   def __init__(self):
       try:
@@ -106,9 +109,9 @@ class RPCHandler(webapp.RequestHandler):
           auth = tweepy.OAuthHandler(cpedialog.twitter_consumer_key, cpedialog.twitter_consumer_secret)
           auth.set_request_token(cpedialog.twitter_request_token_key, cpedialog.twitter_request_token_secret)
           auth.set_access_token(cpedialog.twitter_access_key, cpedialog.twitter_access_secret)
-          self.api = tweepy.API(auth)
+          self.auth_api = tweepy.API(auth)
       except Exception:
-          self.api = None
+          self.auth_api = None
 
   def get(self):
     action = self.request.get('action')
@@ -472,10 +475,27 @@ class RPCHandler(webapp.RequestHandler):
       text = input(gv_message)
       voice.send_sms(phoneNumber, text)
 
-  def GetTweets(self):
-      if self.api is not None:
-          statuses = self.api.user_timeline()
-          returnValue = {"records":statuses}
+  def GetTweets(self,page,result_size):
+      if self.auth_api is not None:
+          statuses = self.auth_api.user_timeline(count=result_size,page=page)
+          tweets = []
+          for status_ in statuses:
+              status = twitter.Status(
+                   created_at=rfc822.formatdate(time.mktime(status_.created_at.timetuple())),
+                   id=status_.id,
+                   text=status_.text,
+                   in_reply_to_screen_name=status_.in_reply_to_screen_name,
+                   in_reply_to_user_id=status_.in_reply_to_user_id,
+                   in_reply_to_status_id=status_.in_reply_to_status_id,
+                   truncated=status_.truncated,
+                   source=status_.source)
+              tweet = {}
+              tweet['text'] = status.GetText()
+              tweet['id'] = status.GetId()
+              tweet['created_at'] = status.GetRelativeCreatedAt()
+              tweet['source'] = status.GetSource()
+              tweets+=[tweet]
+          returnValue = {"records":tweets,"startIndex":page}
           return returnValue
 
 
