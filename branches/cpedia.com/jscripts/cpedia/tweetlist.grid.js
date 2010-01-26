@@ -50,12 +50,14 @@ YAHOO.util.Event.addListener(window, "load", function() {
                 pageCount++;
             }
             show_or_hide_link();
+            document.getElementById("ajax_icon").style.display = "none";
         };
         
         var myFailureHandler = function() {
             this.showTableMessage(YAHOO.widget.DataTable.MSG_ERROR, YAHOO.widget.DataTable.CLASS_ERROR);
             this.onDataReturnAppendRows.apply(this, arguments);
             YAHOO.log("Polling tweets failure", "error");
+            document.getElementById("ajax_icon").style.display = "none";            
         };
 
         // Set up polling
@@ -66,6 +68,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
         };
         show_or_hide_link();
         var show_more_tweets = function(e) {
+            document.getElementById("ajax_icon").style.display = "";
             var target = YAHOO.util.Event.getTarget(e);
             var pageCount_ = pageCount;
             if (target.id == "newer_tweets") {
