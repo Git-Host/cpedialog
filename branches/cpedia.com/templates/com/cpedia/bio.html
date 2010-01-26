@@ -1,6 +1,7 @@
 <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/connection/connection-min.js"></script>
 <script type="text/javascript" src="/jscripts/cpedia/google_voice.js"></script>        
 <div id="sidebar_div">
+    {% if twitter_user %}
     <div>
         <fieldset id="bio">
             <legend>Who am I?</legend>
@@ -17,6 +18,9 @@
             </div>
         </fieldset>
     </div>
+    {% else %}
+    <div> Please do Twitter OAuth 2-legged authentication from background.</div>
+    {% endif %}
     <div id="google_voice_message">
         <div class="gv_title">Send me an SMS message:</div>
         <div class="gv_notes">Yes, I can receive it in my phone immediately.</div>
