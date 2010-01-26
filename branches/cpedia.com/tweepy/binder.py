@@ -8,6 +8,9 @@ import urllib
 from . parsers import parse_error
 from . error import TweepError
 
+from google.appengine.api import urlfetch
+
+
 try:
     import json #Python >= 2.6
 except ImportError:
@@ -107,33 +110,38 @@ def bind_api(path, parser, allowed_param=None, method='GET', require_auth=False,
 
         # Open connection
         # FIXME: add timeout
-        if api.secure:
-            conn = httplib.HTTPSConnection(_host)
-        else:
-            conn = httplib.HTTPConnection(_host)
-
-        # Build request
-        conn.request(method, url, headers=headers, body=post_data)
-
-        # Get response
-        resp = conn.getresponse()
-        api.last_response = resp
+#        if api.secure:
+#            conn = httplib.HTTPSConnection(_host)
+#        else:
+#            conn = httplib.HTTPConnection(_host)
+#
+#        # Build request
+#        conn.request(method, url, headers=headers, body=post_data)
+#
+#        # Get response
+#        resp = conn.getresponse()
+        api.logger.debug('url: %s ' % url )            
+        result = urlfetch.fetch(url=scheme+_host+url,
+                    payload=post_data,
+                    method=urlfetch.GET,
+                    headers=headers,deadline=10)
+        api.last_response = result
         api.logger.debug('Received response...')
-        api.logger.debug('  headers: %s' % resp.getheaders())
-        api.logger.debug('  status code: %s' % resp.status)
+        api.logger.debug('  headers: %s' % result.headers )
+        api.logger.debug('  status code: %s' % result.status_code)
 
         # If an error was returned, throw an exception
-        if resp.status != 200:
+        if result.status_code != 200:
             try:
-                error_msg = parse_error(resp.read())
+                error_msg = parse_error(result.content)
             except Exception:
-                error_msg = "Twitter error response: status code = %s" % resp.status
+                error_msg = "Twitter error response: status code = %s" % result.status_code
             api.logger.error('  Error: %s' % error_msg)
             raise TweepError(error_msg)
 
         # Parse json respone body
         try:
-            jobject = json.loads(resp.read())
+            jobject = json.loads(result.content)
         except Exception:
             raise TweepError("Failed to parse json response text")
 
@@ -154,7 +162,7 @@ def bind_api(path, parser, allowed_param=None, method='GET', require_auth=False,
         except Exception:
             raise TweepError("Failed to parse json object")
 
-        conn.close()
+        #conn.close()
 
         # validate result
         if api.validate:

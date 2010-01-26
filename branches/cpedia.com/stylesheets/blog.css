@@ -703,6 +703,10 @@ a.tag28, a.tag29, a.tag30 {
     cursor: default !important;
 }
 
+.tweet_paging{
+    padding-top:10px;padding-left:10px;
+    font-style:italic;
+}
 .ll_photobox {
     float: right;
     margin: 1px;

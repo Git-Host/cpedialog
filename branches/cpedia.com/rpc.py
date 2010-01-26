@@ -102,16 +102,19 @@ class UploadCSS (webapp.RequestHandler):
 class RPCHandler(webapp.RequestHandler):
   session = cpedia.sessions.sessions.Session()
   auth_api = None
-  
-  def __init__(self):
-      try:
-          cpedialog = util.getCPedialog()
-          auth = tweepy.OAuthHandler(cpedialog.twitter_consumer_key, cpedialog.twitter_consumer_secret)
-          auth.set_request_token(cpedialog.twitter_request_token_key, cpedialog.twitter_request_token_secret)
-          auth.set_access_token(cpedialog.twitter_access_key, cpedialog.twitter_access_secret)
-          self.auth_api = tweepy.API(auth)
-      except Exception:
-          self.auth_api = None
+
+  def get_auth_api(self):
+      if not self.auth_api:
+          try:
+              cpedialog = util.getCPedialog()
+              auth = tweepy.OAuthHandler(cpedialog.twitter_consumer_key, cpedialog.twitter_consumer_secret)
+              auth.set_request_token(cpedialog.twitter_request_token_key, cpedialog.twitter_request_token_secret)
+              auth.set_access_token(cpedialog.twitter_access_key, cpedialog.twitter_access_secret)
+              self.auth_api = tweepy.API(auth_handler=auth,logger=util.getLogger(__name__))
+              util.getLogger(__name__).debug('initialize oauth api.')
+          except Exception:
+              self.auth_api = None
+      return self.auth_api
 
   def get(self):
     action = self.request.get('action')
@@ -476,8 +479,8 @@ class RPCHandler(webapp.RequestHandler):
       voice.send_sms(phoneNumber, text)
 
   def GetTweets(self,page,result_size):
-      if self.auth_api is not None:
-          statuses = self.auth_api.user_timeline(count=result_size,page=page)
+      if self.get_auth_api() is not None:
+          statuses = self.get_auth_api().user_timeline(count=result_size,page=page)
           tweets = []
           for status_ in statuses:
               status = twitter.Status(
