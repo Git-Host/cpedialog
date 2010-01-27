@@ -49,6 +49,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
                 pageCount++;
             }
             show_or_hide_link();
+            document.getElementById("current_tweet_page").innerHTML = pageCount;
             document.getElementById("ajax_icon").src = "/img/ajax-none.gif";
         };
         
