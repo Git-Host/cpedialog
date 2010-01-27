@@ -2,6 +2,7 @@ from conf import config
 from util import *
 import settings
 import os
+from google.appengine.api import urlfetch
 
 if settings.DEBUG:
     import logging
@@ -65,13 +66,14 @@ class Voice(object):
             from getpass import getpass
             passwd = getpass()
 
-        content = self.__do_page('login').read()
+        content = self.__do_page('login')
         # holy hackjob
-        galx = re.search(r"name=\"GALX\"\s+value=\"(.+)\"", content).group(1)
-        self.__do_page('login', {'Email': email, 'Passwd': passwd, 'GALX': galx})
+        galx = re.search(r"name=\"dsh\"\s+value=\"(.+)\"", content).group(1)
+        dsh = re.search(r"id=\"GALX\"\s+value=\"(.+)\"", content).group(1)
+        self.__do_page('login', {'Email': email, 'Passwd': passwd, 'GALX': galx, 'dsh': dsh})
         
         del email, passwd
-        
+        log.debug(self.special)
         try:
             assert self.special
         except (AssertionError, AttributeError):
@@ -166,7 +168,7 @@ class Voice(object):
             raise DownloadError
         fn = path.join(adir, '%s.mp3' % msg)
         fo = open(fn, 'wb')
-        fo.write(response.read())
+        fo.write(response)
         fo.close()
         return fn
     
@@ -193,14 +195,24 @@ class Voice(object):
         page = page.upper()
         if isinstance(data, dict) or isinstance(data, tuple):
             data = urlencode(data)
-        headers.update({'User-Agent': 'PyGoogleVoice/0.5'})
+        #headers.update({'User-Agent': 'PyGoogleVoice/0.5'})
         if log:
             log.debug('%s?%s - %s' % (getattr(settings, page)[22:], data or '', headers))
         if page in ('DOWNLOAD','XML_SEARCH'):
             return urlopen(Request(getattr(settings, page) + data, None, headers))
         if data:
             headers.update({'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'})
-        return urlopen(Request(getattr(settings, page), data, headers))
+
+        result = urlfetch.fetch(url=getattr(settings, page),
+                        payload=data,
+                        method=urlfetch.POST,
+                        headers=headers,follow_redirects=False)
+        if result.status_code == 200:
+            log.debug(result.content)
+            return result.content
+        else:
+            return None
+        #return urlopen(Request(getattr(settings, page), data, headers))
 
     def __validate_special_page(self, page, data={}, **kwargs):
         """
@@ -228,7 +240,7 @@ class Voice(object):
         """
         Return XMLParser instance generated from given page
         """
-        return XMLParser(self, page, lambda: self.__do_special_page('XML_%s' % page.upper(), data, headers).read())
+        return XMLParser(self, page, lambda: self.__do_special_page('XML_%s' % page.upper(), data, headers))
       
     def __messages_post(self, page, *msgs, **kwargs):
         """
