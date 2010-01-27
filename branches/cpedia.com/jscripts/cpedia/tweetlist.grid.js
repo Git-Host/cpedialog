@@ -7,13 +7,25 @@ YAHOO.util.Event.addListener(window, "load", function() {
         var myTableConfig = {
             initialRequest: '&arg0=' + pageCount + '&arg1=' + pageSize   //'startIndex=0&results=25'
         };
+
+        var tweetFormat = function(texto){
+            //make links
+            var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+            texto = texto.replace(exp,"<a href='$1' class='extLink' target='_blank'>$1</a>");
+            var exp = /[\@]+([A-Za-z0-9-_]+)/ig;
+            texto = texto.replace(exp,"<a href='http://twitter.com/$1' target='_blank' class='profileLink'>@$1</a>");
+            var exp = /[\#]+([A-Za-z0-9-_]+)/ig;
+            texto = texto.replace(exp,"<a href='https://twitter.com/search?q=#$1' target='_blank' class='hashLink'>#$1</a>");
+            return texto;
+        };
+
         var myColumnDefs = [
             {
                 key:"text",
                 label:"Tweet",
                 sortable:true,
                 formatter:function(elCell, oRecord) {
-                    var text = oRecord.getData("text") + "<br/><span class=tweet-meta>" + oRecord.getData("created_at") + " from " + oRecord.getData("source") + "</span>";
+                    var text = tweetFormat(oRecord.getData("text")) + "<br/><span class=tweet-meta>" + oRecord.getData("created_at") + " from " + oRecord.getData("source") + "</span>";
                     elCell.innerHTML = text;
                 }
             }
