@@ -40,7 +40,11 @@ class Voice(object):
         except NameError:
             regex = r"('_rnr_se':) '(.+)'"
         try:
-            sp = re.search(regex, urlopen(settings.INBOX).read()).group(2)
+            result = urlfetch.fetch(url=settings.INBOX,
+                            method=urlfetch.POST)
+            sp = None
+            if result.status_code == 200:
+                sp = re.search(regex, result.content).group(2)
         except AttributeError:
             sp = None
         self._special = sp
@@ -68,10 +72,10 @@ class Voice(object):
 
         content = self.__do_page('login')
         # holy hackjob
-        galx = re.search(r"name=\"dsh\"\s+value=\"(.+)\"", content).group(1)
-        dsh = re.search(r"id=\"GALX\"\s+value=\"(.+)\"", content).group(1)
-        self.__do_page('login', {'Email': email, 'Passwd': passwd, 'GALX': galx, 'dsh': dsh})
-        
+        dsh= re.search(r"id=\"dsh\"\s+value=\"(.+)\"", content).group(1)
+        galx = re.search(r"name=\"GALX\"\s+value=\"(.+)\"", content).group(1)
+        result = self.__do_page('login', {'Email': email, 'Passwd': passwd, 'GALX': galx, 'dsh': dsh})
+        log.debug(result)
         del email, passwd
         log.debug(self.special)
         try:
@@ -195,7 +199,7 @@ class Voice(object):
         page = page.upper()
         if isinstance(data, dict) or isinstance(data, tuple):
             data = urlencode(data)
-        #headers.update({'User-Agent': 'PyGoogleVoice/0.5'})
+        headers.update({'User-Agent': 'PyGoogleVoice/0.5'})
         if log:
             log.debug('%s?%s - %s' % (getattr(settings, page)[22:], data or '', headers))
         if page in ('DOWNLOAD','XML_SEARCH'):
@@ -206,7 +210,7 @@ class Voice(object):
         result = urlfetch.fetch(url=getattr(settings, page),
                         payload=data,
                         method=urlfetch.POST,
-                        headers=headers,follow_redirects=False)
+                        headers=headers)
         if result.status_code == 200:
             log.debug(result.content)
             return result.content

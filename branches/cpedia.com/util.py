@@ -425,10 +425,13 @@ def getTwitterUser():
     except Exception:
         twitter_user = None
     if twitter_user is None:
-        cpedialog = getCPedialog()
-        api = twitter.Api()
-        twitter_user = api.GetUser("cpedia")
-        memcache.add(key=key_, value=twitter_user, time=36000)
+        try:
+            cpedialog = getCPedialog()
+            api = twitter.Api()
+            twitter_user = api.GetUser("cpedia")
+            memcache.add(key=key_, value=twitter_user, time=36000)
+        except Exception:
+            twitter_user = None
     else:
         getLogger(__name__).debug("getTwitterUser from cache. ")
     return twitter_user
