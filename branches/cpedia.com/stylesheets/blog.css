@@ -703,6 +703,13 @@ a.tag28, a.tag29, a.tag30 {
     cursor: default !important;
 }
 
+#yui-history-iframe {
+  position:absolute;
+  top:0; left:0;
+  width:1px; height:1px; /* avoid scrollbars */
+  visibility:hidden;
+}
+
 .tweet_paging{
     padding-top:10px;padding-left:5px;
     font-style:italic;
