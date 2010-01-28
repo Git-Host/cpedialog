@@ -143,6 +143,7 @@ class Voice(object):
         """
         Send an SMS message to a given ``phoneNumber`` with the given ``text`` message
         """
+        text = u(text,'utf-8').encode('utf-8')        
         self.__validate_special_page('sms', {'phoneNumber': phoneNumber, 'text': text})
 
     def search(self, query):
@@ -258,3 +259,12 @@ class Voice(object):
         return self.__do_special_page(page, dict(data))
     
     _Message__messages_post = __messages_post
+
+
+def u(s, encoding):
+    if isinstance(s, unicode):
+        return s
+    else:
+        return unicode(s, encoding)
+
+
