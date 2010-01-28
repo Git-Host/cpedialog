@@ -48,6 +48,11 @@
         var delicious_username = document.getElementById("delicious_username");
         delicious_username.disabled = !delicious.checked;
     }
+    function checkAnalytics(){
+        var analytics = document.getElementById("analytics_enable");
+        var analytics_web_property_id = document.getElementById("analytics_web_property_id");
+        analytics_web_property_id.disabled = !analytics.checked;
+    }
     function checkGoogleAjaxFeed(){
         var google_ajax_feed_enable = document.getElementById("google_ajax_feed_enable");
         var google_ajax_feed_title = document.getElementById("google_ajax_feed_title");
@@ -322,7 +327,7 @@
         <tr>
             <th><label for="analytics_enable">{% trans "Google Analytics enable" %}:</label></th>
             <td>
-                <input id="analytics_enable" name="analytics_enable" type="checkbox" {% if BLOG.analytics_enable %} checked {% endif %}/>
+                <input id="analytics_enable" name="analytics_enable" type="checkbox" onclick="checkAnalytics()" {% if BLOG.analytics_enable %} checked {% endif %}/>
                 <small>You may track visits to your site in <a href="http://www.google.com/analytics/">Google Analytics</a>.</small>
             </td>
         </tr>

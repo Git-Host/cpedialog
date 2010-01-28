@@ -431,7 +431,8 @@ def getTwitterUser():
             twitter_user = api.GetUser("cpedia")
             memcache.add(key=key_, value=twitter_user, time=36000)
         except Exception:
-            twitter_user = None
+            pass
+            #twitter_user = None
     else:
         getLogger(__name__).debug("getTwitterUser from cache. ")
     return twitter_user
