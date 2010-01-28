@@ -35,6 +35,8 @@ from google.appengine.ext import db
 from model import Archive,Weblog,WeblogReactions,\
     AuthSubStoredToken,Album,Menu,Images,Tag,Feeds,User,CSSFile
 
+from cpedia.utils import translate
+
 import authorized
 import util
 import tweepy
@@ -471,12 +473,18 @@ class RPCHandler(webapp.RequestHandler):
 
   def SendGoogleVoiceSMS(self,request):
       gv_message = request.get("gv_message")
+      client_cellphone_number = request.get("client_cellphone_number")
       cpedialog = util.getCPedialog()
       voice = Voice()
       voice.login(cpedialog.google_voice_username,cpedialog.google_voice_password)
-      phoneNumber = input(cpedialog.cell_phone_number)
-      text = input(gv_message)
+      #phoneNumber = input(cpedialog.cell_phone_number)
+      #text = input(gv_message)
+      text = translate.translate(util.u(gv_message,'utf-8'))
+      phoneNumber = cpedialog.cell_phone_number
+      if client_cellphone_number is not None and len(str(client_cellphone_number))>0:
+         phoneNumber = cpedialog.cell_phone_number+", "+ client_cellphone_number
       voice.send_sms(phoneNumber, text)
+      return True
 
   def GetTweets(self,page,result_size):
       if self.get_auth_api() is not None:

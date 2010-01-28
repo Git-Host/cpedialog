@@ -748,6 +748,7 @@ a.tag28, a.tag29, a.tag30 {
 }
 .gv_notes{
     font-size:0.8em;
+    padding-bottom:5px;
 }
 .gv_title{
     font-size:1.1em;

@@ -1,3 +1,4 @@
+YAHOO.namespace("cpedia.message");
 YAHOO.util.Event.addListener(window, "load", function() {
    var send_sms = function(){
        var gv_message = document.getElementById("gv_message");
@@ -33,4 +34,6 @@ YAHOO.util.Event.addListener(window, "load", function() {
                );
    };
    YAHOO.util.Event.addListener("gv_message_send_button","click",send_sms);
+   YAHOO.cpedia.message.tooltips = new YAHOO.widget.Tooltip("tt1", { context:"client_cell_label" });
+   YAHOO.cpedia.message.tooltips = new YAHOO.widget.Tooltip("tt2", { context:"gv_message_label" });
 });

@@ -3,6 +3,8 @@ from util import *
 import settings
 import os
 from google.appengine.api import urlfetch
+from cpedia.utils.urlopen import URLOpener
+opener = URLOpener()
 
 if settings.DEBUG:
     import logging
@@ -39,12 +41,10 @@ class Voice(object):
                 regex = bytes("('_rnr_se':) '(.+)'")
         except NameError:
             regex = r"('_rnr_se':) '(.+)'"
-        try:
-            result = urlfetch.fetch(url=settings.INBOX,
-                            method=urlfetch.POST)
-            sp = None
-            if result.status_code == 200:
-                sp = re.search(regex, result.content).group(2)
+        try:            
+            googleVoiceHomePage= opener.open(settings.INBOX).content
+            match = re.search('name="_rnr_se".*?value="(.*?)"', googleVoiceHomePage)
+            sp = match.group(1)            
         except AttributeError:
             sp = None
         self._special = sp
@@ -74,10 +74,10 @@ class Voice(object):
         # holy hackjob
         dsh= re.search(r"id=\"dsh\"\s+value=\"(.+)\"", content).group(1)
         galx = re.search(r"name=\"GALX\"\s+value=\"(.+)\"", content).group(1)
-        result = self.__do_page('login', {'Email': email, 'Passwd': passwd, 'GALX': galx, 'dsh': dsh})
-        log.debug(result)
+        result = self.__do_page('login', {'Email': email, 'Passwd': passwd, 'GALX': galx,'dsh':dsh})
+
         del email, passwd
-        log.debug(self.special)
+
         try:
             assert self.special
         except (AssertionError, AttributeError):
@@ -199,7 +199,7 @@ class Voice(object):
         page = page.upper()
         if isinstance(data, dict) or isinstance(data, tuple):
             data = urlencode(data)
-        headers.update({'User-Agent': 'PyGoogleVoice/0.5'})
+        #headers.update({'User-Agent': 'PyGoogleVoice/0.5'})
         if log:
             log.debug('%s?%s - %s' % (getattr(settings, page)[22:], data or '', headers))
         if page in ('DOWNLOAD','XML_SEARCH'):
@@ -207,12 +207,11 @@ class Voice(object):
         if data:
             headers.update({'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'})
 
-        result = urlfetch.fetch(url=getattr(settings, page),
-                        payload=data,
-                        method=urlfetch.POST,
-                        headers=headers)
+        # Login
+        result = opener.open(getattr(settings, page), data,headers)
+
         if result.status_code == 200:
-            log.debug(result.content)
+            #log.debug(result.content)
             return result.content
         else:
             return None
