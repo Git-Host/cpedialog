@@ -21,7 +21,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
                '/rpc?action=SendGoogleVoiceSMS',
        {
            success: function (o) {
-               window.alert("You SMS message has been send successfully.");
+               window.alert("You SMS message has been sent successfully.");
                gv_message.value = "";
                resetBtn();
            },
