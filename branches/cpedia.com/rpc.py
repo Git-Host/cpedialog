@@ -479,7 +479,8 @@ class RPCHandler(webapp.RequestHandler):
       voice.login(cpedialog.google_voice_username,cpedialog.google_voice_password)
       #phoneNumber = input(cpedialog.cell_phone_number)
       #text = input(gv_message)
-      text = translate.translate(util.u(gv_message,'utf-8'))
+      #text = translate.translate(util.u(gv_message,'utf-8'))
+      text = util.u(gv_message,'utf-8')
       phoneNumber = cpedialog.cell_phone_number
       if client_cellphone_number is not None and len(str(client_cellphone_number))>0:
          phoneNumber = cpedialog.cell_phone_number+", "+ client_cellphone_number
