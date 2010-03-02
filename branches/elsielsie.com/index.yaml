@@ -21,16 +21,6 @@ indexes:
   - name: valid
   - name: order
 
-- kind: Images
-  properties:
-  - name: -date
-    direction: desc
-
-- kind: Images
-  properties:
-  - name: date
-    direction: desc
-
 - kind: Menu
   properties:
   - name: valid
@@ -40,11 +30,6 @@ indexes:
   properties:
   - name: user
   - name: valid
-
-- kind: Tag
-  properties:
-  - name: entrycount
-    direction: desc
 
 - kind: Tag
   properties:
@@ -65,11 +50,6 @@ indexes:
 
 - kind: Weblog
   properties:
-  - name: date
-    direction: desc
-
-- kind: Weblog
-  properties:
   - name: entrytype
   - name: date
     direction: desc
@@ -83,28 +63,13 @@ indexes:
 
 - kind: Weblog
   properties:
-  - name: lastCommentedDate
-    direction: desc
-
-- kind: Weblog
-  properties:
   - name: monthyear
   - name: date
-    direction: desc
-
-- kind: Weblog
-  properties:
-  - name: permalink
     direction: desc
 
 - kind: Weblog
   properties:
   - name: tags
-  - name: date
-    direction: desc
-
-- kind: WeblogReactions
-  properties:
   - name: date
     direction: desc
 
