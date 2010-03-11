@@ -10,6 +10,12 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Album
+  properties:
+  - name: valid
+  - name: order
+    direction: desc
+
 - kind: Feeds
   properties:
   - name: valid
@@ -19,3 +25,55 @@ indexes:
   properties:
   - name: valid
   - name: order
+
+- kind: OpenID
+  properties:
+  - name: user
+  - name: valid
+
+- kind: Tag
+  properties:
+  - name: valid
+  - name: tag
+
+- kind: UsedNonce
+  properties:
+  - name: salt
+  - name: server_url
+  - name: timestamp
+
+- kind: Weblog
+  properties:
+  - name: __searchable_text_index
+  - name: date
+    direction: desc
+
+- kind: Weblog
+  properties:
+  - name: entrytype
+  - name: date
+    direction: desc
+
+- kind: Weblog
+  properties:
+  - name: entrytype
+  - name: monthyear
+  - name: date
+    direction: desc
+
+- kind: Weblog
+  properties:
+  - name: monthyear
+  - name: date
+    direction: desc
+
+- kind: Weblog
+  properties:
+  - name: tags
+  - name: date
+    direction: desc
+
+- kind: WeblogReactions
+  properties:
+  - name: weblog
+  - name: date
