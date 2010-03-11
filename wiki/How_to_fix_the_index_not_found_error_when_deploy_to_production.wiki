@@ -11,7 +11,7 @@ If you download cpedialog, and then deploy it to the appengine server directly f
 
 = How to resolve? =
 
-Down the fixed index file:
+Replace index.yaml with the fixed index file:
 http://code.google.com/p/cpedialog/downloads/detail?name=index.yaml&can=2&q=#makechanges
  
 
