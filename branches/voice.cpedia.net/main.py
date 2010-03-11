@@ -27,6 +27,7 @@ import album
 import book
 import admin
 import login
+import voice
 import logging
 import util
 import os
@@ -111,6 +112,9 @@ def main():
                                         ('/lost_password/*$', login.LostPassword),
                                         ('/reset_password/*$', login.ResetPassword),
                                         ('/twitteroauth/signin/*$', login.LoginTwitterOAuth),
+
+                                        ('/google_voice/account/*$', voice.GoogleVoiceAccountPage),
+                                        ('/google_voice/call/*$', voice.CallGoogleVoicePage),
 
                                         #('/([-\w]+)/*$', blog.PageHandler),
                                         ('/*$', cpediacom.MainPage),                                        
