@@ -491,7 +491,7 @@ class CPediaLog(SerializableModel):
     analytics_enable = db.BooleanProperty(default = False)
     analytics_web_property_id = db.StringProperty(multiline=False,default='')
 
-    google_ajax_feed_enable = db.BooleanProperty(default = True)
+    google_ajax_feed_enable = db.BooleanProperty(default = False)
     google_ajax_feed_key = db.StringProperty(multiline=False,
                                              default='ABQIAAAAOY_c0tDeN-DKUM-NTZldZhQG0TqTy2vJ9mpRzeM1HVuOe9SdDRSieJccw-q7dBZF5aGxGJ-oZDyf5Q'
             )  #this key only for support from google. It's optional.
