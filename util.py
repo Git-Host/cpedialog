@@ -244,7 +244,7 @@ def getCPedialog():
             cpedialog = CPediaLog()
         memcache.add(key=key_, value=cpedialog, time=36000)            
     else:
-        getLogger(__name__).debug("getFeedList from cache. ")
+        getLogger(__name__).debug("getCPedialog from cache. ")
     return cpedialog
 
 #get CSS links
