@@ -19,7 +19,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
         YAHOO.util.Connect.setForm(formObject);
         YAHOO.util.Connect.asyncRequest(
                 'POST',
-                '/google_voice/call',
+                '/google-voice/call',
         {
             success: function (o) {
                 window.alert(o.responseText);
@@ -46,7 +46,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
         YAHOO.util.Connect.setForm(formObject);
         YAHOO.util.Connect.asyncRequest(
                 'POST',
-                '/google_voice/account',
+                '/google-voice/account',
         {
             success: function (o) {
                 window.alert(o.responseText);
