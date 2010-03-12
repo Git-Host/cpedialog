@@ -22,7 +22,6 @@ YAHOO.util.Event.addListener(window, "load", function() {
                 '/google-voice/call',
         {
             success: function (o) {
-                window.alert(o.responseText);
                 window.alert("You call has been connected successfully.");
                 resetBtn();
             },
