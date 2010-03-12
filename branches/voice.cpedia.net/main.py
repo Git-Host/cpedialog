@@ -113,8 +113,8 @@ def main():
                                         ('/reset_password/*$', login.ResetPassword),
                                         ('/twitteroauth/signin/*$', login.LoginTwitterOAuth),
 
-                                        ('/google_voice/account/*$', voice.GoogleVoiceAccountPage),
-                                        ('/google_voice/call/*$', voice.CallGoogleVoicePage),
+                                        ('/google-voice/account/*$', voice.GoogleVoiceAccountPage),
+                                        ('/google-voice/call/*$', voice.CallGoogleVoicePage),
 
                                         #('/([-\w]+)/*$', blog.PageHandler),
                                         #('/*$', cpediacom.MainPage),
