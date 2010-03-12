@@ -117,7 +117,7 @@ def main():
                                         ('/google_voice/call/*$', voice.CallGoogleVoicePage),
 
                                         #('/([-\w]+)/*$', blog.PageHandler),
-                                        #('/*$', cpediacom.MainPage),                                        
+                                        #('/*$', cpediacom.MainPage),
                                        ],
                                        debug=cpedialog.debug)
     wsgiref.handlers.CGIHandler().run(application)
