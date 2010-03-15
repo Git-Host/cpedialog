@@ -78,10 +78,10 @@ class CallGoogleVoicePage(BaseRequestHandler):
         password = self.request.get("password")
         outgoingNumber = self.request.get("outgoingNumber")
         forwardingNumber = self.request.get("forwardingNumber")
-        phoneType = self.request.get("phoneType")
+        #phoneType = self.request.get("phoneType")
         voice = Voice()
         voice.login(username,password)
-        voice.call(outgoingNumber,forwardingNumber,phoneType)
+        voice.call(outgoingNumber,forwardingNumber)
         return
 
 
