@@ -68,22 +68,32 @@ class BaseRequestHandler(webapp.RequestHandler):
         directory = os.path.dirname(__file__)
         view.ViewPage(cache_time=0).render(self, template_name,values)
 
+class MainPage(BaseRequestHandler):
+    def get(self):
+        self.generate('com/cpedia/gvdialer.html')
+
+class GVDialerAboutPage(BaseRequestHandler):
+    def get(self):
+        self.generate('com/cpedia/gvdialer.html')
+
 
 class CallGoogleVoicePage(BaseRequestHandler):
     def get(self):
         self.generate('com/cpedia/voice.html')
 
     def post(self):
-        username = self.request.get("username")
-        password = self.request.get("password")
-        outgoingNumber = self.request.get("outgoingNumber")
-        forwardingNumber = self.request.get("forwardingNumber")
-        #phoneType = self.request.get("phoneType")
-        voice = Voice()
-        voice.login(username,password)
-        voice.call(outgoingNumber,forwardingNumber)
-        return
-
+        try:
+            username = self.request.get("username")
+            password = self.request.get("password")
+            outgoingNumber = self.request.get("outgoingNumber")
+            forwardingNumber = self.request.get("forwardingNumber")
+            #phoneType = self.request.get("phoneType")
+            voice = Voice()
+            voice.login(username,password)
+            voice.call(outgoingNumber,forwardingNumber)
+            return
+        except Exception , e:
+            self.response.out.write(e)
 
 class GoogleVoiceAccountPage(BaseRequestHandler):
     def get(self):
