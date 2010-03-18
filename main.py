@@ -116,6 +116,10 @@ def main():
                                         ('/google-voice/account/*$', voice.GoogleVoiceAccountPage),
                                         ('/google-voice/call/*$', voice.CallGoogleVoicePage),
 
+                                        ('/*$', voice.MainPage),
+                                        ('/gv-dialer/*$', voice.MainPage),
+                                        ('/gv-dialer/about/*$', voice.GVDialerAboutPage),
+
                                         #('/([-\w]+)/*$', blog.PageHandler),
                                         #('/*$', cpediacom.MainPage),
                                        ],
