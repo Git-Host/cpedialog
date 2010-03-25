@@ -32,8 +32,9 @@ class Voice(object):
         """
         Returns special identifier for your session (if logged in)
         """
-        if hasattr(self, '_special') and getattr(self, '_special'):
-            return self._special
+
+        #if hasattr(self, '_special') and getattr(self, '_special'):
+        #    return self._special
         try:
             try:
                 regex = bytes("('_rnr_se':) '(.+)'", 'utf8')
@@ -56,8 +57,10 @@ class Voice(object):
         Login to the service using your Google Voice account
         Credentials will be propmpted for if not given as args or in the ``~/.gvoice`` config file
         """
-        if hasattr(self, '_special') and getattr(self, '_special'):
-            return self
+        #bug fix. all kinds of user will login, so fetch "_special" every time.
+
+        #if hasattr(self, '_special') and getattr(self, '_special'):
+        #    return self
         
         if email is None:
             email = config.email
@@ -90,7 +93,7 @@ class Voice(object):
         Logs out an instance and makes sure it does not still have a session
         """
         self.__do_page('logout')
-        del self._special 
+        del self._special
         assert self.special == None
         return self
         
