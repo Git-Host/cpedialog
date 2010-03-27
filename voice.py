@@ -72,9 +72,9 @@ class MainPage(BaseRequestHandler):
     def get(self):
         self.generate('com/cpedia/gvdialer.html')
 
-class GVDialerAboutPage(BaseRequestHandler):
+class GVDialerHelpPage(BaseRequestHandler):
     def get(self):
-        self.generate('com/cpedia/gvdialer.html')
+        self.generate('com/cpedia/gvdialer_help.html')
 
 
 class CallGoogleVoicePage(BaseRequestHandler):
