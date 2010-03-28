@@ -15,6 +15,7 @@
 # limitations under the License.
 
 # -*- coding: utf-8 -*-
+import model
 
 __author__ = 'Ping Chen'
 
@@ -50,6 +51,11 @@ import twitter
 from googlevoice import Voice
 from googlevoice.util import input
 
+from google.appengine.ext.webapp import template
+from google.appengine.api import users
+from google.appengine.ext import webapp
+from google.appengine.ext import db
+from google.appengine.api import memcache
 
 import gdata.urlfetch
 gdata.service.http_request_handler = gdata.urlfetch
@@ -70,7 +76,16 @@ class BaseRequestHandler(webapp.RequestHandler):
 
 class MainPage(BaseRequestHandler):
     def get(self):
-        self.generate('com/cpedia/gvdialer.html')
+        #perm_stem = 'gv-dialer'
+        #blog = db.Query(model.Weblog).filter('permalink =',perm_stem).get()
+        #reactions = db.GqlQuery("select * from WeblogReactions where weblog =:1  order by date", blog)
+        template_values = {
+         # 'blog': blog,
+          #'reactions': reactions,
+          }
+        #self.generate('blog_view.html',template_values)
+        self.generate('com/cpedia/main.html',template_values)
+
 
 class GVDialerHelpPage(BaseRequestHandler):
     def get(self):

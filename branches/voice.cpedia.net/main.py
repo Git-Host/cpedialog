@@ -119,7 +119,7 @@ def main():
                                         ('/*$', voice.MainPage),
                                         ('/help/*$', voice.GVDialerHelpPage),
 
-                                        #('/([-\w]+)/*$', blog.PageHandler),
+                                        ('/([-\w]+)/*$', blog.PageHandler),
                                         #('/*$', cpediacom.MainPage),
                                        ],
                                        debug=cpedialog.debug)
