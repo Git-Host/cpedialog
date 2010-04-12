@@ -37,7 +37,7 @@ import simplejson
 import cgi
 import urllib, hashlib
 
-import twitter
+import tweepy
 
 # Functions to generate permalinks
 def get_permalink(date,title):
@@ -418,6 +418,22 @@ def getUser():
     session = cpedia.sessions.sessions.Session()
     return session.get_current_user()
 
+auth_api = None
+
+def get_auth_api(self):
+    if not auth_api:
+        try:
+            cpedialog = getCPedialog()
+            auth = tweepy.OAuthHandler(cpedialog.twitter_consumer_key, cpedialog.twitter_consumer_secret)
+            auth.set_request_token(cpedialog.twitter_request_token_key, cpedialog.twitter_request_token_secret)
+            auth.set_access_token(cpedialog.twitter_access_key, cpedialog.twitter_access_secret)
+            auth_api = tweepy.API(auth_handler=auth,logger=getLogger(__name__))
+            getLogger(__name__).debug('initialize oauth api.')
+        except Exception:
+            auth_api = None
+    return auth_api
+    
+
 def getTwitterUser():
     key_ = "twitter_user_key"
     try:
@@ -426,9 +442,11 @@ def getTwitterUser():
         twitter_user = None
     if twitter_user is None:
         try:
-            cpedialog = getCPedialog()
-            api = twitter.Api()
-            twitter_user = api.GetUser("cpedia")
+            #cpedialog = getCPedialog()
+            #api = twitter.Api()
+            #twitter_user = api.GetUser("cpedia")
+            twitter_user = get_auth_api().me()
+            getLogger(__name__).debug("getTwitterUser from cache. "+twitter_user)            
             memcache.add(key=key_, value=twitter_user, time=36000)
         except Exception:
             pass
@@ -436,3 +454,4 @@ def getTwitterUser():
     else:
         getLogger(__name__).debug("getTwitterUser from cache. ")
     return twitter_user
+
