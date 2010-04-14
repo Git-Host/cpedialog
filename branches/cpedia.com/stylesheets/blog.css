@@ -745,6 +745,7 @@ a.tag28, a.tag29, a.tag30 {
 }
 #google_voice_message{
     padding-top:20px;
+    padding-bottom:20px;
 }
 .gv_notes{
     font-size:0.8em;
