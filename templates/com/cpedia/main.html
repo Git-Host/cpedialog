@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="google voice,free call,sipdroid,gizmo5,gvdialer,GV Dialer"/>
+    <meta name="description" content="GV Dialer"/>
+    <meta name="author" content="cpedia, Ping Chen, http://cpedia.net"/>
+    <meta name="copyright" content="2010 http://gvdialer.cpedia.net"/>
+    <title>{% block title %}{{title}}{% endblock %}</title>
+    {% block header %}
+    {% endblock %}
+    <!-- yui -->
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css"/>
+    <style type="text/css">
+        #custom-doc {
+            width: 24.62em;
+            *width: 24.02em;
+            min-width: 320px;
+            margin: auto;
+            text-align: left;
+        }
+    </style>
+</head>
+<body class="yui-skin-sam">
+<div id="custom-doc" class="yui-t7">
+    <div id="hd">
+        <a name="top"></a>
+        {% include "main_top.html" %}
+    </div>
+    {% block main_body %}
+    <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b">
+                <div class="yui-g">
+                    <DIV class=post-body>
+                        <p style="line-height:1.5em!important;"><a href="#about_gvdialer">What’s GV Dialer?</a> <br/>
+
+                            <a href="#why_gvdialer">Why do I need GV Dialer?</a> <br/>
+
+                            <blockquote style="margin-left:15px;!important"><a href="#why_gvdialer_no_faves">I am in US, but I do not have
+                                faves number feature (such as T-Mobile faves).</a> <br/>
+                             <a href="#why_gvdialer_data_plan">I have an data plan, I want to
+                                call USA and Canada for free with Gizmo5/Sipdroid.</a> <br/><br/>  </blockquote>
+                        <a style="font-weight:bold;" href="market://search/?q=pname:net.cpedia.gvdialer">Download GV Dialer from Android Market: (Only available when viewing from your handset)</a>                                       
+                        </p>
+                        <br/><br/>
+
+                        <p><b><a name="about_gvdialer">What’s GV Dialer?</a></b> <a href="#top"
+                                                                                    style="margin-left:1.2cm;font:0.5em!important;">Back
+                            to top</a></p>
+                        <br/>
+
+                        <p><img style="float:right;" src="http://cpedialog.googlecode.com/svn/branches/voice.cpedia.net/img/gvdialer/gvdialer_chart.png" alt="">
+                            GV Dialer will intercept your outgoing call; uses Google Voice to call you back and connect
+                            your
+                            call for free (in the US).
+                            <br/> <br/>
+                            Unlike the official Voice app, GV Dialer will routes your call through the internet and will
+                            not
+                            use your minutes.
+                            <br/> <br/>
+                            You can use GV Dialer with Gizmo5/sipdroid; can also use it when not in US.
+                            <br/> <br/>
+                            To use GV Dialer, you need set up a Google Voice account if you don't already have one. As
+                            of
+                            today, I think this is only possible by requesting an invitation, and you can request an
+                            invite.
+                            It normally takes 1 - 2 weeks to get it. <br/> <br/>
+                            <img src="http://cpedialog.googlecode.com/svn/branches/voice.cpedia.net/img/gvdialer/gv_dialer_main.png"
+                                 alt="">
+                            <br/> <br/>
+                            <img src="http://cpedialog.googlecode.com/svn/branches/voice.cpedia.net/img/gvdialer/gv_dialer_making_call.png"
+                                 alt="">
+                            <br/> <br/>
+                        </p>
+                        <br/> <br/>
+
+                        <p><b> <a name="why_gvdialer">Why do I need GV Dialer?</a> </b></p>
+                        <br/>
+
+                        <p><b>
+                            <a name="why_gvdialer_no_faves">I am in US, but I do not have faves number feature (such as
+                                T-Mobile faves).</a> </b> <a href="#top" style="margin-left:1.2cm;font:0.5em!important;">Back to
+                            top</a></p>
+
+                        <br/>
+
+                        <p>
+                            In this time, if you the official Google Voice application, you will be charged. As the
+                            official
+                            Voice application will call to a local number (for example 760-576-4664, will change
+                            irregularly), and connect to your destination through this local number. If you can not call
+                            to
+                            this number for free or add this number to your faves, you will still be charged.
+                            <br/> <br/>
+                            You can use GV Dialer to avoid this kind of charge.
+                            <br/> <br/>
+
+                            Set up your Google voice account, and choose the default phone to ring(this is the callback
+                            number). <br/> <br/>
+                            <img src="http://cpedialog.googlecode.com/svn/branches/voice.cpedia.net/img/gvdialer/gvdialer_settings.png"
+                                 alt="">
+                            <br/> <br/> <img
+                                src="http://cpedialog.googlecode.com/svn/branches/voice.cpedia.net/img/gvdialer/gv_dialer_calling.png"
+                                alt="">
+                            <br/> <br/></p>
+
+                        <p><b> <a name="why_gvdialer_data_plan">I have a data plan; I want to call USA and Canada for
+                            free with Gizmo5/Sipdroid.</a> </b> <a href="#top" style="margin-left:1.2cm;font:0.5em!important;">Back
+                            to top</a></p>
+
+                        <br/>
+
+                        <p>
+                            1) Set up a free SIP Gizmo5 account by clicking here. Please note that currently, you have
+                            to
+                            wait for Google to re-release the Gizmo5 service. Once you have the account, note down your
+                            username/password, as well as the
+                            1-747-xxx-xxxx number that Gizmo assigns to you. This number is available on the Gizmo page
+                            when
+                            you login (https://my.gizmo5.com/).
+                            <br/> <br/>
+                            2) Add and confirm your gizmo 1-747-xxx-xxxx number in Google Voice, and tell Google Voice
+                            to
+                            forward to this number when it receives calls (important). You must either run Gizmo5's
+                            client
+                            software, a third party softphone registered to Gizmo5, or Sipdroid registered to Gizmo5
+                            (see
+                            step 5 below) in order to receive the confirmation call from Google Voice.
+                            <br/> <br/>
+                            3) Set your gizmo5 number as your default phone to ring in GV Dialer. <br/> <br/>
+                            <img src="http://cpedialog.googlecode.com/svn/branches/voice.cpedia.net/img/gvdialer/default_phone_to_ring.png"
+                                 alt="">
+                            <br/> <br/>
+                            4) Download Sipdroid from the market, and install it on your Android phone. In the "SIP
+                            Account
+                            Settings" of Sipdroid, enter your Gizmo username and password in the appropriate fields, and
+                            proxy01.sipphone.com under "Server". <br/> <br/>
+                            <img src="http://cpedialog.googlecode.com/svn/branches/voice.cpedia.net/img/gvdialer/sip_settings.png"
+                                 alt="">
+                            <br/> <br/>
+                            5) Now you can call with GV Dialer, the callback will be catch up by Sipdroid and connect
+                            your
+                            call for free. <br/> <br/>
+                            <img src="http://cpedialog.googlecode.com/svn/branches/voice.cpedia.net/img/gvdialer/dialing_goolge_411.png"
+                                 alt="">
+                            <br/> <br/> <img
+                                src="http://cpedialog.googlecode.com/svn/branches/voice.cpedia.net/img/gvdialer/sip_incalling.png"
+                                alt="">
+                            <br/> <br/> <img
+                                src="http://cpedialog.googlecode.com/svn/branches/voice.cpedia.net/img/gvdialer/sip_call_in.png"
+                                alt=""></p>
+                    </DIV>
+                </div>
+            </div>
+        </div>
+        <div class="yui-b">
+        </div>
+    </div>
+    {% endblock %}
+    <div id="ft">
+        {% include "footer.html" %}
+    </div>
+</div>
+
+{% if BLOG.analytics_enable %}
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("{{ BLOG.analytics_web_property_id }}");
+        pageTracker._trackPageview();
+    } catch(err) {
+    }
+</script>
+{% endif %}
+</body>
+</html>
