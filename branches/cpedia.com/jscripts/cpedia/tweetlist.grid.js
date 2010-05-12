@@ -3,7 +3,7 @@ YAHOO.namespace("cpedia.twitter");
 YAHOO.util.Event.addListener(window, "load", function() {
     YAHOO.cpedia.twitter.GetTweets = new function() {
         var pageCount = 1;
-        var pageSize = 8;
+        var pageSize = 10;
         var myTableConfig = {
             initialRequest: '&arg0=' + pageCount + '&arg1=' + pageSize   //'startIndex=0&results=25'
         };
