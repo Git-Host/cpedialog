@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="google voice,free call,sipdroid,gizmo5,gvdialer,GV Dialer"/>
+    <meta name="description" content="GV SMS"/>
+    <meta name="author" content="cpedia, Ping Chen, http://cpedia.net"/>
+    <meta name="copyright" content="2010 http://gvsms.cpedia.net"/>
+    <title>{% block title %}{{title}}{% endblock %}</title>
+    {% block header %}
+    {% endblock %}
+    <!-- yui -->
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css"/>
+    <style type="text/css">
+        #custom-doc {
+            width: 24.62em;
+            *width: 24.02em;
+            min-width: 320px;
+            margin: auto;
+            text-align: left;
+        }
+    </style>
+</head>
+<body class="yui-skin-sam">
+<div id="custom-doc" class="yui-t7">
+    <div id="hd">
+        <a name="top"></a>
+        {% include "main_top.html" %}
+    </div>
+    {% block main_body %}
+    <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b">
+                <div class="yui-g">
+                    <DIV class=post-body>
+                        <p>
+                             <a style="font-weight:bold;" href="market://search/?q=pname:net.cpedia.gvsms">
+                                 Download GV SMS from Android Market: (Only available when viewing from your handset)</a>
+                        </p> <br/><br/>
+
+                            <img style="float:right;" src="/img/gvsms/qr_code.png" alt="">                            
+                            GV SMS can help you to schedule SMS with Google Voice. You can send free SMS to multiple contacts or groups at any scheduled time.
+                            <br/> <br/>
+                            You can schedule SMS as One time, daily, weekly, monthly or yearly.  <br/>
+                            It’s easy to select multiple contacts or groups. <br/>
+                            Phone types filter for group.     <br/>
+                            Sending event alert and status report.   <br/>
+                            SMS send through Google Voice, you can send as many SMS as you wish completely free.  <br/><br/>
+                            <img src="/img/gvsms/gvsms.png" alt=""> <br>
+                            <img src="/img/gvsms/compose.png" alt=""> 
+
+
+
+<!-- Include the Google Friend Connect javascript library. -->
+<script type="text/javascript" src="http://www.google.com/friendconnect/script/friendconnect.js"></script>
+<!-- Define the div tag where the gadget will be inserted. -->
+<div id="div-4014653743362357425" style="width:320px;border:1px solid #cccccc;"></div>
+<!-- Render the gadget into a div. -->
+<script type="text/javascript">
+var skin = {};
+skin['BORDER_COLOR'] = '#cccccc';
+skin['ENDCAP_BG_COLOR'] = '#e0ecff';
+skin['ENDCAP_TEXT_COLOR'] = '#333333';
+skin['ENDCAP_LINK_COLOR'] = '#0000cc';
+skin['ALTERNATE_BG_COLOR'] = '#ffffff';
+skin['CONTENT_BG_COLOR'] = '#ffffff';
+skin['CONTENT_LINK_COLOR'] = '#0000cc';
+skin['CONTENT_TEXT_COLOR'] = '#333333';
+skin['CONTENT_SECONDARY_LINK_COLOR'] = '#7777cc';
+skin['CONTENT_SECONDARY_TEXT_COLOR'] = '#666666';
+skin['CONTENT_HEADLINE_COLOR'] = '#333333';
+skin['DEFAULT_COMMENT_TEXT'] = '- add your comment about GV SMS here -';
+skin['HEADER_TEXT'] = 'GV SMS Comments';
+skin['POSTS_PER_PAGE'] = '10';
+google.friendconnect.container.setParentUrl('/' /* location of rpc_relay.html and canvas.html */);
+google.friendconnect.container.renderWallGadget(
+ { id: 'div-4014653743362357425',
+   site: '12280568197598290703',
+   'view-params':{"disableMinMax":"true","scope":"SITE","allowAnonymousPost":"true","features":"video,comment","startMaximized":"true"}
+ },
+  skin);
+</script>
+
+                    </DIV>
+                </div>
+            </div>
+        </div>
+        <div class="yui-b">
+        </div>
+    </div>
+    {% endblock %}
+    <div id="ft">
+        {% include "footer.html" %}
+    </div>
+</div>
+
+{% if BLOG.analytics_enable %}
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("{{ BLOG.analytics_web_property_id }}");
+        pageTracker._trackPageview();
+    } catch(err) {
+    }
+</script>
+{% endif %}
+</body>
+</html>
