@@ -1,0 +1,159 @@
+# !/usr/bin/env python
+#
+# Copyright 2008 CPedia.com.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# -*- coding: utf-8 -*-
+import model
+
+__author__ = 'Ping Chen'
+
+
+import gdata.photos.service
+import gdata.media
+import gdata.geo
+import atom
+
+import cgi
+import wsgiref.handlers
+import os
+import re
+import datetime
+import calendar
+import logging
+import string
+import simplejson
+
+from xml.etree import ElementTree
+
+from google.appengine.ext.webapp import template
+from google.appengine.api import users
+from google.appengine.ext import webapp
+from google.appengine.ext import db
+from google.appengine.api import memcache
+
+import authorized
+import view
+import util
+import twitter
+
+from googlevoice import Voice
+from googlevoice.util import input
+
+from google.appengine.ext.webapp import template
+from google.appengine.api import users
+from google.appengine.ext import webapp
+from google.appengine.ext import db
+from google.appengine.api import memcache
+
+import gdata.urlfetch
+gdata.service.http_request_handler = gdata.urlfetch
+
+# This handler allows the functions defined in the RPCHandler class to
+# be called automatically by remote code.
+class RPCHandler(webapp.RequestHandler):
+  #session = cpedia.sessions.sessions.Session()
+  auth_api = None
+
+  def get(self):
+    action = self.request.get('action')
+    arg_counter = 0;
+    args = []
+    while True:
+      arg = self.request.get('arg' + str(arg_counter))
+      arg_counter += 1
+      if arg:
+        args += (simplejson.loads(arg),);
+      else:
+        break;
+    result = getattr(self, action)(*args)
+    self.response.out.write(simplejson.dumps((result)))
+
+  def post(self):
+    action = self.request.get('action')
+    request_ = self.request
+    result = getattr(self, action)(request_)
+    util.getLogger(__name__).debug('ajax action "%s"return value is %s', action,simplejson.dumps(result))
+    self.response.out.write(simplejson.dumps(result))
+
+
+class BaseRequestHandler(webapp.RequestHandler):
+  def generate(self, template_name, template_values={}):
+        google_login_url = users.create_login_url(self.request.uri)
+        google_logout_url = users.create_logout_url(self.request.uri)
+        values = {
+        "google_login_status":users.get_current_user(),
+        "google_login_url":google_login_url,
+        "google_logout_url":google_logout_url,
+        'request': self.request,
+        }
+        values.update(template_values)
+        directory = os.path.dirname(__file__)
+        view.ViewPage(cache_time=0).render(self, template_name,values)
+
+class MainPage(BaseRequestHandler):
+    def get(self):
+        #perm_stem = 'gv-dialer'
+        #blog = db.Query(model.Weblog).filter('permalink =',perm_stem).get()
+        #reactions = db.GqlQuery("select * from WeblogReactions where weblog =:1  order by date", blog)
+        template_values = {
+         # 'blog': blog,
+          #'reactions': reactions,
+          }
+        #self.generate('blog_view.html',template_values)
+        self.generate('com/cpedia/main.html',template_values)
+
+
+
+class CallGoogleVoicePage(BaseRequestHandler):
+    def get(self):
+        self.generate('com/cpedia/voice.html')
+
+    def post(self):
+        try:
+            username = self.request.get("username")
+            password = self.request.get("password")
+            outgoingNumber = self.request.get("outgoingNumber")
+            forwardingNumber = self.request.get("forwardingNumber")
+            #phoneType = self.request.get("phoneType")
+            voice = Voice()
+            voice.login(username,password)
+            voice.call(outgoingNumber,forwardingNumber)
+            return
+        except Exception , e:
+            self.response.out.write(e)
+
+class GoogleVoiceAccountPage(BaseRequestHandler):
+    def get(self):
+        self.generate('com/cpedia/voice.html')
+
+    def post(self):
+        username = self.request.get("username")
+        password = self.request.get("password")
+        voice = Voice()
+        voice.login(username,password)
+        settings = voice.settings
+        phones = voice.phones
+        phones_=[]
+        for phone in phones:
+            phone_ = {}
+            phone_['name'] = phone.name
+            phone_['phoneNumber'] = phone.phoneNumber
+            phones_+=[phone_]
+        returnValue = {"phones":phones_,"google_voice_number":settings['primaryDid']}
+        self.response.out.write(simplejson.dumps((returnValue)))
+
+
+
+        
