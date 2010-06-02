@@ -34,6 +34,7 @@ import calendar
 import logging
 import string
 import simplejson
+import traceback
 
 from xml.etree import ElementTree
 
@@ -56,9 +57,17 @@ from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.api import memcache
+from google.appengine.api import mail
 
 import gdata.urlfetch
 gdata.service.http_request_handler = gdata.urlfetch
+
+import sys
+import urllib
+from google.appengine.api import urlfetch
+
+from cpedia.utils import utils
+from BeautifulSoup import BeautifulSoup
 
 # This handler allows the functions defined in the RPCHandler class to
 # be called automatically by remote code.
@@ -154,6 +163,103 @@ class GoogleVoiceAccountPage(BaseRequestHandler):
         returnValue = {"phones":phones_,"google_voice_number":settings['primaryDid']}
         self.response.out.write(simplejson.dumps((returnValue)))
 
-
-
         
+    #get latest coupon code from www.retailmenot.com
+class GetCouponsJob(BaseRequestHandler):
+    def get(self):
+    #if self.get("X-AppEngine-Cron")=="true":
+        try:
+            form_fields = {
+              "f": "ms",
+              "rf": "idx",
+              "tn": "baidump3",
+              "ct": "134217728",
+              "lm": "0",
+            }
+            form_data = urllib.urlencode(form_fields)
+            retailmenot_page = urlfetch.fetch(
+                    url="http://mp3.baidu.com/m",
+                    payload=form_data,
+                    method=urlfetch.POST,
+                    headers={'Content-Type': 'text/html; charset=UTF-8'}
+                    )
+            mp3s = []
+            if retailmenot_page.status_code == 200:
+                retailmenot_soap = BeautifulSoup(retailmenot_page.content)
+                mp3ListTable = retailmenot_soap.find("table",id="Tbs")
+                mp3_TRs = mp3ListTable.findAll("tr")
+                for mp3_tr in mp3_TRs:
+                    tds = mp3_tr.findAll("td")
+                    if(tds is not None and len(tds) > 0):
+                        mp3={}
+                        mp3["id"]= tds[0].contents[0]
+                        song = tds[1]
+                        songlink = song.find("a")
+                        mp3["title"] = songlink.next.contents[0]
+                        mp3["link"] = songlink.get("href")
+                        
+                        #coupon = models.Coupons(vendor="retailmenot.com")
+                        code_ = mp3_tr.find("td",attrs={"class":"code"})
+                        coupon.code = str(code_.next.contents[0])
+                        discount_  = mp3_tr.find("td",attrs={"class":"discount"})
+                        coupon.discount = utils.utf82uni(discount_.contents[0])
+                        site_info = mp3_tr.find("span",attrs={"class":"site"}).next.contents[0]
+                        coupon.site_name = utils.utf82uni(site_info.rstrip(" coupon codes"))
+                        siteTools = mp3_tr.find("div",attrs={"class":"siteTools"})
+                        site_img = siteTools.find("img")
+                        if site_img:
+                            image_url = site_img.get("src")
+                            coupon.image = image_url
+                            site_url = site_img.get("alt")
+                            if site_url.rfind("http:")==-1:
+                                site_url = "http://"+site_url
+                            coupon.site_url = site_url
+                        script_ = mp3_tr.find("script",attrs={"type":"data"}).contents[0]
+                        couponId = "couponId"
+                        siteId = "siteId"
+                        dict_ = eval(script_)
+                        coupon.coupon_id = dict_["couponId"]
+                        coupon.site_id = dict_["siteId"]
+                        mp3s+=[coupon]
+            latest_coupons = []
+            for coupon in mp3s:
+                coupon_ = models.Coupons.gql('where coupon_id =:1 and site_id =:2',coupon.coupon_id,coupon.site_id
+                        ).fetch(10
+                        )
+                if coupon_ and len(coupon_) > 0:
+                    break
+                else:
+                    latest_coupons += [coupon]
+            for latest_coupon in reversed(latest_coupons):
+                latest_coupon.created_date = datetime.datetime.now() #unaccuracy for the auto_now_add
+                latest_coupon.put()
+            template_values = {
+            "msg":"Generate latest coupons from retailmenot successfully.",
+            }
+        except Exception, exception:
+            mail.send_mail(sender="cpedia Mobile <android@cpedia.net>",
+                           to="Ping Chen <cpedia@gmail.com>",
+                           subject="Something wrong with the Baidu MP3 Search API.",
+                           body="""
+Hi Ping,
+
+Something wroing with the Baidu MP3 Search API.
+
+Below is the detailed exception information:
+%s
+
+Please access app engine console to resolve the problem.
+http://appengine.google.com/
+
+Sent from mp3.cpedia.net
+            """ % traceback.format_exc())
+
+            template_values = {
+            "msg":"Generate latest deals from dealsea.com unsuccessfully. An alert email sent out.<br>" + traceback.format_exc(),
+            }
+
+        self.generate('coupons.html',template_values)
+
+def post(self):
+    self.get()
+
