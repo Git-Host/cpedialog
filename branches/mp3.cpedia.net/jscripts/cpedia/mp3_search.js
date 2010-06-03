@@ -19,11 +19,9 @@ YAHOO.util.Event.addListener(window, "load", function() {
             search_mp3_btn.disabled = false;
             search_mp3_btn.value = 'Search';
         };
-        var formObject = document.getElementById('mp3_form');
-        YAHOO.util.Connect.setForm(formObject);
         YAHOO.util.Connect.asyncRequest(
-                'POST',
-                '/baidump3/search',
+                'GET',
+                '/baidump3/search/'+search_key.value+'/'+search_page.value,
         {
             success: function (o) {
                 var search_result = document.getElementById("search_result");
