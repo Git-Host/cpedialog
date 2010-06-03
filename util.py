@@ -436,3 +436,7 @@ def getTwitterUser():
     else:
         getLogger(__name__).debug("getTwitterUser from cache. ")
     return twitter_user
+
+def deltag(arg):
+        result = re.sub('<(.|\n)+?>','',arg)
+        return re.sub('&nbsp;','',result)

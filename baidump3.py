@@ -116,7 +116,7 @@ class MP3MainPage(BaseRequestHandler):
 class SearchMP3(webapp.RequestHandler):
     def get(self,key,page):
     #if self.get("X-AppEngine-Cron")=="true":
-        try:
+#        try:
             form_fields = {
               "f": "ms",
               "tn": "baidump3",
@@ -128,7 +128,7 @@ class SearchMP3(webapp.RequestHandler):
             form_data = urllib.urlencode(form_fields)
             #util.getLogger(__name__).debug("http://mp3.baidu.com/m?" + str(form_data)+"&word="+key)
             baidump3_page = urlfetch.fetch(
-                        url="http://mp3.baidu.com/m?" + str(form_data)+"&word="+key,
+                        url="http://221.195.40.183/m?" + str(form_data)+"&word="+key,
                         method=urlfetch.GET,
                         headers={'Content-Type': 'text/html;charset=gb2312'}
                     )
@@ -136,7 +136,7 @@ class SearchMP3(webapp.RequestHandler):
             if baidump3_page.status_code == 200:
                 #htm= unicode(baidump3_page.content,'GBK','ignore').encode('utf-8','ignore')
                 baidump3_soap = BeautifulSoup(baidump3_page.content)
-                util.getLogger(__name__).debug(baidump3_soap)
+                #util.getLogger(__name__).debug(baidump3_soap)
                 mp3ListTable = baidump3_soap.find("table",id="Tbs")
                 if mp3ListTable:
                     mp3_TRs = mp3ListTable.findAll("tr")
@@ -146,42 +146,58 @@ class SearchMP3(webapp.RequestHandler):
                             mp3={}
                             mp3["id"]= tds[0].contents[0]
                             song = tds[1]
-                            songlink = song.find("a")
-                            mp3["title"] = songlink.next.contents[0]
-                            mp3["link"] = songlink.get("href")
+                            song_a = song.find("a")
+                            if song_a:
+                                title_result  = util.deltag(str(song_a))
+                                mp3["title"] = util.u(title_result, 'utf-8')
+                                mp3["link"] = util.u(song_a.get("href"), 'utf-8')
+                            else:
+                                mp3["title"] = ""
+                                mp3["link"] = ""
+
                             singer = tds[2]
-                            mp3["singer"] = singer.find("a").contents[0]
+                            singer_a = singer.find("a")
+                            if singer_a:
+                                singer_result  = util.deltag(str(singer_a))
+                                mp3["singer"] = util.u(singer_result , 'utf-8')
+                                mp3["singerlink"] = util.u(singer_a.get("href"), 'utf-8')
+                            else:
+                                mp3["singer"] = ""
+                                mp3["singerlink"] = ""
+
                             album = tds[3]
                             album_a = album.find("a")
                             if album_a:
-                                mp3["album"] = album_a.contents[0]
-                                mp3["albumlink"] = album_a.get("href")
+                                album_result  = util.deltag(str(album_a))
+                                mp3["album"] = util.u(album_result , 'utf-8')
+                                mp3["albumlink"] = util.u(album_a.get("href") , 'utf-8')
                             else:
                                 mp3["album"] = ""
                                 mp3["albumlink"] = ""
-                            mp3["size"] = tds[7].contents[0]
+
+                            mp3["size"] = util.u(tds[7].contents[0], 'utf-8')
                             mp3s+=[mp3]
 
             self.response.out.write(simplejson.dumps({"status":1,"mp3s":mp3s,"startIndex":int(page)*30}))
-        except Exception, exception:
-            mail.send_mail(sender="cpedia Mobile: MP3 Online <cpedia@gmail.com>",
-                           to="Ping Chen <cpedia@gmail.com>",
-                           subject="Something wrong with the Baidu MP3 Search API.",
-                           body="""
-Hi Ping,
-
-Something wroing with the Baidu MP3 Search API.
-
-Below is the detailed exception information:
-%s
-
-Please access app engine console to resolve the problem.
-http://appengine.google.com/
-
-Send from mp3.cpedia.net
-            """ % traceback.format_exc())
-
-            self.response.out.write(simplejson.dumps("{status:0}"))
+#        except Exception, exception:
+#            mail.send_mail(sender="cpedia Mobile: MP3 Online <cpedia@gmail.com>",
+#                           to="Ping Chen <cpedia@gmail.com>",
+#                           subject="Something wrong with the Baidu MP3 Search API.",
+#                           body="""
+#Hi Ping,
+#
+#Something wroing with the Baidu MP3 Search API.
+#
+#Below is the detailed exception information:
+#%s
+#
+#Please access app engine console to resolve the problem.
+#http://appengine.google.com/
+#
+#Send from mp3.cpedia.net
+#            """ % traceback.format_exc())
+#
+#            self.response.out.write(simplejson.dumps("{status:0}"))
 
     def post(self):
         key = self.request.get('key')
