@@ -66,7 +66,6 @@ import sys
 import urllib
 from google.appengine.api import urlfetch
 
-from cpedia.utils import utils
 from BeautifulSoup import BeautifulSoup
 
 # This handler allows the functions defined in the RPCHandler class to
@@ -124,15 +123,15 @@ class SearchMP3(webapp.RequestHandler):
               "tn": "baidump3",
               "ct": "134217728",
               "lm": "0",
-              "pn": page,
+              "rn": "",
+              "pn": page*30,
               "word": urllib.urlencode(key),
             }
             form_data = urllib.urlencode(form_fields)
             retailmenot_page = urlfetch.fetch(
-                    url="http://mp3.baidu.com/m",
-                    payload=form_data,
-                    method=urlfetch.POST,
-                    headers={'Content-Type': 'text/html; charset=UTF-8'}
+                        url="http://mp3.baidu.com/m&" + form_data,
+                        method=urlfetch.GET,
+                        headers={'Content-Type': 'text/html; charset=gb2312'}
                     )
             mp3s = []
             if retailmenot_page.status_code == 200:
@@ -158,7 +157,7 @@ class SearchMP3(webapp.RequestHandler):
 
             self.response.out.write(simplejson.dumps({"status":1,"mp3s":mp3s,"startIndex":page*30}))
         except Exception, exception:
-            mail.send_mail(sender="cpedia Mobile <android@cpedia.net>",
+            mail.send_mail(sender="cpedia Mobile: MP3 Online <android-mp3@cpedia.net>",
                            to="Ping Chen <cpedia@gmail.com>",
                            subject="Something wrong with the Baidu MP3 Search API.",
                            body="""
