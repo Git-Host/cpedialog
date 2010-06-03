@@ -24,6 +24,7 @@ import rpc
 import blog
 import cpediacom
 import album
+import baidump3
 import book
 import admin
 import login
@@ -116,7 +117,10 @@ def main():
                                         ('/google-voice/account/*$', voice.GoogleVoiceAccountPage),
                                         ('/google-voice/call/*$', voice.CallGoogleVoicePage),
 
-                                        ('/*$', voice.MainPage),
+                                        ('/baidump3/search/(.*)/(\d*)/*$', baidump3.SearchMP3),
+                                        ('/baidump3/*$', baidump3.MP3MainPage),
+
+                                        ('/*$', baidump3.MainPage),
                                         ('/help/*$', voice.GVDialerHelpPage),
 
                                         ('/([-\w]+)/*$', blog.PageHandler),

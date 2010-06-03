@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="MP3 Online, android"/>
+    <meta name="description" content="MP3 Online for Android"/>
+    <meta name="author" content="cpedia, Ping Chen, http://cpedia.net"/>
+    <meta name="copyright" content="2010 http://mp3.cpedia.net"/>
+    <title>{% block title %}{{title}}{% endblock %}</title>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/get/get-min.js" ></script>
+    <!-- Connection Manager -->
+    <script src="http://yui.yahooapis.com/2.7.0/build/connection/connection-min.js"></script>
+    <!-- JSON Utility -->
+    <script src="http://yui.yahooapis.com/2.7.0/build/json/json-min.js"></script>
+    {% block header %}
+    {% endblock %}
+    <!-- yui -->
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css"/>
+    <style type="text/css">
+        #custom-doc {
+            width: 24.62em;
+            *width: 24.02em;
+            min-width: 320px;
+            margin: auto;
+            text-align: left;
+        }
+    </style>
+</head>
+<body class="yui-skin-sam">
+<div id="custom-doc" class="yui-t7">
+    <div id="hd">
+        <a name="top"></a>
+        {% include "main_top.html" %}
+    </div>
+    {% block main_body %}
+    <div id="bd">
+        <div id="yui-main">
+            <div class="yui-b">
+                <div class="yui-g">
+                     {% include "search_mp3.html" %}
+                </div>
+            </div>
+        </div>
+        <div class="yui-b">
+        </div>
+    </div>
+    {% endblock %}
+    <div id="ft">
+        {% include "footer.html" %}
+    </div>
+</div>
+
+{% if BLOG.analytics_enable %}
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("{{ BLOG.analytics_web_property_id }}");
+        pageTracker._trackPageview();
+    } catch(err) {
+    }
+</script>
+{% endif %}
+</body>
+</html>

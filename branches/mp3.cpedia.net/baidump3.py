@@ -99,12 +99,7 @@ class RPCHandler(webapp.RequestHandler):
 
 class BaseRequestHandler(webapp.RequestHandler):
   def generate(self, template_name, template_values={}):
-        google_login_url = users.create_login_url(self.request.uri)
-        google_logout_url = users.create_logout_url(self.request.uri)
         values = {
-        "google_login_status":users.get_current_user(),
-        "google_login_url":google_login_url,
-        "google_logout_url":google_logout_url,
         'request': self.request,
         }
         values.update(template_values)
@@ -113,60 +108,14 @@ class BaseRequestHandler(webapp.RequestHandler):
 
 class MainPage(BaseRequestHandler):
     def get(self):
-        #perm_stem = 'gv-dialer'
-        #blog = db.Query(model.Weblog).filter('permalink =',perm_stem).get()
-        #reactions = db.GqlQuery("select * from WeblogReactions where weblog =:1  order by date", blog)
-        template_values = {
-         # 'blog': blog,
-          #'reactions': reactions,
-          }
-        #self.generate('blog_view.html',template_values)
-        self.generate('com/cpedia/main.html',template_values)
+        self.generate('com/cpedia/main.html',{})
 
-
-
-class CallGoogleVoicePage(BaseRequestHandler):
+class MP3MainPage(BaseRequestHandler):
     def get(self):
-        self.generate('com/cpedia/voice.html')
+        self.generate('com/cpedia/mp3.html',{})
 
-    def post(self):
-        try:
-            username = self.request.get("username")
-            password = self.request.get("password")
-            outgoingNumber = self.request.get("outgoingNumber")
-            forwardingNumber = self.request.get("forwardingNumber")
-            #phoneType = self.request.get("phoneType")
-            voice = Voice()
-            voice.login(username,password)
-            voice.call(outgoingNumber,forwardingNumber)
-            return
-        except Exception , e:
-            self.response.out.write(e)
-
-class GoogleVoiceAccountPage(BaseRequestHandler):
-    def get(self):
-        self.generate('com/cpedia/voice.html')
-
-    def post(self):
-        username = self.request.get("username")
-        password = self.request.get("password")
-        voice = Voice()
-        voice.login(username,password)
-        settings = voice.settings
-        phones = voice.phones
-        phones_=[]
-        for phone in phones:
-            phone_ = {}
-            phone_['name'] = phone.name
-            phone_['phoneNumber'] = phone.phoneNumber
-            phones_+=[phone_]
-        returnValue = {"phones":phones_,"google_voice_number":settings['primaryDid']}
-        self.response.out.write(simplejson.dumps((returnValue)))
-
-        
-    #get latest coupon code from www.retailmenot.com
-class GetCouponsJob(BaseRequestHandler):
-    def get(self):
+class SearchMP3(webapp.RequestHandler):
+    def get(self,key,page):
     #if self.get("X-AppEngine-Cron")=="true":
         try:
             form_fields = {
@@ -175,6 +124,8 @@ class GetCouponsJob(BaseRequestHandler):
               "tn": "baidump3",
               "ct": "134217728",
               "lm": "0",
+              "pn": page,
+              "word": urllib.urlencode(key),
             }
             form_data = urllib.urlencode(form_fields)
             retailmenot_page = urlfetch.fetch(
@@ -197,45 +148,15 @@ class GetCouponsJob(BaseRequestHandler):
                         songlink = song.find("a")
                         mp3["title"] = songlink.next.contents[0]
                         mp3["link"] = songlink.get("href")
-                        
-                        #coupon = models.Coupons(vendor="retailmenot.com")
-                        code_ = mp3_tr.find("td",attrs={"class":"code"})
-                        coupon.code = str(code_.next.contents[0])
-                        discount_  = mp3_tr.find("td",attrs={"class":"discount"})
-                        coupon.discount = utils.utf82uni(discount_.contents[0])
-                        site_info = mp3_tr.find("span",attrs={"class":"site"}).next.contents[0]
-                        coupon.site_name = utils.utf82uni(site_info.rstrip(" coupon codes"))
-                        siteTools = mp3_tr.find("div",attrs={"class":"siteTools"})
-                        site_img = siteTools.find("img")
-                        if site_img:
-                            image_url = site_img.get("src")
-                            coupon.image = image_url
-                            site_url = site_img.get("alt")
-                            if site_url.rfind("http:")==-1:
-                                site_url = "http://"+site_url
-                            coupon.site_url = site_url
-                        script_ = mp3_tr.find("script",attrs={"type":"data"}).contents[0]
-                        couponId = "couponId"
-                        siteId = "siteId"
-                        dict_ = eval(script_)
-                        coupon.coupon_id = dict_["couponId"]
-                        coupon.site_id = dict_["siteId"]
-                        mp3s+=[coupon]
-            latest_coupons = []
-            for coupon in mp3s:
-                coupon_ = models.Coupons.gql('where coupon_id =:1 and site_id =:2',coupon.coupon_id,coupon.site_id
-                        ).fetch(10
-                        )
-                if coupon_ and len(coupon_) > 0:
-                    break
-                else:
-                    latest_coupons += [coupon]
-            for latest_coupon in reversed(latest_coupons):
-                latest_coupon.created_date = datetime.datetime.now() #unaccuracy for the auto_now_add
-                latest_coupon.put()
-            template_values = {
-            "msg":"Generate latest coupons from retailmenot successfully.",
-            }
+                        singer = tds[2]
+                        mp3["singer"] = singer.find("a").contents[0]
+                        album = tds[3]
+                        mp3["album"] = album.find("a").contents[0]
+                        mp3["albumlink"] = album.find("a").get("href")
+                        mp3["size"] = tds[7].contents[0]
+                        mp3s+=[mp3]
+
+            self.response.out.write(simplejson.dumps({"status":1,"mp3s":mp3s,"startIndex":page*30}))
         except Exception, exception:
             mail.send_mail(sender="cpedia Mobile <android@cpedia.net>",
                            to="Ping Chen <cpedia@gmail.com>",
@@ -254,12 +175,10 @@ http://appengine.google.com/
 Sent from mp3.cpedia.net
             """ % traceback.format_exc())
 
-            template_values = {
-            "msg":"Generate latest deals from dealsea.com unsuccessfully. An alert email sent out.<br>" + traceback.format_exc(),
-            }
+            self.response.out.write(simplejson.dumps("{status:0}"))
 
-        self.generate('coupons.html',template_values)
-
-def post(self):
-    self.get()
+    def post(self):
+        key = self.request.get('key')
+        page = self.request.get('page')
+        self.get(key,page)
 
