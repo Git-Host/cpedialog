@@ -6,13 +6,26 @@
 <div id="mp3_search">
     <div>
         <form id="mp3_form">
+            <div><label for="search_engine"
+                        id="search_engine_label" style="font-style:italic;">Search Engine</label>
+                <br/><select id="search_engine">
+                        <option value="baidu">Baidu</option>
+                        <option value="yahoo">Yahoo</option>
+                        <option value="soso">SOSO</option>
+                </select>
+            </div><br/> 
             <div><label for="key"
                         id="key_label" style="font-style:italic;">Search Key</label>
                 <br/><input id="key" name="key"/>
             </div> <br/> 
             <div><label for="page"
                         id="password_label" style="font-style:italic;">Page</label>
-                <br/><input id="page" name="page"/>
+                <br/>
+                <select id="page" name="page">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                </select>
             </div><br/> 
             <div>
                 <input type="button" id="search_mp3_btn"

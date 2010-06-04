@@ -1,5 +1,6 @@
 YAHOO.util.Event.addListener(window, "load", function() {
     var search_mp3 = function() {
+        var search_engine = document.getElementById("search_engine");
         var search_key = document.getElementById("key");
         var search_page = document.getElementById("page");
         var search_mp3_btn = document.getElementById("search_mp3_btn");
@@ -21,11 +22,12 @@ YAHOO.util.Event.addListener(window, "load", function() {
         };
         YAHOO.util.Connect.asyncRequest(
                 'GET',
-                '/baidump3/search/'+search_key.value+'/'+search_page.value,
+                '/search-mp3/'+search_engine.value+'/'+encodeURIComponent(search_key.value)+'/'+search_page.value,
         {
             success: function (o) {
                 var search_result = document.getElementById("search_result");
                 search_result.innerHTML = o.responseText;
+                //alert(o.responseText);
                 resetBtn();
             },
             failure: function(o) {

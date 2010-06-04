@@ -102,7 +102,7 @@ except NameError:
 sgmllib.tagfind = re.compile('[a-zA-Z][-_.:a-zA-Z0-9]*')
 markupbase._declname_match = re.compile(r'[a-zA-Z][-_.:a-zA-Z0-9]*\s*').match
 
-DEFAULT_OUTPUT_ENCODING = "gb2312"
+DEFAULT_OUTPUT_ENCODING = "GB18030"
 
 def _match_css_class(str):
     """Build a RE to match the given CSS class."""
