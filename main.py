@@ -24,7 +24,6 @@ import rpc
 import blog
 import cpediacom
 import album
-import baidump3
 import book
 import admin
 import login
@@ -32,6 +31,8 @@ import voice
 import logging
 import util
 import os
+
+import mp3
 
 
 from google.appengine.ext.webapp import template
@@ -117,10 +118,12 @@ def main():
                                         ('/google-voice/account/*$', voice.GoogleVoiceAccountPage),
                                         ('/google-voice/call/*$', voice.CallGoogleVoicePage),
 
-                                        ('/baidump3/search/(.*)/(\d*)/*$', baidump3.SearchMP3),
-                                        ('/baidump3/*$', baidump3.MP3MainPage),
+                                        ('/search-mp3/baidu/(.*)/(\d*)/*$', mp3.SearchBaiduMP3),
+                                        ('/search-mp3/yahoo/(.*)/(\d*)/*$', mp3.SearchYahooMP3),
+                                        ('/search-mp3/soso/(.*)/(\d*)/*$', mp3.SearchSOSOMP3),
+                                        ('/search-mp3/*$', mp3.MP3MainPage),
 
-                                        ('/*$', baidump3.MainPage),
+                                        ('/*$', mp3.MainPage),
                                         ('/help/*$', voice.GVDialerHelpPage),
 
                                         ('/([-\w]+)/*$', blog.PageHandler),
