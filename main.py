@@ -121,6 +121,13 @@ def main():
                                         ('/search-mp3/baidu/(.*)/(\d*)/*$', mp3.SearchBaiduMP3),
                                         ('/search-mp3/yahoo/(.*)/(\d*)/*$', mp3.SearchYahooMP3),
                                         ('/search-mp3/soso/(.*)/(\d*)/*$', mp3.SearchSOSOMP3),
+                                        ('/search-mp3/sogou/(.*)/(\d*)/*$', mp3.SearchSogouMP3),
+
+                                        ('/search-mp3/baidu/*$', mp3.SearchBaiduMP3),
+                                        ('/search-mp3/yahoo/*$', mp3.SearchYahooMP3),
+                                        ('/search-mp3/soso/*$', mp3.SearchSOSOMP3),
+                                        ('/search-mp3/sogou/*$', mp3.SearchSogouMP3),
+                                        
                                         ('/search-mp3/*$', mp3.MP3MainPage),
 
                                         ('/*$', mp3.MainPage),
