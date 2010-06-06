@@ -124,13 +124,15 @@ class SearchBaiduMP3(webapp.RequestHandler):
               "lm": "0",
               "rn": "",
               "pn": str(int(page)*30),
+              "word": key,
             }
             form_data = urllib.urlencode(form_fields)
             #util.getLogger(__name__).debug("http://mp3.baidu.com/m?" + str(form_data)+"&word="+key)
             baidump3_page = urlfetch.fetch(
-                        url="http://221.195.40.183/m?" + str(form_data)+"&word="+key,
+                        url="http://221.195.40.183/m?" + str(form_data),
                         method=urlfetch.GET,
-                        headers={'Content-Type': 'text/html;charset=GB18030'}
+                        headers={'Content-Type': 'text/html;charset=GB18030'},
+                        deadline=10
                     )
             mp3s = []
             if baidump3_page.status_code == 200:
@@ -217,13 +219,15 @@ class SearchYahooMP3(webapp.RequestHandler):
               "v": "music",
               "pid": "ysearch",
               "b": str(int(page)*30),
+              "p": key,
             }
             form_data = urllib.urlencode(form_fields)
             #util.getLogger(__name__).debug("http://mp3.baidu.com/m?" + str(form_data)+"&word="+key)
             yahoomp3_page = urlfetch.fetch(
-                        url="http://one.cn.yahoo.com/s?" + str(form_data)+"&p="+key,
+                        url="http://one.cn.yahoo.com/s?" + str(form_data),
                         method=urlfetch.GET,
-                        headers={'Content-Type': 'text/html;charset=utf-8'}
+                        headers={'Content-Type': 'text/html;charset=utf-8'},
+                        deadline=10
                     )
             mp3s = []
             if yahoomp3_page.status_code == 200:
@@ -312,13 +316,15 @@ class SearchSOSOMP3(webapp.RequestHandler):
               "t": "1",
               "source": "1",
               "p": str(int(page)*30),
+              "w": key,
             }
             form_data = urllib.urlencode(form_fields)
             #util.getLogger(__name__).debug("http://mp3.baidu.com/m?" + str(form_data)+"&word="+key)
             sosomp3_page = urlfetch.fetch(
-                        url="http://cgi.music.soso.com/fcgi-bin/m.q?" + str(form_data)+"&w="+key,
+                        url="http://cgi.music.soso.com/fcgi-bin/m.q?" + str(form_data),
                         method=urlfetch.GET,
-                        headers={'Content-Type': 'text/html;charset=GB18030'}
+                        headers={'Content-Type': 'text/html;charset=GB18030'},
+                        deadline=10
                     )
             mp3s = []
             if sosomp3_page.status_code == 200:
@@ -367,6 +373,103 @@ Send from mp3.cpedia.net
             """ % traceback.format_exc())
 
             self.response.out.write(simplejson.dumps({"status":0}))
+
+    def post(self):
+        key = self.request.get('key')
+        page = self.request.get('page')
+        self.get(key,page)
+
+
+class SearchSogouMP3(webapp.RequestHandler):
+    def get(self,key,page):
+    #if self.get("X-AppEngine-Cron")=="true":
+        #try:
+            form_fields = {
+              "pf": "mp3",
+              "page": str(int(page)*30),
+              "query": key 
+            }
+            form_data = urllib.urlencode(dict([k, v.encode('utf-8')] for k, v in form_fields.items()))
+            util.getLogger(__name__).debug("http://mp3.sogou.com/music.so?" + str(form_data)+"&query="+key)
+            sogoump3_page = urlfetch.fetch(
+                        url="http://mp3.sogou.com/music.so?" + str(form_data),
+                        method=urlfetch.GET,
+                        headers={'Content-Type': 'text/html;charset=GB18030'},
+                        deadline=10
+                    )
+            mp3s = []
+            if sogoump3_page.status_code == 200:
+                #htm= unicode(baidump3_page.content,'GBK','ignore').encode('utf-8','ignore')
+                sogoump3_soap = BeautifulSoup(sogoump3_page.content)
+                util.getLogger(__name__).debug(sogoump3_soap)
+                mp3ListTable = sogoump3_soap.find("table",id="songlist")
+                if mp3ListTable:
+                    mp3_TRs = mp3ListTable.findAll("tr")
+                    i = 1
+                    for mp3_tr in mp3_TRs:
+                        tds = mp3_tr.findAll("td")
+                        if(tds is not None and len(tds) > 0):
+                            mp3={}
+                            mp3["id"]= int(page)*30+i
+                            i = i+1
+                            song = tds[1]
+                            song_sups = song.findAll("sup")
+                            [sup.extract() for sup in song_sups]
+                            song_result  = util.deltag(str(song))
+                            mp3["title"] = util.u(song_result, 'GB18030')
+                            #mp3["link"] = util.u(song_a.get("href"), 'GB18030')
+
+                            singer = tds[2]
+                            if singer:
+                                singer_result  = util.deltag(str(singer))
+                                mp3["singer"] = util.u(singer_result , 'GB18030')
+                                #mp3["singerlink"] = util.u(singer_a.get("href"), 'GB18030')
+                            else:
+                                mp3["singer"] = ""
+                                #mp3["singerlink"] = ""
+
+                            album = tds[3]
+                            if album:
+                                album_result  = util.deltag(str(album))
+                                mp3["album"] = util.u(album_result , 'GB18030')
+                                #mp3["albumlink"] = util.u(album_a.get("href") , 'GB18030')
+                            else:
+                                mp3["album"] = ""
+                                #mp3["albumlink"] = ""
+
+                            down = tds[5]
+                            down_a = down.find("a")
+                            if down_a:
+                                down_onclick = down_a.get("onclick")
+                                mp3["link"] = util.u(down_onclick.split("'")[1] , 'GB18030')
+                            else:
+                                mp3["link"] = ""
+
+                            mp3["size"] = util.u(tds[7].contents[0], 'GB18030')
+                            mp3s+=[mp3]
+
+        #util.getLogger(__name__).debug(mp3s)
+            self.response.headers['Content-Type'] = 'text/json;charset=utf-8'
+            self.response.out.write(simplejson.dumps({"source":"sogou","status":1,"mp3s":mp3s,"startIndex":int(page)*30}))
+#        except Exception, exception:
+#            mail.send_mail(sender="cpedia Mobile: MP3 Online <cpedia@gmail.com>",
+#                           to="Ping Chen <cpedia@gmail.com>",
+#                           subject="Something wrong with the Sogou MP3 Search API.",
+#                           body="""
+#Hi Ping,
+#
+#Something wroing with the Sogou MP3 Search API.
+#
+#Below is the detailed exception information:
+#%s
+#
+#Please access app engine console to resolve the problem.
+#http://appengine.google.com/
+#
+#Send from mp3.cpedia.net
+#            """ % traceback.format_exc())
+#
+#            self.response.out.write(simplejson.dumps({"status":0}))
 
     def post(self):
         key = self.request.get('key')

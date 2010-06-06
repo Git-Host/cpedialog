@@ -20,9 +20,12 @@ YAHOO.util.Event.addListener(window, "load", function() {
             search_mp3_btn.disabled = false;
             search_mp3_btn.value = 'Search';
         };
+        var formObject = document.getElementById('mp3_form');
+        YAHOO.util.Connect.setForm(formObject);
         YAHOO.util.Connect.asyncRequest(
-                'GET',
-                '/search-mp3/'+search_engine.value+'/'+encodeURIComponent(search_key.value)+'/'+search_page.value,
+                'POST',
+                //'/search-mp3/'+search_engine.value+'/'+escape(search_key.value)+'/'+search_page.value,
+                '/search-mp3/'+search_engine.value,
         {
             success: function (o) {
                 var search_result = document.getElementById("search_result");
