@@ -1,0 +1,40 @@
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/skins/sam/container.css" />
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/connection/connection-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
+<script type="text/javascript" src="/jscripts/cpedia/google_voice.js"></script>        
+<div id="sidebar_div">
+    {% if twitter_user %}
+    <div>
+        <fieldset id="bio">
+            <legend>Who am I?</legend>
+            <div id="twitter_bio">
+                <div class="ll_photobox">
+                    <img alt="" src="{{twitter_user.profile_image_url}}" class="ll_profilephoto photo"></div>
+                <div class="ll_name"> {{twitter_user.name}}</div>
+                <div class="ll_nickname">"{{twitter_user.screen_name}}" when posting publicly</div>
+                <div class="ll_address">{{twitter_user.location}}</div>
+                <div class="ll_description">{{twitter_user.description}}</div>
+                <div class="ll_viewmore"><p>
+                    <a target="_blank" class="ll_profilelinks" href="http://www.google.com/profiles/cpedia">View my full
+                        profile</a></p></div>
+            </div>
+        </fieldset>
+    </div>
+    {% else %}
+    <div> Please do Twitter OAuth 2-legged authentication from background.</div>
+    {% endif %}
+    <div id="google_voice_message">
+        <div class="gv_title">Send me an SMS message:</div>
+        <div class="gv_notes">Yes, I can receive it in my phone immediately.</div>
+        <div>
+            <form id="gv_form">
+            <div><label for="client_cellphone_number" title="Pls add country code, I will send a copy to you."
+                        id="client_cell_label" style="font-style:italic;">Your cell phone # (optional)</label>
+                <br/><input id="client_cellphone_number" name="client_cellphone_number"/>
+            </div>
+            <div><label for="gv_message" title="Try english, other languages will be translated." id="gv_message_label" style="font-style:italic;">SMS message</label><br/><textarea rows="2" cols="30" id="gv_message" name="gv_message"></textarea></div>
+            <div class="gv_message_send_button"><input type="button" id="gv_message_send_button"
+                                                       value="Send SMS to me"/></div></form>
+        </div>
+    </div>
+</div>
