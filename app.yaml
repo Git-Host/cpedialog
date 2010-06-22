@@ -1,4 +1,4 @@
-application: free-voice
+application: backup-to-gmail
 version: 1
 runtime: python
 api_version: 1
