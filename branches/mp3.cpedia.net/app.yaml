@@ -1,5 +1,5 @@
 application: mp3-online
-version: 1
+version: 2
 runtime: python
 api_version: 1
 skip_files: |
@@ -39,6 +39,14 @@ handlers:
 - url: /crossdomain.xml
   static_files: img/crossdomain.xml
   upload: img/crossdomain.xml
+
+- url: /mtvustop100.html
+  static_files: mp3/ustop10.html
+  upload: mp3/ustop10.html
+
+- url: /eula.txt
+  static_files: mp3/eula.txt
+  upload: mp3/eula.txt
 
 - url: /static
   static_dir: static
