@@ -3,13 +3,13 @@ YAHOO.util.Event.addListener(window, "load", function() {
    var send_sms = function(){
        var gv_message = document.getElementById("gv_message");
        var gv_message_send_button = document.getElementById("gv_message_send_button");
-       gv_message_send_button.disabled = true;
-       gv_message_send_button.value = 'Sending...';
        if(gv_message.value==""){
            alert("Please input SMS message.");
            gv_message.focus();
            return false;
        }
+       gv_message_send_button.disabled = true;
+       gv_message_send_button.value = 'Sending...';       
        var resetBtn = function(){
            gv_message_send_button.disabled = false;
            gv_message_send_button.value = 'Send SMS to me';

@@ -134,4 +134,13 @@ class MainPage(BaseRequestHandler):
             twitter_user = None
         self.generate('com/cpedia/main.html',{'twitter_user':twitter_user})
 
-        
+class SMSMainPage(BaseRequestHandler):
+    def get(self):
+        self.generate('com/carrsdigital/sms.html',{})
+
+class SMSConfigPage(BaseRequestHandler):
+    @authorized.role('admin')
+    def get(self):
+        self.generate('com/carrsdigital/config.html',{})
+
+
