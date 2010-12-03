@@ -113,7 +113,9 @@ def main():
                                         ('/twitteroauth/signin/*$', login.LoginTwitterOAuth),
 
                                         #('/([-\w]+)/*$', blog.PageHandler),
-                                        ('/*$', cpediacom.MainPage),                                        
+                                        #('/*$', cpediacom.MainPage),
+                                        ('/config/*$', cpediacom.SMSConfigPage),
+                                        ('/*$', cpediacom.SMSMainPage),                                        
                                        ],
                                        debug=cpedialog.debug)
     wsgiref.handlers.CGIHandler().run(application)

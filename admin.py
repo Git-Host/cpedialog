@@ -111,17 +111,20 @@ class AdminSystemPage(BaseRequestHandler):
         cpedialog.twitter_consumer_secret = self.request.get("twitter_consumer_secret")
         cpedialog.icp_number = self.request.get("icp_number")
         cpedialog.logo_images_space = self.request.get("logo_images_space")
-        if(int(self.request.get("num_post_per_page"))!=cpedialog.num_post_per_page):
-            cpedialog.num_post_per_page = int(self.request.get("num_post_per_page"))
-            util.flushBlogPagesCache()        
-        cpedialog.cache_time = int(self.request.get("cache_time"))
+        if self.request.get("num_post_per_page"):
+            if(int(self.request.get("num_post_per_page"))!=cpedialog.num_post_per_page):
+                cpedialog.num_post_per_page = int(self.request.get("num_post_per_page"))
+                util.flushBlogPagesCache()
+        if self.request.get("cache_time"):                
+            cpedialog.cache_time = int(self.request.get("cache_time"))
         if self.request.get("debug"):
             cpedialog.debug = True
         else:
             cpedialog.debug = False
         cpedialog.host_ip = self.request.remote_addr
         cpedialog.host_domain = self.request.get("SERVER_NAME")
-        cpedialog.time_zone_offset = float(self.request.get("time_zone_offset"))
+        if self.request.get("time_zone_offset"):
+            cpedialog.time_zone_offset = float(self.request.get("time_zone_offset"))
         if self.request.get("recaptcha_enable"):
             cpedialog.recaptcha_enable = True
             cpedialog.recaptcha_public_key =  self.request.get("recaptcha_public_key")
@@ -168,7 +171,8 @@ class AdminSystemPage(BaseRequestHandler):
 
         cpedialog.put()
         util.flushCPedialog()
-        self.redirect('/admin')
+        #self.redirect('/admin')
+        self.redirect('/config')
         return
 
 class AdminPagesPage(BaseRequestHandler):

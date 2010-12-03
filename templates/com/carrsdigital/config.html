@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Carrsdigital.com</title>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+    <script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/get/get-min.js" ></script>
+    <!-- Connection Manager -->
+    <script src="http://yui.yahooapis.com/2.7.0/build/connection/connection-min.js"></script>
+    <!-- JSON Utility -->
+    <script src="http://yui.yahooapis.com/2.7.0/build/json/json-min.js"></script>
+
+    <!-- yui -->
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/blog.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/portal.css" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/datatable/assets/skins/sam/datatable.css" />
+</head>
+<body class="yui-skin-sam">
+<script type="text/javascript">
+    function saveConfiguration(){
+        var googlevoice_username = document.forms["configForm"]["google_voice_username"];
+        if(googlevoice_username.value==""){
+            alert("Please input goolge voice account username.");
+            googlevoice_username.focus();
+            return false;
+        }
+        var googlevoice_password = document.forms["configForm"]["google_voice_password"];
+        if(googlevoice_password.value==""){
+            alert("Please input google voice account password.");
+            googlevoice_password.focus();
+            return false;
+        }
+
+        //replace the AJAX post form submit because of the bug of YUI in firefox 3.0
+        //see: http://developer.yahoo.com/yui/connection/#issues
+        var formObject = document.getElementById('configForm');
+        formObject.action = "/admin/system";
+        formObject.target ="_self";
+        formObject.submit();
+    }
+</script>
+<div>
+<fieldset id="admin_system">
+    <legend>System Configuration</legend>
+    <div class="fieldsetdiv">
+    <form method=post id="configForm" name="configForm" enctype= "multipart/form-data">
+    <table cellspacing="0" class="yui-skin-sam noborder_table">
+        <tr>
+            <th><label for="google_voice_username">Google Voice Username:</label></th>
+            <td>
+                <input id="google_voice_username" name="google_voice_username"  size="15" type="text" value="{{BLOG.google_voice_username}}"/>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="google_voice_password">Goolge Voice Password:</label></th>
+            <td>
+                <input id="google_voice_password" name="google_voice_password"  size="15" type="password" value="{{BLOG.google_voice_password}}"/>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="cell_phone_number">My Cell Phone Number:</label></th>
+            <td>
+                <input id="cell_phone_number" name="cell_phone_number"  size="15" type="text" value="{{BLOG.cell_phone_number}}"/>
+            </td>
+        </tr>
+        <tr>
+            <th> </th>
+            <td><input name="commit" type="button" value="Save" id="save_btn" onclick="saveConfiguration()"/></td>
+        </tr>
+    </table>
+    </form>
+    </div>
+</fieldset>
+ </div>
+</body>
+</html>
