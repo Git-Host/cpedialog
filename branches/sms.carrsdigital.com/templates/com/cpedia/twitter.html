@@ -1,0 +1,29 @@
+<!--DataTable-->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/datatable/assets/skins/sam/datatable.css" />
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/element/element-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/datatable/datatable-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/paginator/paginator-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/history/history-min.js"></script>
+<script type="text/javascript" src="/jscripts/cpedia/tweetlist.grid.js"></script>
+<iframe id="yui-history-iframe" src="/img/ajax-none.gif"></iframe>
+<input id="yui-history-field" type="hidden">
+<div>
+    <fieldset id="twitter">
+        <legend>What's happening to me?</legend>
+        <div class="fieldsetdiv">
+            <div id="tweetdiv">
+            </div>
+            <div class="tweet_paging">
+                <div class="yui-u first" id="paging" style="display:none;">
+                   <span><img src="/img/ajax-none.gif" alt="" id="ajax_icon"/></span>
+                   <a href="javascript:void(0)"><span id="newer_tweets">Newer |</span></a>
+                   <a href="javascript:void(0)"><span id="older_tweets">Older</span></a> [<span id="current_tweet_page">1</span>]
+                </div>
+                <div class="yui-u moretweets">
+                    more and follow <a href="http://twitter.com/{{twitter_user.screen_name}}" target="_blank">@{{twitter_user.screen_name}}</a>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
