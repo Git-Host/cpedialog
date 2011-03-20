@@ -1,5 +1,5 @@
 application: mp3-online
-version: 3
+version: 4
 runtime: python
 api_version: 1
 skip_files: |
@@ -41,8 +41,40 @@ handlers:
   upload: img/crossdomain.xml
 
 - url: /mtvustop100.html
-  static_files: mp3/ustop10.html
-  upload: mp3/ustop10.html
+  static_files: mp3/mtv_ustop10.html
+  upload: mp3/mtv_ustop10.html
+
+- url: /billboard_country30.html
+  static_files: mp3/billboard_country30.html
+  upload: mp3/billboard_country30.html
+
+- url: /billboard_hiphop50.html
+  static_files: mp3/billboard_hiphop50.html
+  upload: mp3/billboard_hiphop50.html
+
+- url: /billboard_hot100.html
+  static_files: mp3/billboard_hot100.html
+  upload: mp3/billboard_hot100.html
+
+- url: /billboard_jazz10.html
+  static_files: mp3/billboard_jazz10.html
+  upload: mp3/billboard_jazz10.html
+
+- url: /billboard_latin20.html
+  static_files: mp3/billboard_latin20.html
+  upload: mp3/billboard_latin20.html
+
+- url: /billboard_pop20.html
+  static_files: mp3/billboard_pop20.html
+  upload: mp3/billboard_pop20.html
+
+- url: /billboard_radio40.html
+  static_files: mp3/billboard_radio40.html
+  upload: mp3/billboard_radio40.html
+
+- url: /billboard_rock30.html
+  static_files: mp3/billboard_rock30.html
+  upload: mp3/billboard_rock30.html
 
 - url: /eula.txt
   static_files: mp3/eula.txt

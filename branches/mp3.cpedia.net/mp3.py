@@ -113,6 +113,20 @@ class MP3MainPage(BaseRequestHandler):
     def get(self):
         self.generate('com/cpedia/mp3.html',{})
 
+class MP3GoogleUpdatePage(BaseRequestHandler):
+    def get(self):
+        latest_release = db.GqlQuery("select * from GoogleMP3Release  order by releaseDate desc").get()
+        if latest_release is not None:
+            self.response.out.write(latest_release.to_json())
+        return
+
+class MP3AmazonUpdatePage(BaseRequestHandler):
+    def get(self):
+        latest_release = db.GqlQuery("select * from AmazonMP3Release  order by releaseDate desc").get()
+        if latest_release is not None:
+            self.response.out.write(latest_release.to_json())
+        return
+
 class SearchBaiduMP3(webapp.RequestHandler):
     def get(self,key,page):
     #if self.get("X-AppEngine-Cron")=="true":

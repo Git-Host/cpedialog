@@ -674,3 +674,16 @@ class CSSFile(SerializableModel):
     contents = db.StringProperty(multiline=True)
     default = db.BooleanProperty(default=False)
     
+class GoogleMP3Release(SerializableModel):
+    versionName = db.StringProperty()
+    versionCode = db.StringProperty()
+    downloadURL = db.StringProperty()
+    releaseDate = db.DateTimeProperty(auto_now_add=True)
+
+
+class AmazonMP3Release(SerializableModel):
+    versionName = db.StringProperty()
+    versionCode = db.StringProperty()
+    downloadURL = db.StringProperty()
+    releaseDate = db.DateTimeProperty(auto_now_add=True)
+

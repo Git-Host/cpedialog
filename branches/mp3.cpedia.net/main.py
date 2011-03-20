@@ -129,6 +129,8 @@ def main():
                                         ('/search-mp3/sogou/*$', mp3.SearchSogouMP3),
                                         
                                         ('/search-mp3/*$', mp3.MP3MainPage),
+                                        ('/google/update/*$', mp3.MP3GoogleUpdatePage),
+                                        ('/amazon/update/*$', mp3.MP3AmazonUpdatePage),
 
                                         ('/*$', mp3.MainPage),
                                         ('/help/*$', voice.GVDialerHelpPage),
