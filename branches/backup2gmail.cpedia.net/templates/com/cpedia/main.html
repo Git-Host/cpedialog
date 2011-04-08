@@ -13,8 +13,18 @@
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css"/>
     <link rel="stylesheet" type="text/css"
           href="http://yui.yahooapis.com/2.7.0/build/reset-fonts-grids/reset-fonts-grids.css"/>
+    <script type="text/javascript" src="/jscripts/lightbox2.04/js/prototype.js"></script>
+    <script type="text/javascript" src="/jscripts/lightbox2.04/js/scriptaculous.js?load=effects,builder"></script>
+    <script type="text/javascript" src="/jscripts/lightbox2.04/js/lightbox.js"></script>
+    <link rel="stylesheet" href="/jscripts/lightbox2.04/css/lightbox.css" type="text/css" media="screen" />
     <style type="text/css">
-        #custom-doc { width:49.23em;*width:48.04em;min-width:640px; margin:auto; text-align:left; }
+        #custom-doc {
+            width: 24.62em;
+            *width: 24.02em;
+            min-width: 320px;
+            margin: auto;
+            text-align: left;
+        }
     </style>
 </head>
 <body class="yui-skin-sam">
@@ -40,17 +50,7 @@
                             <a href="#communication_error">2. General communication error...</a> <br/>
                             <a href="#incoming_not_backed_up">3. Incoming messages not be backed up?</a> <br/><br/></blockquote>
 
-                        <img style="float:right;" src="/img/backup2gmail/qr_code.png" alt="Download from Google Android market">
-                        <a style="font-weight:bold;" href="market://search/?q=pname:net.cpedia.backup2gmail">
-                                Download Backup to Gmail from Google Android Market (Only available when viewing from your
-                                handset)</a>
-                            <br/><br/>
-
-                        <img style="float:right;" src="/img/backup2gmail/qr_code_amazon.png" alt="Download from Amazon Appstore">
-                        <a style="font-weight:bold;" href="http://www.amazon.com/gp/mas/dl/android?p=net.cpedia.backup2gmail">
-                                Download Backup to Gmail from Amazon appstore</a>
-                         </p> <br/><br/>
-
+                        </p>
 
                         With Google Android phone, you can synchronize your Gmail, Contacts, Calendar, Picasa Web Albums
                         with Google's Cloud Server. <br/><br/>
@@ -64,16 +64,43 @@
 
                         Now you can also restore MMS and Call log from Gmail to your android phone. Supports android 1.5 and above.
                         <br/> <br/>
+                        <table>
+                            <tr>
+                                <td>
+                                    <a style="font-weight:bold;"
+                                       href="market://search/?q=pname:net.cpedia.backup2gmail">
+                                        Download Backup to Gmail from Google Android Market (Only available when viewing
+                                        from your
+                                        handset)</a></td>
+                                <td>
+                                    <img src="/img/backup2gmail/qr_code.png" alt="Download from Google Android market">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a style="font-weight:bold;"
+                                       href="http://www.amazon.com/gp/mas/dl/android?p=net.cpedia.backup2gmail">
+                                        Download Backup to Gmail from Amazon appstore</a></td>
+                                <td>
+                                    <img src="/img/backup2gmail/qr_code_amazon.png" alt="Download from Amazon Appstore">
+                                </td>
+                            </tr>
+                        </table>
 
-                        <img src="/img/backup2gmail/backup_main.png" alt="">
-                        <img src="/img/backup2gmail/settings.png" alt=""> <br>
-                        <img src="/img/backup2gmail/settings.png" alt="">
-                        <img src="/img/backup2gmail/settings.png" alt=""> <br>
-                        <img src="/img/backup2gmail/settings.png" alt=""> <br>
+                        <div id="albums">
+                        <table cellspacing="0" border="0" id="albumsTable">
+                            <tr>
+                            <td><a rel="lightbox[roadtrip]" onFocus='this.blur()' href="/img/backup2gmail/main_l.jpg"><img src="/img/backup2gmail/main_thum.jpg" style="height: 180px;"></a> &nbsp;&nbsp;</td>
+                            <td><a rel="lightbox[roadtrip]" onFocus='this.blur()' href="/img/backup2gmail/settings_l.jpg"><img src="/img/backup2gmail/settings_thum.jpg" style="height: 180px;"></a> </td>
+                            <td>&nbsp;<a rel="lightbox[roadtrip]" onFocus='this.blur()' href="/img/backup2gmail/oauth_l.jpg"><img src="/img/backup2gmail/oauth_thum.jpg" style="height: 180px;"></a></td>
+                            </tr><tr>
+                            <td><a rel="lightbox[roadtrip]" onFocus='this.blur()' href="/img/backup2gmail/labels_l.jpg"><img src="/img/backup2gmail/labels_thum.jpg" style="height: 180px;"></a>&nbsp;&nbsp;</td>
+                            <td>&nbsp;<a rel="lightbox[roadtrip]" onFocus='this.blur()' href="/img/backup2gmail/mms_l.jpg"><img src="/img/backup2gmail/mms_thum.jpg" style="height: 180px;"></a>&nbsp;&nbsp;</td>
+                            </tr>
+                        </table>
+                        </div>
 
                         <br/><br/>
-
-
 
                         <p><b style="font-size:12pt"><a name="about_question">Common questions </a></b>
                             <a href="#top" style="margin-left:1.2cm;font:0.5em!important;">Back to top</a>
@@ -99,7 +126,7 @@
                         </p> <br>
 
                         This is the firmware bug of some droid x/2 bug. Please <a href="mailto:android@cpedia.net">give me email</a>  for how to resolve the issue.<br>
-                        <img src="/img/backup2gmail/oauth.png" alt=""> <br><br> <br>
+                        <br> <br>
 
 
 
